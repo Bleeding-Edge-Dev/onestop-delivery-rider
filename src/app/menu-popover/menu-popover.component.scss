@@ -1,0 +1,61 @@
+.headerContainer{
+    text-align: center;
+    p{
+        margin:5px;
+    }
+   
+}
+.id{
+    font-size: 12px;
+    font-weight: 100;
+    color:#373636;
+}
+.idv{
+    font-size: 12px;
+    color:#FA3B54;
+    font-weight: 800;
+}
+.vname{
+    font-size:16px;
+    color:#3D534E;
+}
+.menu{
+    font-size:18px;
+    color:#00BFA3;
+}
+.dishContainer{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    p{
+        margin:0;
+    }
+    .dishName{
+        font-size: 14px;
+        color:#3D534E;
+        font-weight: 500;
+    }
+    .extras{
+        font-size:12px;
+        color:#436C6C;
+    }
+    .quantity{
+        color:#3D534E;
+        font-size:14px;
+    }
+}
+
+.footer{
+    text-align: center;
+    .ptype{
+        color:#3D534E;
+        font-size: 16px;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+    }
+    .amount{
+        margin:3px;
+        font-size: 18px;
+        color:#ED232E;
+    }
+}

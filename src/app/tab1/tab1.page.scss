@@ -1,0 +1,101 @@
+.strip{
+    height:10px;
+    background-color:#00EECB;
+}
+.title{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.logo{
+    width:fit-content;
+}
+.pname{
+    width: fit-content;
+    display: flex;
+    align-items: flex-end;
+}
+
+.notContainer{
+
+    border-radius: 10px;
+    align-items:flex-end;
+    justify-content: space-between;
+}
+
+.notTitle{
+    font-size: 16px;
+    color:#064436;
+    text-align: center;
+    margin:5px 0;
+}
+
+.notContent{
+    display: flex;
+    justify-content: space-around;
+ 
+}
+.notNumber{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:48px;
+    font-weight: bold;
+    color:white;
+}
+
+#ongoing{
+    background: rgb(0,238,203);
+background: linear-gradient(104deg, rgba(0,238,203,1) 0%, rgba(0,184,157,1) 100%);
+}
+#past{
+    background: rgb(242,39,49);
+background: linear-gradient(104deg, rgba(242,39,49,1) 0%, rgba(199,0,26,1) 100%);
+}
+//sec head
+
+.secHead{
+    margin:10px 0;
+    padding:0 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.buttonContainer{
+    display: flex;
+    justify-content: space-around;
+    padding:10px;
+}
+
+.idSec{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.infoContainer{
+    display: flex;
+    justify-content: space-between;
+}
+.actionButton{
+    cursor: pointer;
+    text-align: center;
+    padding:10px;
+    color:#fff;
+    background: rgb(0,238,203);
+    background: linear-gradient(104deg, rgba(0,238,203,1) 0%, rgba(0,184,157,1) 100%);
+    
+}
+
+.msg{
+    margin-top:0;
+    margin-bottom:5px;
+    padding:0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p{
+        margin:0;
+    }
+   
+}

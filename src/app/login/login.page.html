@@ -1,0 +1,45 @@
+
+<ion-header [translucent]="true">
+	<div class="strip" style="height:10px; background-color:#00EECB ">
+
+	</div>
+	<ion-toolbar>
+		<ion-title >
+			<img src="../../assets/no1.png" style="height: 4rem;" alt="">
+		   </ion-title>
+
+	  
+  </ion-toolbar>
+
+    <ion-grid>
+      <ion-row justify-content-center>
+        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+          <div text-center>
+            <h4>Sign In </h4>
+          </div>
+          <div padding>
+            <form [formGroup]="loginGroup">
+              <ion-item>
+                <ion-input formControlName="username"  type='text'  placeholder="Username" ></ion-input>
+              </ion-item>
+          <span class="error" *ngIf="userInvalid">Usename is Required</span>
+              <ion-item>
+                <ion-input  formControlName="password"   type="password" placeholder="Password"></ion-input>
+              </ion-item>
+           
+            </form> 
+            
+          </div>
+          <div padding>
+            <ion-button class="signButton" size="large" (click)="login()" expand="block">Login</ion-button>
+          </div>
+          
+          
+        </ion-col>
+      
+      </ion-row>
+    
+      
+    </ion-grid>
+
+

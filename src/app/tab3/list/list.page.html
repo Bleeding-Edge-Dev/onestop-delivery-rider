@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <div class="strip"></div>
+  <ion-toolbar>
+    <ion-title class="title">
+      <div class="title">
+        <div class="logo">
+          <img src="../../assets/no1.png" style="height: 3.5rem;"alt="logo">
+        </div>
+        
+      </div>
+   
+        </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <p class="heading" *ngIf="list.length <1">You don't have transactions yet.</p>
+  <div class="card" *ngFor="let reward of list">
+    <ion-row>
+      <ion-col size="6" class="date">
+        Date of request <br>
+        {{reward.REQUEST_TIME}}
+      </ion-col>
+      <!--  -->
+      <ion-col size="6" class="date" *ngIf="reward.STATUS=='Completed'" >
+        Date of Settlement <br>
+        {{reward.SETTLEMENT_TIME}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <p class="points">Points used:{{reward.POINTS}}</p>
+      </ion-col>
+      <ion-col size="6">
+        <p class="points"> <span style="font-weight:normal" >Status:</span> {{reward.STATUS}}</p>
+       
+      </ion-col>
+    </ion-row>
+    <p class="comment" *ngIf="reward.STATUS=='Completed' || 'Rejected'"> {{reward.COMMENT}}</p>
+   
+
+  </div>
+</ion-content>

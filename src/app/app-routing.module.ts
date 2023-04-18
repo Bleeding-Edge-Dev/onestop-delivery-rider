@@ -32,6 +32,10 @@ const routes: Routes = [
   {
     path: 'wallet2',
     loadChildren: () => import('./wallet2/wallet2.module').then( m => m.Wallet2PageModule)
+  },
+  {
+    path: 'feed',
+    loadChildren: () => import('./feed/feed.module').then( m => m.FeedPageModule)
   }
 ];
 @NgModule({

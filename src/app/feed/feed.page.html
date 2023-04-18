@@ -1,0 +1,66 @@
+<header>
+  <div class="online-btn" (click)="toggleRiderOnline()">
+    <span class="circle" [ngClass]="{'circle-online': isRiderOnline, 'circle-offline': !isRiderOnline}"></span>
+    <span class="text" 
+    [ngClass]="{'text-online': isRiderOnline, 'text-offline': !isRiderOnline}"
+    >
+    {{isRiderOnline ? 'Online' : 'Offline'}}
+  </span>
+  </div>
+  <div>
+    <button class="bordered-chip">HELP</button>
+    <button><img src="../assets/icons/notifications.svg" alt="notification"></button>
+  </div>
+
+</header>
+
+<ion-content>
+  <div class="banner-wrapper">
+    <span class="banner-text">
+      Go Online to start <br>
+      accepting orders!
+    </span>
+    <span class="banner-img">
+      <img src="../../assets/rider.svg" alt="banner" />
+    </span>
+
+  </div>
+  <div class="todays-progress-wrapper">
+    <span class="feed-header">
+      <p class="feed-title">Today's Progress</p>
+      <button class="text-only-btn">see more</button>
+    </span>
+    <div>
+      <div class="card">
+        <span class="card-stats">₹{{"0"}}</span>
+        <p>Total Earnings</p>
+        <button class="text-only-btn">Payouts <img src="../assets/icons/chevron_right.svg" /></button>
+      </div>
+      <div class="card">
+        <span class="card-stats">{{"0.0"}}</span>
+        <p>Trips Today</p>
+        <button class="text-only-btn">Trips <img src="../assets/icons/chevron_right.svg" /></button>
+      </div>
+      <div class="card">
+        <span class="card-stats">{{"0"}}</span>
+        <p>Total Login Hours</p>
+        <button class="text-only-btn">Sessions <img src="../assets/icons/chevron_right.svg" /></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="my-target-wrapper feed-block">
+    <span class="feed-header">
+      <p class="feed-title">My Target</p>
+      <p class="">{{"(Time: 07:00 PM - 11:00 PM)"}}</p>
+    </span>
+    <div>
+
+    </div>
+    <span class="card-footer">
+      <p>Learn about payout calculation</p>
+      <button class="text-only-btn">See Rate Card</button>
+    </span>
+  </div>
+
+</ion-content>

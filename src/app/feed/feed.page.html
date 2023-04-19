@@ -1,8 +1,6 @@
 <app-header></app-header>
 
 <ion-content>
-
-
   <div class="banner-wrapper">
     <span class="banner-text">
       Go Online to start <br>
@@ -37,6 +35,41 @@
     </div>
   </div>
 
+  <div class="orders-wrapper feed-block">
+    <span class="feed-header">
+      <p class="feed-title">Orders</p>
+    </span>
+    <div class="orders-content">
+      <div class="options">
+        <button [ngClass]="{'active': showActiveOrders}" (click)="showActiveOrders = true">Active</button>
+        <button [ngClass]="{'active': !showActiveOrders}" (click)="showActiveOrders = false">New</button>
+      </div>
+      <div class="opted-orders">
+        <div class="card" *ngFor="let order of (showActiveOrders ? orders.active : orders.new)">
+          <div class="skinny-text ">
+            Order ID: {{ order.orderId }}
+          </div>
+          <div class="skinny-text pick-up">
+            Pickup from:
+          </div>
+          <div>
+            <div class="dark-text">
+              {{ order.pickupAddress.restaurantName }}
+            </div>
+            <div class="address skinny-small-text">
+              {{ order.pickupAddress.address }}
+            </div>
+          </div>
+          <span class="chip"
+            [ngClass]="{'red-chip': showActiveOrders,'green-chip': !showActiveOrders}">
+            {{showActiveOrders?"ACTIVE":"NEW"}}</span>
+          <img class="expand-btn" src="../../assets/icon/expand_circle_down-1.svg" alt="">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
   <div class="my-target-wrapper feed-block">
     <span class="feed-header">
       <p class="feed-title">My Target</p>
@@ -50,5 +83,6 @@
       <button class="text-only-btn">See Rate Card</button>
     </span>
   </div>
+
 
 </ion-content>

@@ -151,3 +151,115 @@
         }
     }
 }
+
+.orders-wrapper {
+    .options {
+        display: flex;
+        margin-bottom: 1rem;
+
+        button {
+            width: 70px;
+            height: 40px;
+            background: #FFFFFF;
+            font-family: 'Nunito';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+
+            &.active {
+                font-weight: 700;
+
+                color: #FF6565;
+                border-bottom: 2px solid #FF6565;
+            }
+        }
+    }
+
+    .opted-orders {
+        padding: 16px;
+        display: grid;
+        gap: 8px;
+
+        .card {
+            position: relative;
+            width: 100%;
+            background: #FFFFFF;
+            border: 1px solid #F1F1F1;
+            border-radius: 8px;
+            padding: 16px;
+ 
+
+            .chip{
+                position: absolute;
+                right: 16px;
+                top: 16px;
+ 
+            }
+            .pick-up{
+                margin-top: 16px;
+                margin-bottom: 4px;
+            }
+            .expand-btn{
+                position: absolute;
+                right: 18px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            .skinny-text {
+                
+                height: 19px;
+                font-family: 'Nunito';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+
+
+
+
+                letter-spacing: 0.0125em;
+
+                color: #000000;
+            }
+            .dark-text{
+                font-family: 'Nunito';
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 160%;
+/* identical to box height, or 26px */
+
+letter-spacing: 0.0125em;
+
+color: #000000;
+            }
+            .skinny-small-text {
+                font-family: 'Nunito';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 10px;
+
+
+
+                letter-spacing: 0.0125em;
+
+                color: #000000;
+
+            }
+        }
+
+    }
+
+
+
+    .restaurant-name {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .address {
+        font-size: 1rem;
+        color: #888;
+    }
+
+
+}

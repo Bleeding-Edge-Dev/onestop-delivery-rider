@@ -1,27 +1,15 @@
-<header>
-  <div class="online-btn" (click)="toggleRiderOnline()">
-    <span class="circle" [ngClass]="{'circle-online': isRiderOnline, 'circle-offline': !isRiderOnline}"></span>
-    <span class="text" 
-    [ngClass]="{'text-online': isRiderOnline, 'text-offline': !isRiderOnline}"
-    >
-    {{isRiderOnline ? 'Online' : 'Offline'}}
-  </span>
-  </div>
-  <div>
-    <button class="bordered-chip">HELP</button>
-    <button><img src="../assets/icons/notifications.svg" alt="notification"></button>
-  </div>
-
-</header>
+<app-header></app-header>
 
 <ion-content>
+
+
   <div class="banner-wrapper">
     <span class="banner-text">
       Go Online to start <br>
       accepting orders!
     </span>
     <span class="banner-img">
-      <img src="../../assets/rider.svg" alt="banner" />
+      <img src="../../assets/icon/rider.svg" alt="banner" />
     </span>
 
   </div>
@@ -34,17 +22,17 @@
       <div class="card">
         <span class="card-stats">₹{{"0"}}</span>
         <p>Total Earnings</p>
-        <button class="text-only-btn">Payouts <img src="../assets/icons/chevron_right.svg" /></button>
+        <button class="text-only-btn">Payouts <img src="../../assets/icon/chevron_right.svg" /></button>
       </div>
       <div class="card">
         <span class="card-stats">{{"0.0"}}</span>
         <p>Trips Today</p>
-        <button class="text-only-btn">Trips <img src="../assets/icons/chevron_right.svg" /></button>
+        <button class="text-only-btn">Trips <img src="../../assets/icon/chevron_right.svg" /></button>
       </div>
       <div class="card">
         <span class="card-stats">{{"0"}}</span>
         <p>Total Login Hours</p>
-        <button class="text-only-btn">Sessions <img src="../assets/icons/chevron_right.svg" /></button>
+        <button class="text-only-btn">Sessions <img src="../../assets/icon/chevron_right.svg" /></button>
       </div>
     </div>
   </div>

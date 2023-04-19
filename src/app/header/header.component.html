@@ -1,0 +1,14 @@
+<header>
+  <div class="online-btn" (click)="toggleRiderOnline()">
+    <span class="circle" [ngClass]="{'circle-online': isRiderOnline, 'circle-offline': !isRiderOnline}"></span>
+    <span class="text" 
+    [ngClass]="{'text-online': isRiderOnline, 'text-offline': !isRiderOnline}"
+    >
+    {{isRiderOnline ? 'Online' : 'Offline'}}
+  </span>
+  </div>
+  <div>
+    <button class="bordered-chip">HELP</button>
+    <button><img src="../../assets/icon/notifications.svg" alt="notification"></button>
+  </div>
+</header>

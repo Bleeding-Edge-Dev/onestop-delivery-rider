@@ -8,6 +8,8 @@ import { FeedPageRoutingModule } from './feed-routing.module';
 
 import { FeedPage } from './feed.page';
 
+import { HeaderComponent } from '../header/header.component';
+
 
 @NgModule({
   imports: [
@@ -16,6 +18,6 @@ import { FeedPage } from './feed.page';
     IonicModule,
     FeedPageRoutingModule
   ],
-  declarations: [FeedPage]
+  declarations: [FeedPage,HeaderComponent]
 })
 export class FeedPageModule {}

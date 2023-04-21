@@ -1,0 +1,36 @@
+<app-header></app-header>
+
+<ion-content>
+    <div class="payout-reports">
+        <div class="flexed-options">
+            <button class="active">Daily</button>
+            <button>Weekly</button>
+            <button>Monthly</button>
+        </div>
+        <div class="progress-block">
+            <div class="card">
+              <span class="card-stats">₹{{"0"}}</span>
+              <p>Total Earnings</p>
+            </div>
+            <div class="card">
+              <span class="card-stats">{{"0.0"}}</span>
+              <p>Trips Today</p>
+              <button class="text-only-btn">Trips <img src="../../assets/icon/chevron_right.svg" /></button>
+            </div>
+            <div class="card">
+              <span class="card-stats">{{"0"}}</span>
+              <p>Total Login Hours</p>
+              <button class="text-only-btn">Sessions <img src="../../assets/icon/chevron_right.svg" /></button>
+            </div>
+          </div>
+    </div>
+    <app-my-target></app-my-target>
+    <div class="my-earnings-wrapper">
+      <div class="feed-header">
+        <p class="feed-title">My Earnings Today</p>
+        <p class="feed-title">₹{{"300"}}</p>
+      </div>
+      
+    </div>
+    <app-payout-rate-card></app-payout-rate-card>
+</ion-content>

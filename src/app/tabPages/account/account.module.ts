@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ReportPageRoutingModule } from './report-routing.module';
+import { AccountPageRoutingModule } from './account-routing.module';
 
-import { ReportPage } from './report.page';
+import { AccountPage } from './account.page';
+import { HeaderComponent } from 'src/app/components/header/header.component';
 import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
@@ -14,10 +15,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    ReportPageRoutingModule,
-
-
+    AccountPageRoutingModule,
+    ComponentsModule
   ],
-  declarations: [ReportPage]
+  declarations: [AccountPage]
 })
-export class ReportPageModule {}
+export class AccountPageModule { }

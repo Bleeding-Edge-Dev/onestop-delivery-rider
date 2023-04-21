@@ -1,0 +1,55 @@
+<!-- <div class="backdrop " (click)="onDismiss($event)"> -->
+<div class="backdrop ">
+  <div class="wrapper" >
+    <div class="dismiss-btn" (click)="onDismiss($event)">
+      <img src="../../../assets/icon/close.svg" alt="">
+    </div>
+    <div class="banner">
+      <div class="banner-content">
+        <div class="heading">
+          New Order!
+        </div>
+        <div class="sub-heading">
+          Order will disappear in
+        </div>
+        <div class="countdown">
+          {{"00:30"}}
+        </div>
+      </div>
+      <img src="../../../assets/icon/rider.svg" alt="">
+    </div>
+
+    <div class="order-details">
+      <div class="first-card">
+        <span>
+          <span class="slim-text">Expected Earning</span>
+          <span class="regular-text-xxl">₹{{"150"}}</span>
+        </span>
+        <span>
+          <span class="slim-text">Pickup: <span class="regular-text">{{"0.58"}}km</span></span>
+          <span class="slim-text">Drop: <span class="regular-text">{{"4.07"}}km</span></span>
+        </span>
+      </div>
+      <div class="second-card">
+        <div class="skinny-text">Pickup From:</div>
+        <div class="regular-text-xl">{{"ABC Restaurant"}}<div class="skinny-text">Opp. HSC School, Pipli Road, Uran, Navi Mumbai - 400001</div></div>
+        <div class="minutes-away"><img src="../../../assets/icon/schedule.svg" alt=""> <span class="slim-text">{{"2"}} mins away</span></div>
+      </div>
+    </div>
+    <div class="btn-wrapper">
+      <input type="range" value={{sliderValue}}
+      [ngClass]="{'above-90': sliderValue > 90}"
+        (input)="onSliderChange($event)"
+         (touchend)="onSliderTouchEnd()"
+          min="0" max="100">
+          <div class="thumb-icon" [style.left.px]="25+ sliderValue * 2.2">
+            <img src="../../../assets/icon/keyboard_double_arrow_right.svg" 
+            >
+          </div>
+
+
+    </div>
+    
+    
+
+</div>

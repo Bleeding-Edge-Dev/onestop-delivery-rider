@@ -1,0 +1,218 @@
+.backdrop {
+
+    width: 100%;
+    height: 100vh;
+    z-index: 99999999;
+
+    .wrapper {
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        animation: prompt-from-bottom 0.2s ease-in-out;
+        border-radius: 8px;
+        width: 327px;
+        .dismiss-btn{
+            position: absolute;
+            top: -40px;
+            left: 0px;
+            padding: 16px;
+            cursor: pointer;
+            z-index: 99999;
+            background-color: #fff;
+            width: 32px;
+height: 32px;
+// box-shadow: 0px 4px 4px -2px rgba(125, 125, 125, 0.25);
+border-radius: 50%;
+display: grid;
+place-content: center;
+
+img{
+    width: 20px;
+    height: 20px;
+    max-width: 32px;
+    z-index: 9999999;
+    object-fit: cover;
+    pointer-events: none;
+
+}
+        }
+        .banner {
+            border-radius: 8px 8px 0 0;
+            color: #fff;
+            height: 174px;
+            background: #313131;
+            display: flex;
+            padding: 40px 16px 40px 16px;
+            gap: 47px;
+
+            .banner-content {
+                letter-spacing: 0.0125em;
+
+
+                .heading {
+                    font-weight: 700;
+                    font-size: 24px;
+
+                }
+
+                .sub-heading {
+                    margin-top: 13px;
+                    font-weight: 400;
+                    font-size: 10px;
+                }
+
+                .countdown {
+                    font-weight: 700;
+                    font-size: 32px;
+                }
+            }
+
+            img {
+                width: 109px;
+                height: 95px;
+            }
+        }
+
+        .order-details {
+
+            display: grid;
+            gap: 16px;
+            padding: 16px;
+
+            .first-card {
+                @extend .card;
+                display: flex;
+                justify-content: space-between;
+
+                &>span {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                }
+
+
+            }
+
+            .second-card {
+                @extend .card;
+                display: grid;
+                gap: 9px;
+
+                .minutes-away {
+                    display: flex;
+                    gap: 9px;
+                    align-items: center;
+
+                    span {
+                        color: #ACACAC;
+                    }
+                }
+            }
+
+        }
+
+        // .btn-wrapper{
+        //     display: flex;
+        //     align-items: center;
+        //     padding: 32px 16px ;
+        // }
+
+    }
+}
+
+@keyframes prompt-from-bottom {
+    from {
+        top: 70%;
+        opacity: 0;
+    }
+
+    to {
+        top: 50%;
+        opacity: 1;
+    }
+}
+
+.card {
+    background: #FFFFFF;
+    border: 1px solid #F1F1F1;
+    border-radius: 8px;
+    padding: 16px 16px 14px 16px;
+
+
+}
+
+.btn-wrapper {
+    padding: 20px;
+    position: relative;
+    .thumb-icon{
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 9999;
+        width: 64px;
+        pointer-events: none;
+        height: 50px;
+        object-fit: cover;
+        display:grid;
+        place-content: center;
+
+    }
+
+    input[type="range"] {
+        width: 295px;
+
+        height: 56px;
+        background: #FF6565;
+        border-radius: 28px;
+        -webkit-appearance: none;
+
+        padding: 5px;
+
+        position: relative;
+        animation: all 0.3s ease-in-out;
+        &.above-90{
+            animation: all 0.3s ease-in-out;
+        }
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        z-index: 1;
+        position: relative;
+        height: 50px;
+        width: 64px;
+        height: 48px;
+        background: #FFFFFF;
+        border-radius: 23px;
+        animation: all 0.3s ease-in-out;
+    }
+    input[type="range"]:before {
+        content: "Accept Order";
+        color: #fff;
+        position: absolute;
+        left: 100px;
+        top: 14px;
+        z-index: 1;
+        font-weight: 700;
+        font-size: 16px;
+
+        animation: all 0.3s ease-in-out;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:before {
+        color: #FFFFFF;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        font-size: 56px;
+        font-weight: bold;
+        content: "→";
+        animation: all 0.3s ease-in-out;
+    }
+    
+}

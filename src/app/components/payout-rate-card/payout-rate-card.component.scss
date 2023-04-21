@@ -1,0 +1,15 @@
+.payout-ratecard-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    p {
+        font-weight: 400;
+        font-size: 12px;
+    }
+    button {
+        font-weight: 700;
+        font-size: 12px;
+
+    }
+}

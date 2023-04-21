@@ -1,0 +1,47 @@
+.orders-wrapper {
+    padding:0 16px;
+    .orders-content {
+
+    }
+
+    .opted-orders {
+
+        display: grid;
+        gap: 8px;
+
+        .card {
+            position: relative;
+            width: 100%;
+            background: #FFFFFF;
+            border: 1px solid #F1F1F1;
+            border-radius: 8px;
+            padding: 16px;
+
+
+            .chip {
+                position: absolute;
+                right: 16px;
+                top: 16px;
+
+            }
+
+            .pick-up {
+                margin-top: 16px;
+                margin-bottom: 4px;
+            }
+
+            .expand-btn {
+                position: absolute;
+                right: 18px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+        }
+
+    }
+
+
+
+
+}

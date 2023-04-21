@@ -1,0 +1,33 @@
+<div class="orders-wrapper">
+  <span class="feed-header">
+    <p class="feed-title">Orders</p>
+  </span>
+  <div class="orders-content">
+    <div class="flexed-options">
+      <button [ngClass]="{'active': showActiveOrders}" (click)="showActiveOrders = true">Active</button>
+      <button [ngClass]="{'active': !showActiveOrders}" (click)="showActiveOrders = false">New</button>
+    </div>
+    <div class="opted-orders">
+      <ion-card class="card" *ngFor="let order of (showActiveOrders ? orders.active : orders.new)">
+        <div class="skinny-text ">
+          Order ID: {{ order.orderId }}
+        </div>
+        <div class="slim-text pick-up">
+          Pickup from:
+        </div>
+        <div>
+          <div class="dark-text">
+            {{ order.pickupAddress.restaurantName }}
+          </div>
+          <div class="address slim-text-s">
+            {{ order.pickupAddress.address }}
+          </div>
+        </div>
+        <span class="chip"
+          [ngClass]="{'red-chip': showActiveOrders,'green-chip': !showActiveOrders}">
+          {{showActiveOrders?"ACTIVE":"NEW"}}</span>
+        <img (click)="expandOrder()" class="expand-btn" src="../../assets/icon/expand_circle_down-1.svg" alt="">
+      </ion-card>
+    </div>
+  </div>
+</div>

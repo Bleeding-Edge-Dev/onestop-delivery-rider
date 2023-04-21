@@ -9,12 +9,12 @@ const routes: Routes = [
     children: [
       {
         path: 'feed',
-        loadChildren: () => import('../feed/feed.module').then(m => m.FeedPageModule)
+        loadChildren: () => import('../tabPages/feed/feed.module').then(m => m.FeedPageModule)
       },
-      {
-        path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
-      },
+      // {
+      //   path: 'tab1',
+      //   loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+      // },
       {
         path: 'tab2',
         loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
@@ -28,8 +28,20 @@ const routes: Routes = [
         loadChildren: () => import('../wallet/wallet.module').then(m => m.WalletPageModule)
       },
       {
+        path: 'payouts',
+        loadChildren: () => import('../tabPages/payouts/payouts.module').then(m => m.PayoutsPageModule)
+      },
+      {
+        path: 'pocket',
+        loadChildren: () => import('../tabPages/pocket/pocket.module').then( m => m.PocketPageModule)
+      },
+      {
+        path: 'account',
+        loadChildren: () => import('../tabPages/account/account.module').then( m => m.AccountPageModule)
+      },
+      {
         path: '',
-        redirectTo: '/tabs/tabs/tab1',
+        redirectTo: '/tabs/tabs/feed',
         pathMatch: 'full'
       }
     ]
@@ -39,11 +51,11 @@ const routes: Routes = [
     redirectTo: '/tabs/tabs/tab1',
     pathMatch: 'full'
   },
- 
+
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }

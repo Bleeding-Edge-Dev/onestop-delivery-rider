@@ -1,0 +1,78 @@
+<!-- <div class="backdrop " (click)="onDismiss($event)"> -->
+  <div class="backdrop ">
+    <div class="wrapper" >
+      <div class="circle-dismiss-btn" (click)="onDismiss($event)">
+        <img src="../../../../assets/icon/close.svg" alt="">
+      </div>
+      <div class="regular-text-xl">Rate Card</div>
+      <div class="block">
+        <div class="head">
+            <img src="../../../../assets/icon/currency2.svg" alt="">
+            <span>
+              <div class="regular-text">Order Pay</div>
+              <div class="slim-text-s">Earnings per order</div>
+            </span>
+        </div>
+        <div class="block-lines">
+          <span class="regular-text">Distance Pay</span>
+          <span>
+            <span class="regular-text">+ ₹{{"4"}}</span>
+            <div class="slim-text-s">per trip</div>
+          </span>
+        </div>
+        <div class="block-lines">
+          <span class="regular-text">Order Extra Wait Time</span>
+          <span>
+            <span class="regular-text">+ ₹{{"1"}}</span>
+            <div class="slim-text-s">per trip</div>
+          </span>
+        </div>
+        <div class="block-lines">
+          <span class="regular-text">Minimum Base Pay</span>
+          <span>
+            <span class="regular-text">₹{{"20"}}</span>
+            <div class="slim-text-s">per trip</div>
+          </span>
+        </div>
+      </div>
+      <div class="block">
+        <div class="head">
+            <img src="../../../../assets/icon/rewards.svg" alt="">
+            <span>
+              <div class="regular-text">My Rewards</div>
+              <div class="slim-text-s">You can get one reward each day</div>
+            </span>
+        </div>
+        <app-my-target></app-my-target>
+      </div>
+      <div class="block">
+        <div class="head">
+            <img src="../../../../assets/icon/surge.svg" alt="">
+            <span>
+              <div class="regular-text">Surge Pricing</div>
+              <div class="slim-text-s">Earn extra amounts during these hours</div>
+            </span>
+        </div>
+        <div class="block-lines surge-lines">
+          <span class="regular-text">Rain (2 slots)</span>
+          <span>
+            <span class="regular-text"> Upto ₹{{"75"}}</span>
+            <span class="slim-text-s">each trip</span>
+          </span>
+        </div>
+        
+        <div class="block-lines surge-lines">
+          <span class="slim-text">Deliver between 3pm - 6pm</span>
+          <span>
+            <span class="slim-text">₹{{"75"}}</span>
+          </span>
+        </div>
+        <div class="block-lines surge-lines">
+          <span class="slim-text">Deliver between 6:10pm - 10:40pm</span>
+          <span>
+            <span class="slim-text"> ₹{{"1000"}}</span>
+          </span>
+        </div>
+      </div>
+  
+  </div>

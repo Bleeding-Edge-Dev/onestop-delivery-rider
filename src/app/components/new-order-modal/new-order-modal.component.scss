@@ -14,31 +14,6 @@
         animation: prompt-from-bottom 0.2s ease-in-out;
         border-radius: 8px;
         width: 327px;
-        .dismiss-btn{
-            position: absolute;
-            top: -40px;
-            left: 0px;
-            padding: 16px;
-            cursor: pointer;
-            z-index: 99999;
-            background-color: #fff;
-            width: 32px;
-height: 32px;
-// box-shadow: 0px 4px 4px -2px rgba(125, 125, 125, 0.25);
-border-radius: 50%;
-display: grid;
-place-content: center;
-
-img{
-    width: 20px;
-    height: 20px;
-    max-width: 32px;
-    z-index: 9999999;
-    object-fit: cover;
-    pointer-events: none;
-
-}
-        }
         .banner {
             border-radius: 8px 8px 0 0;
             color: #fff;
@@ -145,37 +120,33 @@ img{
 }
 
 .btn-wrapper {
-    padding: 20px;
+    margin:15px 0;
+    padding:0 20px;
     position: relative;
+    
     .thumb-icon{
         position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
+        top:0;
         z-index: 9999;
         width: 64px;
         pointer-events: none;
-        height: 50px;
+        height: 56px;
         object-fit: cover;
         display:grid;
         place-content: center;
+
 
     }
 
     input[type="range"] {
         width: 295px;
-
         height: 56px;
         background: #FF6565;
         border-radius: 28px;
         -webkit-appearance: none;
 
         padding: 5px;
-
         position: relative;
-        animation: all 0.3s ease-in-out;
-        &.above-90{
-            animation: all 0.3s ease-in-out;
-        }
     }
 
     input[type="range"]::-webkit-slider-thumb {

@@ -1,0 +1,80 @@
+.backdrop {
+
+    width: 100%;
+    height: 100vh;
+    z-index: 99999999;
+
+    .wrapper {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        bottom: 0;
+        background-color: #fff;
+        animation: prompt-from-bottom 0.2s ease-in-out;
+        border-radius: 8px 8px 0 0;
+        padding: 24px 32px 48px 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+
+        .circle-dismiss-btn {
+            left: 16px;
+
+        }
+
+        .block {
+            display: flex;
+            flex-direction: column;
+            gap:13px;
+            .head {
+                display: flex;
+                gap: 12PX;
+                padding-bottom: 3px;
+                img {
+                    width: 40px;
+                    height: 40px;
+                }
+
+                span {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                }
+            }
+            .block-lines{
+                display: flex;
+                justify-content: space-between;
+                span{
+                    &:last-child{
+                        display: flex;
+                        gap: 8px ;
+                    }
+                }
+
+                
+            }
+            .surge-lines{
+                span{
+                    color: #757575 !important;
+                }
+            }
+        }
+
+
+
+
+    }
+}
+
+
+@keyframes prompt-from-bottom {
+    from {
+        bottom: 1000;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 1;
+    }
+}

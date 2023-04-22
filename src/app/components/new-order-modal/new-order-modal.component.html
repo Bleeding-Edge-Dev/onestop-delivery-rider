@@ -1,7 +1,7 @@
 <!-- <div class="backdrop " (click)="onDismiss($event)"> -->
 <div class="backdrop ">
   <div class="wrapper" >
-    <div class="dismiss-btn" (click)="onDismiss($event)">
+    <div class="circle-dismiss-btn" (click)="onDismiss($event)">
       <img src="../../../assets/icon/close.svg" alt="">
     </div>
     <div class="banner">
@@ -37,8 +37,9 @@
       </div>
     </div>
     <div class="btn-wrapper">
-      <input type="range" value={{sliderValue}}
-      [ngClass]="{'above-90': sliderValue > 90}"
+      <input type="range" 
+      value={{sliderValue}}
+      [style.background]="getColor()"
         (input)="onSliderChange($event)"
          (touchend)="onSliderTouchEnd()"
           min="0" max="100">
@@ -46,6 +47,7 @@
             <img src="../../../assets/icon/keyboard_double_arrow_right.svg" 
             >
           </div>
+          
 
 
     </div>

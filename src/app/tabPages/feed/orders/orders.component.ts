@@ -61,7 +61,7 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit(
   ) {  
-
+    // this.openNewOrder()
   }
 
   showActiveOrders = true;

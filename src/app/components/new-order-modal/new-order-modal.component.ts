@@ -16,7 +16,7 @@ export class NewOrderModalComponent implements OnInit {
   constructor(private modalController: ModalController) { }
 
   onDismiss(event: { target: HTMLElement; }) {
-    if (event.target.classList.contains('backdrop') || event.target.classList.contains('dismiss-btn')) {
+    if (event.target.classList.contains('backdrop') || event.target.classList.contains('circle-dismiss-btn')) {
       this.modalController.dismiss();
     }
 
@@ -46,6 +46,14 @@ export class NewOrderModalComponent implements OnInit {
       setTimeout(() => {
         this.sliderValue = 0;
       }, 100);
+    }
+  }
+  getColor(){
+    if(this.sliderValue > 90){
+      return '#4FCB6D';
+    }
+    else{
+      return '#FF6565';
     }
   }
 

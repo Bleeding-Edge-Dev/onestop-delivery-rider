@@ -234,11 +234,11 @@ ion-backdrop{
   @include text(12px, 700);
 }
 .regular-text-l{
-  @include text(14px, 700);
+  @include text(16px, 700);
 }
 
 .regular-text-xl{
-  @include text(16px, 700);
+  @include text(18px, 700);
 }
 .regular-text-xxl{
   @include text(24px, 700);
@@ -336,3 +336,48 @@ box-sizing: border-box;
   }
 
 }
+
+.circle-dismiss-btn {
+  position: absolute;
+  top: -40px;
+  left: 0px;
+  padding: 16px;
+  cursor: pointer;
+  z-index: 99999;
+  background-color: #fff;
+  width: 32px;
+  height: 32px;
+  // box-shadow: 0px 4px 4px -2px rgba(125, 125, 125, 0.25);
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  img{
+      width: 20px;
+      height: 20px;
+      max-width: 32px;
+      z-index: 9999999;
+      object-fit: cover;
+      pointer-events: none;
+  
+  }
+
+}
+
+
+.my-target-wrapper{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 16px;
+     span {
+          gap: 10px;
+  
+          p {
+              &:nth-child(2) {
+                  font-weight: 400;
+                  font-size: 10px;
+  
+              }        }
+      
+      
+      }
+  } 

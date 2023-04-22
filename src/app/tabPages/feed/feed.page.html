@@ -31,7 +31,14 @@
   <div *ngIf="isRiderOnline">
     <app-orders></app-orders>
   </div>
-<app-my-target class="feed-block" ></app-my-target>
+  
+  <div class="my-target-wrapper">
+    <span class="feed-header">
+      <p class="feed-title">My Target</p>
+      <p class="">{{"(Time: 07:00 PM - 11:00 PM)"}}</p>
+    </span>
+    <app-my-target></app-my-target>
+    </div>
 
 <app-payout-rate-card></app-payout-rate-card>
 </ion-content>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { RateCardModalComponent } from './rate-card-modal/rate-card-modal.component';
 
 @Component({
   selector: 'app-payout-rate-card',
@@ -7,8 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PayoutRateCardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalController: ModalController) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: RateCardModalComponent,
+    });
+    return await modal.present();
+  }
 
 }

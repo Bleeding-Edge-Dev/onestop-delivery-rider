@@ -28,6 +28,259 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;500;600;700;800&display=swap');
 
 
+// Styled Text Styles
+
+@mixin text($size, $weight) {
+  font-family: 'Nunito', sans-serif;
+  font-size: $size;
+  font-weight: $weight;
+}
+
+.rf-10 {
+  @include text(10px, 400);
+}
+
+.rf-12 {
+  @include text(12px, 400);
+}
+
+.rf-14 {
+  @include text(14px, 400);
+}
+.rf-16 {
+  @include text(16px, 400);
+}
+
+.bf-10 {
+  @include text(10px, 700);
+}
+
+.bf-12 {
+  @include text(12px, 700);
+}
+
+.bf-16 {
+  @include text(16px, 700);
+}
+
+.bf-18 {
+  @include text(18px, 700);
+}
+.bf-24{
+  @include text(24px, 700);
+}
+
+.bf-32{
+  @include text(32px, 700);
+}
+.f-white{
+  color: #FFFFFF;
+}
+.f-grey {
+  color: #757575;
+}
+
+.f-midgrey {
+  color: #ACACAC;
+}
+
+.f-lightgrey {
+  color: #B8B8B8;
+}
+
+
+.f-green {
+  color: #4FCB6D;
+}
+
+.f-red {
+  color: #FF6565;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.float-right {
+  float: right;
+}
+
+.max-w-65 {
+  max-width: 65%;
+}
+
+.m-b-36 {
+  margin-bottom: 36px;
+}
+
+.px-40 {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+// chip or badges styles
+
+@mixin chip($color) {
+  padding: 4px 12px;
+  background-color: $color;
+  border-radius: 20px;
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 10px;
+  color: #FFFFFF;
+}
+
+.bordered-chip {
+  @include chip(#FFFFFF);
+  color: #000000;
+  border: 1px solid #000000;
+}
+
+.red-chip {
+  @include chip(#FF6565);
+}
+
+.green-chip {
+  @include chip(#4FCB6D);
+}
+
+
+
+
+
+// commonly used styles
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex-start{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flex-aligned {
+  display: flex;
+  align-items: center;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-col-spaced {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.flex-col-end {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+.flex-spaced {
+  display: flex;
+  justify-content: space-between;
+}
+
+.grid-center {
+  display: grid;
+  place-items: center;
+}
+
+.gap {
+  gap: 8px;
+}
+
+.gap-4 {
+  gap: 4px;
+}
+
+.gap-9 {
+  gap: 9px;
+}
+
+.gap-12 {
+  gap: 12px;
+}
+
+.gap-16 {
+  gap: 16px;
+}
+
+.gap-24 {
+  gap: 24px;
+}
+
+.gap-32 {
+  gap: 32px;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+// padding styles
+.p-16 {
+  padding: 16px;
+}
+
+.p-8 {
+  padding: 8px;
+}
+
+.p-4 {
+  padding: 4px;
+}
+
+.px {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.px-32 {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.mx-16 {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.py {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.py-8 {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+// border radiuses
+.round {
+  border-radius: 8px;
+}
+
+.round-top {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
 ion-content {
   background-color: white;
 }
@@ -36,91 +289,142 @@ ion-page {
   background-color: #fff;
 }
 
+ion-header {
+  height: 72px;
+}
+
+ion-header::after {
+  background-image: none !important;
+}
+
 .rinput {
   border: 1px red solid !important;
   border-radius: 5px !important;
 }
 
-.text-only-btn {
-  font-family: 'Nunito';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 10px;
+button {
   background-color: transparent;
-  color: #FF6565;
+  padding: 0;
 }
 
+// Buttons Styles
 
-.bordered-chip {
-  padding: 4px 12px;
-  border: 1px solid #FF6565;
-  background-color: #FFFFFF;
-  border: 1px solid #000000;
-  border-radius: 20px;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 10px;
-  font-family: 'Nunito';
-  color: #000000;
-}
-
-.red-chip {
-  padding: 4px 12px;
-  background-color: #FF6565;
-  border-radius: 20px;
-  font-family: 'Nunito';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 10px;  
-  color: #FFFFFF;
-}
-.green-chip {
-  padding: 4px 12px;
-  background-color: #4FCB6D;
-  border-radius: 20px;
-  font-family: 'Nunito';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 10px;  
-  color: #FFFFFF;
-}
-
-
-
-
-.secondary-btn{
-  background: linear-gradient(0deg, #BFFFCE, #BFFFCE), #4FCB6D;
-border: 1px solid #4FCB6D;
-border-radius: 8px;
-font-family: 'Nunito';
-font-weight: 700;
-font-size: 12px;
-line-height: 160%;
-color: #4FCB6D;
-
-}
-
-.primary-btn{
-  background: #4FCB6D;
+@mixin button($BGcolor, $color) {
+  width: 124px;
+  height: 32px;
+  background: $BGcolor;
   border-radius: 8px;
-font-family: 'Nunito';
-font-weight: 700;
-font-size: 12px;
-color: #FFFFFF;
+  @extend .bf-12;
+  color: $color;
+
 }
 
-// app-prompt-bottom{
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100vh;
-//   background-color: rgba(0,0,0,0.5);
-//   z-index: 99999999;
-// }
+.p-btn {
+  @include button(#4FCB6D, #FFFFFF);
+}
+
+.s-btn {
+  @include button((linear-gradient(0deg, #BFFFCE, #BFFFCE), #4FCB6D), #4FCB6D);
+  border: 1px solid #4FCB6D;
+}
 
 
-.prompt-bottom-modal{
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+// Positioning Styles
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.absolute-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.v-center {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.absolute-center{
+@extend .v-center;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+
+// deminsions Styles
+.w-screen {
+  width: 100vw;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.min-w-36px {
+  min-width: 36px;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.h-4px {
+  height: 4px;
+}
+
+.h-8px {
+  height: 8px;
+}
+
+.square-8px {
+  width: 8px;
+  height: 8px;
+}
+
+.bg-grey {
+  background: #EEEEEE;
+}
+
+.bg-white {
+  background: #FFFFFF;
+}
+
+.bg-green {
+  background: #4FCB6D;
+}
+
+.bg-red {
+  background: #FF6565;
+}
+
+.bg-brown{
+ background:  #313131;
+}
+
+// Card Styles
+
+
+.bordered-card {
+  background: #FFFFFF;
+  border: 1px solid #F1F1F1;
+  border-radius: 8px;
+}
+
+.prompt-bottom-modal {
   bottom: 0;
 }
 
@@ -129,120 +433,27 @@ ion-modal {
 
 }
 
-ion-backdrop{
+ion-backdrop {
   background: transparent;
 }
-.sc-ion-modal-md-h{
 
-  --background:rgba(61, 61, 61, 0.75) !important;
+.sc-ion-modal-md-h {
 
-}
-.modal-wrapper{
-  background: rgb(0, 0, 0,0.5);
+  --background: rgba(61, 61, 61, 0.75) !important;
 
 }
 
-.feed-header {
-  display: flex;
-  align-items: center;
-
-  p {
-    @extend .regular-text-xl;
-  }
-
-  button {
-      font-weight: 700;
-      font-size: 12px;
-
-  }
-}
-
-
-.skinny-text {
-  font-weight: 400;
-  font-size: 12px;
-  letter-spacing: 0.0125em;
-
-}
-
-.dark-text {
-
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 160%;
-  /* identical to box height, or 26px */
-
-  letter-spacing: 0.0125em;
-
-
-}
-
-.skinny-small-text {
-  font-weight: 400;
-  font-size: 10px;
-  letter-spacing: 0.0125em;
-
-
-}
-
-.dark-text {
-
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 160%;
-  /* identical to box height, or 26px */
-
-  letter-spacing: 0.0125em;
-
+.modal-wrapper {
+  background: rgb(0, 0, 0, 0.5);
 
 }
 
 
-@mixin text($size, $weight, $color : #000) {
-  font-family: 'Nunito', sans-serif;
-  font-size: $size;
-  font-weight: $weight;
-  color: $color;
-}
-@mixin flex-column($justify-content: center, $align-items: center,$gap) {
-  display: flex;
-  flex-direction: column;
-  justify-content: $justify-content;
-  align-items: $align-items;
-  gap:$gap;
-}
-.flex-col{
-  display: flex;
-  flex-direction: column;
-}
 
-.grid-center{
-  display: grid;
-  place-items: center;
-}
 
-.slim-text-s{
-  @include text(10px, 400);
-}
-.slim-text{
-  @include text(12px, 400);
-}
-.slim-text-l{
-  @include text(14px, 400);
-}
-.regular-text{
-  @include text(12px, 700);
-}
-.regular-text-l{
-  @include text(16px, 700);
-}
 
-.regular-text-xl{
-  @include text(18px, 700);
-}
-.regular-text-xxl{
-  @include text(24px, 700);
-}
+
+
 
 // .swipe-btn{
 //   width: 100%;
@@ -251,92 +462,54 @@ ion-backdrop{
 //   border-radius: 28px;
 // }
 
-app-slide-button{
+app-slide-button {
   width: 100%;
   height: 20px;
 }
 
-ion-card{
-all: unset ;
-margin: 0 !important;
-box-sizing: border-box;
+ion-card {
+  all: unset;
+  margin: 0 !important;
+  box-sizing: border-box;
 
-} 
+}
 
-.flexed-options {
-  display: flex;
-  margin-bottom: 1rem;
-  gap: 16px;
+ion-segment{
+@extend .flex-start;
+gap: 16px;
 
+}
+ion-segment-button {
+  min-height: 40px;
+  --padding-top: 0;
+  --padding-end: 6px;
+  --padding-bottom: 0;
+  --padding-start: 6px;
+  text-align: center;
+  max-width: 70px;
+  min-width: 70px;
+  text-transform: unset;
+  --color: black;
+  font-weight: 400;
+  slot{
+    @extend .rf-16;
 
-  button {
-
-      height: 40px;
-      background: #FFFFFF;
-      font-family: 'Nunito';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 16px;
-      padding: 8px 16px;
-
-      &.active {
-          font-weight: 700;
-
-          color: #FF6565;
-          border-bottom: 2px solid #FF6565;
-      }
   }
 }
 
-.payout-reports{
-  padding: 0  16px;
+ion-progress-bar{
+  --background:#D9D9D9;
+  --progress-background: #FF6565;
 }
 
-.progress-block {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-
-
-
-  .card {
-      margin: unset;
-      box-shadow: none;
-      background: #FFFFFF;
-      border: 1px solid #F1F1F1;
-      border-radius: 8px;
-      width: 99px;
-      height: 90px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      .card-stats {
-          padding: 5.5px 10px;
-          background: #EEEEEE;
-          border-radius: 8px;
-          font-style: normal;
-          font-weight: 700;
-          font-size: 16px;
-          color: #000000;
-      }
-
-      p {
-          width: 99px;
-          font-family: 'Nunito';
-          font-style: normal;
-          font-weight: 400;
-          font-size: 10px;
-          text-align: center;
-          color: #000000;
-          height: 10px;
-
-      }
-  }
+.segment-button-checked{
+  font-weight: 700;
+slot{
+  --color: #FF6565;
+  @extend .bf-16;
 
 }
-
+}
 .circle-dismiss-btn {
   position: absolute;
   top: -40px;
@@ -351,33 +524,110 @@ box-sizing: border-box;
   border-radius: 50%;
   display: grid;
   place-content: center;
-  img{
-      width: 20px;
-      height: 20px;
-      max-width: 32px;
-      z-index: 9999999;
-      object-fit: cover;
-      pointer-events: none;
-  
+
+  img {
+    width: 20px;
+    height: 20px;
+    max-width: 32px;
+    z-index: 9999999;
+    object-fit: cover;
+    pointer-events: none;
+
   }
 
 }
 
+.modal-wrapper-bottom {
+  bottom: 0;
+  animation: prompt-from-bottom 0.2s ease-in-out;
+  padding: 24px;
+}
 
-.my-target-wrapper{
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0 16px;
-     span {
-          gap: 10px;
-  
-          p {
-              &:nth-child(2) {
-                  font-weight: 400;
-                  font-size: 10px;
-  
-              }        }
-      
-      
-      }
-  } 
+
+@keyframes prompt-from-bottom {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.slide-btn-wrapper {
+  margin: 15px 0;
+  padding: 0 20px;
+  position: relative;
+
+  .thumb-icon {
+    position: absolute;
+    top: 0;
+    z-index: 9999;
+    width: 64px;
+    pointer-events: none;
+    height: 56px;
+    object-fit: cover;
+    display: grid;
+    place-content: center;
+
+
+  }
+
+  input[type="range"] {
+    width: 295px;
+    height: 56px;
+    background: #FF6565;
+    border-radius: 28px;
+    -webkit-appearance: none;
+    padding: 5px;
+    position: relative;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    z-index: 1;
+    position: relative;
+    height: 50px;
+    width: 64px;
+    height: 48px;
+    background: #FFFFFF;
+    background-image: url("./assets/icon/keyboard_double_arrow_right.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 23px;
+    animation: all 0.3s ease-in-out;
+  }
+
+  input[type="range"]:before{
+    color: #fff;
+    position: absolute;
+    left: 100px;
+    top: 18px;
+    z-index: 1;
+    font-weight: 700;
+    font-size: 16px;
+    animation: all 0.3s ease-in-out;
+  }
+
+
+}
+
+.disabled-btn-wrapper {
+  filter: grayscale(0.9);
+  pointer-events: none;
+  opacity: 0.5;
+
+  input {
+    cursor: not-allowed !important;
+  }
+
+}
+
+.close-circle {
+  background-image: url("./assets/icon/close-circle.svg");
+
+  background-color: #000000;
+  height: 24px !important;
+  width: 24px !important;
+  border-radius: 50%;
+}

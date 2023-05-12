@@ -1,57 +1,49 @@
 <!-- <div class="backdrop " (click)="onDismiss($event)"> -->
-<div class="backdrop ">
-  <div class="wrapper" >
+<div class="backdrop w-full h-screen">
+  <div class="wrapper  absolute-center bg-white round " >
     <div class="circle-dismiss-btn" (click)="onDismiss($event)">
       <img src="../../../assets/icon/close.svg" alt="">
     </div>
-    <div class="banner">
+    <div class="banner round-top f-white bg-brown flex gap-32">
       <div class="banner-content">
-        <div class="heading">
+        <div class="bf-24">
           New Order!
         </div>
-        <div class="sub-heading">
+        <div class="sub-heading rf-10">
           Order will disappear in
         </div>
-        <div class="countdown">
-          {{"00:30"}}
+        <div class="countdown bf-32">
+          {{order.timeLeft}}
         </div>
       </div>
       <img src="../../../assets/icon/rider.svg" alt="">
     </div>
 
     <div class="order-details">
-      <div class="first-card">
-        <span>
-          <span class="slim-text">Expected Earning</span>
-          <span class="regular-text-xxl">₹{{"150"}}</span>
+      <div class="bordered-card flex-spaced p-16">
+        <span class="flex-col">
+          <span class="rf-12">Expected Earning</span>
+          <span class="bf-24">₹{{"150"}}</span>
         </span>
-        <span>
-          <span class="slim-text">Pickup: <span class="regular-text">{{"0.58"}}km</span></span>
-          <span class="slim-text">Drop: <span class="regular-text">{{"4.07"}}km</span></span>
+        <span class="flex-col-spaced">
+          <span class="rf-12">Pickup: <span class="bf-12">{{"0.58"}}km</span></span>
+          <span class="rf-12">Drop: <span class="bf-12">{{"4.07"}}km</span></span>
         </span>
       </div>
       <div class="second-card">
-        <div class="skinny-text">Pickup From:</div>
-        <div class="regular-text-xl">{{"ABC Restaurant"}}<div class="skinny-text">Opp. HSC School, Pipli Road, Uran, Navi Mumbai - 400001</div></div>
-        <div class="minutes-away"><img src="../../../assets/icon/schedule.svg" alt=""> <span class="slim-text">{{"2"}} mins away</span></div>
+        <div class="rf-12">Pickup From:</div>
+        <div class="bf-16">{{order.vname}}
+          <div class="rf-12">{{order.vadd}}</div></div>
+        <div class="minutes-away"><img src="../../../assets/icon/schedule.svg" alt=""> <span class="rf-12">{{"2"}} mins away</span></div>
       </div>
     </div>
-    <div class="btn-wrapper">
+    <div class="slide-btn-wrapper">
       <input type="range" 
       value={{sliderValue}}
       [style.background]="getColor()"
         (input)="onSliderChange($event)"
          (touchend)="onSliderTouchEnd()"
+         (mouseup)="onSliderTouchEnd()"
           min="0" max="100">
-          <div class="thumb-icon" [style.left.px]="25+ sliderValue * 2.2">
-            <img src="../../../assets/icon/keyboard_double_arrow_right.svg" 
-            >
-          </div>
-          
-
-
     </div>
-    
-    
-
 </div>

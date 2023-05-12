@@ -20,7 +20,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     private oneSignal: OneSignal,
     private router: Router,
-    private udpateService: UpdateService // private backgroundGeolocation: BackgroundGeolocation
+    private udpateService: UpdateService 
+    // private backgroundGeolocation: BackgroundGeolocation
   ) {
     this.initializeApp();
     //this.startTracking();

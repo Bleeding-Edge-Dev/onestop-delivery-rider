@@ -1,20 +1,21 @@
+<div class="flex-col  flex-col bf-12 f-grey gap-12">
+  <span>Target Deliveries</span>
+  <div class="flex-spaced w-full relative">
+    <ion-progress-bar class="w-full v-center round h-4px"
+      [value]="myTargetData.currentMilestone.noOfOrders / myTargetData.noOfOrders[myTargetData.noOfOrders.length-1]">
 
-<div class="target-content">
-  <div class="left">
-    <p class="rides-title">Target Deliveries</p>
-    <p class="rewards-title">My Reward</p>
-  </div>
-  <div class="target-bar">
-    <span [style.width.%]="targetData.currentReward / targetData.maxReward * 100"></span>
-  </div>
-  <div class="right">
-    <div class="ride-reward" *ngFor="let reward of targetData.ridesPerReward | keyvalue">
-      <p class="ride-title">{{ reward.key }}</p>
-      <div class="dot">
-
-      </div>
-      <p class="reward-title">₹{{ reward.value }}</p>
+    </ion-progress-bar>
+    <div class="flex-col-start gap-9">
+      <span>{{ 0 }}</span>
+      <div class="dot round bg-red square-8px"></div>
+      <span>₹{{0 }}</span>
+    </div>
+    <div class="flex-col flex-center gap-9" *ngFor="let orderCount of myTargetData.noOfOrders; let i=index"
+      [class.flex-col-end]="orderCount===myTargetData.noOfOrders[myTargetData.noOfOrders.length -1]">
+      <span>{{ orderCount }}</span>
+      <div class="dot round bg-red square-8px"></div>
+      <span>₹{{ myTargetData.rewards[i] }}</span>
     </div>
   </div>
-
+  <span>My Reward</span>
 </div>

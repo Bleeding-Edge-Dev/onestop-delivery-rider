@@ -13,6 +13,9 @@ import { get, remove } from '../services/storage';
 export class ChangePasswordPage implements OnInit {
 passwordGroup : FormGroup;
   inv: boolean;
+nocPass: any;
+noPass: any;
+noccPass: any;
   constructor(private formBuilder:FormBuilder,private passwordService:PasswordService,private loadingController:LoadingController,private alertController:AlertController,private router:Router) { 
     this.passwordGroup = this.formBuilder.group({
       currentPassword: new  FormControl('',[Validators.required]),

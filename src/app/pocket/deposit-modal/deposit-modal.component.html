@@ -1,0 +1,21 @@
+<div class="backdrop w-full h-screen " (click)="onDismiss($event)">
+  <div class="prompt-wrapper w-full absolute round-top flex-col bg-white gap-32 p-32" >
+    <div class="grid gap-16">
+      <span class="bf-18">
+        Enter Deposit Amount
+    </span>
+    <input class="rf-12 round" placeholder="Enter Deposit Amount" type="number" name="" id="" min="0"/>
+    
+<div class="flex-spaced py">
+  <button class="dismiss-btn s-btn" (click)="onDismiss($event)" [(ngModel)]="depositAmount">
+    {{"close"}}
+  </button>
+  <button class="dissmiss-btn p-btn" (click)="onConfirm()">
+    {{"OK"}}
+  </button>
+</div>
+    </div>
+
+  </div>
+
+</div>

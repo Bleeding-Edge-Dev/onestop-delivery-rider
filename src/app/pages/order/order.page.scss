@@ -1,0 +1,26 @@
+.reach-restaurant:before {
+    content: "Reached Restaurant";
+    left: 85px !important;
+}
+
+.pickup-order:before {
+    content: "Picked Up Order";
+    left: 85px !important;
+}
+
+.disabled-pickup-order:before {
+    content: "Confirm to Pick Up";
+    left: 85px !important;
+}
+.deliver-order:before {
+    content: "Order Delivered";
+    left: 85px !important;
+}
+
+div> :has(.disabled-pickup-order) {
+    filter: grayscale(0.9);
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed !important;
+
+}

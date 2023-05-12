@@ -14,17 +14,13 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule),
     canLoad: [AutoLoginGuard]
   },
-
-  {
-    path: 'change-password',
-    loadChildren: () => import('./change-password/change-password.module').then(m => m.ChangePasswordPageModule)
-  },
   {
     path: '',
     redirectTo: '/login',
     pathMatch: 'full'
 
   },
+
 
 ];
 @NgModule({

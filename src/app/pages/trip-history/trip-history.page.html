@@ -1,0 +1,28 @@
+<ion-header class="flex-spaced py-8">
+  <div class="flex-aligned ">
+    <ion-back-button class="f-lightgrey" defaultHref="/tabs/tabs/feed"></ion-back-button>
+    <span class="bf-16">Trip History</span>
+  </div>
+  <div class="flex-aligned gap-24 px">
+    <button class="bordered-chip">HELP</button>
+    <button><img src="../../assets/icon/notifications.svg" alt="notification"></button>
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="p-16">
+    <ion-segment value="daily" mode="md" >
+      <ion-segment-button value="daily">
+        Daily
+      </ion-segment-button>
+      <ion-segment-button value="weekly">
+        Weekly
+      </ion-segment-button>
+      <ion-segment-button value="monthly">
+        Monthly
+      </ion-segment-button>
+    </ion-segment>
+    
+  </div>
+
+</ion-content>

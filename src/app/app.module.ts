@@ -23,13 +23,16 @@ import { AndroidPermissions } from "@ionic-native/android-permissions/ngx";
 import { WalletPageModule } from "./wallet/wallet.module";
 import { AppVersion } from "@ionic-native/app-version/ngx";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
+import { DatePipe } from "@angular/common";
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({
+      mode: 'md'
+    }),
     AppRoutingModule,
     SharedModule,
   ],
@@ -45,6 +48,7 @@ import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
     AndroidPermissions,
     AppVersion,
     InAppBrowser,
+    DatePipe
   ],
   bootstrap: [AppComponent],
 })

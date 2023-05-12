@@ -1,0 +1,67 @@
+<app-header></app-header>
+
+<ion-content>
+    <div class="p-16 flex-col gap-24">
+
+
+
+        <span class="head">
+            <span class="bf-16">My Pocket</span>
+        </span>
+        <ion-card class="bordered-card p-16 flex-col gap-9">
+            <span class="flex-spaced">
+                <span class="bf-12">Order Pay</span>
+                <span class="bf-12">₹{{pockedData.inHandAmount}}</span>
+            </span>
+            <!-- <span class="flex-spaced">
+                <span class="bf-12">My Rewards</span>
+                <span class="bf-12">₹{{pockedData.}}</span>
+            </span> -->
+            <div class="grid-center">
+                <button class="p-btn" (click)="openModal()">
+                    Deposit
+                </button>
+            </div>
+
+        </ion-card>
+
+
+        <span class="flex-spaced">
+            <span class="bf-16">In-Hand Cash</span>
+            <span class="bf-16">₹{{pockedData.inHandAmount}}</span>
+        </span>
+        <ion-card class="flex-col gap-9">
+            <ion-progress-bar class="round h-8px" [value]="pockedData.inHandAmount/pockedData.maxLimit">
+            </ion-progress-bar>
+            <span class="flex-spaced">
+                <span class="bf-12 f-grey">₹0</span>
+                <span class="bf-12 f-grey">₹{{inHandCash.maxAmount}}</span>
+            </span>
+        </ion-card>
+
+
+        <span>
+            <span class="bf-16">Transactions</span>
+        </span>
+        <div>
+            <span class="rf-12 date-filter bordered-card">
+              <span>Date:</span>
+              <ion-datetime placeholder="Select Date " displayFormat="D MMMM YYYY" pickerFormat="MMM D, YYYY"
+                [(ngModel)]="selectedDate" (ionChange)="filterTransactionsByDate()">
+                Date:
+              </ion-datetime>
+            </span>
+          </div>
+          
+          <div class="flex-col gap-9">
+            <div class="flex-spaced bordered-card p-16" *ngFor="let trans of (selectedDate ? filteredTransactions : pockedData.transaction)"
+              [class.f-red]="trans.status === '0'">
+              <span class="bf-12">Withdrawal - {{ trans.datetime | date:'dd/MM/yyyy' }}</span>
+              <span class="bf-12">₹{{ trans.amount }}</span>
+            </div>
+          </div>
+          
+          
+
+    </div>
+</ion-content>

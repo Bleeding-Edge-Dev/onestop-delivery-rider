@@ -1,0 +1,19 @@
+<div class="backdrop w-full h-screen " (click)="onDismiss($event)">
+  <div class="modal-wrapper-bottom w-full absolute round-top flex-col bg-white gap-32 p-32" >
+    <div class="grid gap-16">
+      <span class="bf-12">
+        Enter Withdraw Amount
+    </span>
+    <input class="rf-12 password-field" placeholder="Enter Amount" type="number" name="" id="" min="0" [max]="reedamableAmount" [(ngModel)]="requestAmount" />
+
+    
+<div class="p-16">
+  <button class="dissmiss-btn t-btn" (click)="sendRequest()">
+    Send Request
+  </button>
+</div>
+    </div>
+
+  </div>
+
+</div>

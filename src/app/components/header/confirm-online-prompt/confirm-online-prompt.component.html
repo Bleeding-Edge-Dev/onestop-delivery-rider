@@ -1,23 +1,23 @@
-<div class="backdrop " (click)="onDismiss($event)">
-  <div class="prompt-wrapper" >
-    <div class="prompt-content">
-      <div class="prompt-title">
+<div class="backdrop h-screen w-full " (click)="onDismiss($event)">
+  <div class="modal-wrapper-bottom absolute w-full bg-white round-top grid gap-16" >
+
+      <div class="bf-18">
 Confirm Online
     </div>
-    <div class="prompt-body">
+    <div class="rf-10">
       Are you sure you want to go online? You will start receiving order notifications on the app.
     </div>
     
-<div class="prompt-btns-wrapper">
-  <button class="dismiss-btn secondary-btn" (click)="onDismiss($event)">
+<div class="flex-spaced py px">
+  <button class="dismiss-btn s-btn" (click)="onDismiss($event)">
     {{"close"}}
   </button>
-  <button class="dissmiss-btn primary-btn" (click)="onConfirm()">
+  <button class="dissmiss-btn p-btn" (click)="onConfirm()">
     {{"OK"}}
   </button>
 </div>
     </div>
 
-  </div>
+
 
 </div>

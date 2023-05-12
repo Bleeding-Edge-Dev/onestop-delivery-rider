@@ -7,15 +7,16 @@ import { HeaderComponent } from './header/header.component';
 import { MyTargetComponent } from './my-target/my-target.component';
 import { PayoutRateCardComponent } from './payout-rate-card/payout-rate-card.component';
 import { RateCardModalComponent } from './payout-rate-card/rate-card-modal/rate-card-modal.component';
+import { LanguagePreferedModalComponent } from './language-prefered-modal/language-prefered-modal.component';
 
 
 
 @NgModule({
-  declarations: [NewOrderModalComponent,HeaderComponent,MyTargetComponent,PayoutRateCardComponent,RateCardModalComponent],
+  declarations: [NewOrderModalComponent,HeaderComponent,MyTargetComponent,PayoutRateCardComponent,RateCardModalComponent,LanguagePreferedModalComponent],
   imports: [
     CommonModule,IonicModule
   ],
-  exports: [NewOrderModalComponent,HeaderComponent,MyTargetComponent,PayoutRateCardComponent,RateCardModalComponent],
+  exports: [NewOrderModalComponent,HeaderComponent,MyTargetComponent,PayoutRateCardComponent,RateCardModalComponent,LanguagePreferedModalComponent],
 })
 export class ComponentsModule { }
 

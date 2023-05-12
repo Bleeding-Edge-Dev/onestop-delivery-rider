@@ -1,0 +1,38 @@
+
+.accordian {
+        .btn {
+            display: block;
+            width: 16px;
+            height: 16px;
+            object-fit: cover;
+            background: #EEEEEE;
+            border-radius: 50%;
+            display: grid;
+            place-content: center;
+            padding: 6px 4px;
+
+            img {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    
+
+    .body {
+        max-height: 0px;
+        overflow: hidden;
+    }
+
+    &.active {
+        .header {
+            .btn {
+                rotate: 180deg;
+
+            }
+        }
+        .body {
+            margin-top: 16px;
+            max-height: 100%;
+        }
+    }
+}

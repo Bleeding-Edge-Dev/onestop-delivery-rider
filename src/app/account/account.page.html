@@ -1,0 +1,30 @@
+<app-header>
+
+</app-header>
+<ion-content>
+    <div class="p-16 flex-col gap-16">
+        <div class="bordered-card flex-aligned p-16 gap-24">
+            <span class="user-img bg-grey">
+                <img src="" alt="">
+            </span>
+            <span class="">
+                <div class="bf-16">{{"Nickhil Nickhil"}}</div>
+                <div class="rf-12">{{"FE1799542"}}</div>
+            </span>
+        </div>
+        <div class="flex-col gap-9">
+            <div class="bordered-card px py-12 flex-spaced flex-aligned" *ngFor="let navOption of objectKeys(navOptions)"  (click)="handleNavRoutes(navOption)">
+                <span class="bf-12">{{navOption}}</span>
+                <button class="expand-btn-black">
+                </button>
+            </div>
+        </div>
+        <div class="bordered-card px py-12 flex-spaced flex-aligned"  (click)="logout()" >
+            <span class="bf-12 f-red">Logout</span>
+            <button class="expand-btn-red">
+            </button>
+        </div>
+
+
+    </div>
+</ion-content>

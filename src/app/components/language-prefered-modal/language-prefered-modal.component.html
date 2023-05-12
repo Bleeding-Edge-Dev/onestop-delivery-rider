@@ -1,0 +1,18 @@
+<div class="backdrop w-full h-screen">
+  <div class="wrapper modal-wrapper-bottom w-full absolute round-top flex-col bg-white gap-32">
+    <span class="bf-18">Language Preferences</span>
+    <div class="flex-col gap-16">
+      <div class="flex-spaced" *ngFor="let lang of languages">
+        <label class="bf-12" [for]="lang" >{{lang}}</label>
+        <input class="language-radio" type="radio" name="language-prefered" [id]="lang" (click)="onLanguageSelected(lang)" [checked]="lang === languageSelected">
+      </div>
+
+    </div>
+    <div class="btn-wrapper flex-spaced">
+      <button class="s-btn" (click)="onDismiss()">Cancel</button>
+      <button class="p-btn" (click)="onDismiss()">OK</button>
+
+    </div>
+
+  </div>
+</div>

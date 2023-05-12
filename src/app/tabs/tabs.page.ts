@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { Router, NavigationEnd } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -9,25 +9,28 @@ import { NavController } from '@ionic/angular';
 })
 export class TabsPage {
   tabs = [
-    { label: 'Feed', icon: 'feed', routerLink: '/tabs/tabs/feed', isActive: true },
-    { label: 'Payouts', icon: 'payouts', routerLink: '/tabs/tabs/payouts', isActive: false },
-    { label: 'Pocket', icon: 'pocket', routerLink: '/tabs/tabs/pocket', isActive: false },
-    { label: 'Account', icon: 'account', routerLink: '/tabs/tabs/account', isActive: false },
-    // { label: 'Feed', icon: 'feed', routerLink: '/tabs/tabs/tab1', isActive: false },
-    // { label: 'Payouts', icon: 'payouts', routerLink: '/tabs/tabs/tab2', isActive: false },
-    // { label: 'Pocket', icon: 'pocket', routerLink: '/tabs/tabs/tab3', isActive: false },
-    // { label: 'Account', icon: 'account', routerLink: '/tabs/tabs/wallet', isActive: false },
-
+    { label: 'Feed', icon: 'feed', routerLink: '/tabs/feed', isActive: false },
+    { label: 'Payouts', icon: 'payouts', routerLink: '/tabs/payouts', isActive: false },
+    { label: 'Pocket', icon: 'pocket', routerLink: '/tabs/pocket', isActive: false },
+    { label: 'Account', icon: 'account', routerLink: '/tabs/account', isActive: false },
   ];
 
-  constructor(private navCtrl: NavController) { }
+  constructor(private router: Router, private navCtrl: NavController) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const activeTab = this.tabs.find(tab => event.url.includes(tab.routerLink));
+        if (activeTab) {
+          this.tabs.forEach(tab => (tab.isActive = false));
+          activeTab.isActive = true;
+        }
+      }
+    });
+  }
 
   navigateToTab(tab) {
-    this.tabs.forEach(t => t.isActive = false);
+    this.tabs.forEach(t => (t.isActive = false));
     tab.isActive = true;
 
     this.navCtrl.navigateRoot(tab.routerLink);
   }
-
-
 }

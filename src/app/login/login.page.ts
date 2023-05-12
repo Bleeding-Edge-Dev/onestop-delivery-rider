@@ -11,12 +11,11 @@ import {set} from '../services/storage';
 })
 export class LoginPage implements OnInit {
 
-  private loginGroup:FormGroup;
+  logingroup:FormGroup;
   constructor(private router:Router,
     private alertController:AlertController, private loadingController:LoadingController,
     private formBuilder:FormBuilder,private authService:AuthService) {
-    this.loginGroup = this.formBuilder.group({
-      
+    this.logingroup = this.formBuilder.group({
     username:new FormControl('',[Validators.required]),
     password:new FormControl('',[Validators.required])
     });
@@ -26,27 +25,27 @@ export class LoginPage implements OnInit {
   }
 
 async login(){
-  if (this.loginGroup.controls.username.valid && this.loginGroup.controls.password.valid){
+  if (this.logingroup.controls.username.valid && this.logingroup.controls.password.valid){
     const lc = await this.loadingController.create({message:'Signing In...',spinner:'dots'});
     await lc.present();
-    this.authService.login(this.loginGroup.controls.username.value,this.loginGroup.controls.password.value).subscribe(
+    this.authService.login(this.logingroup.controls.username.value,this.logingroup.controls.password.value).subscribe(
      async  (res:any)=>{
           if(res.token){
             
             await set('token',res.token);
             await set ('name',res.rider);
             await this.authService.checkLogin();
-            this.loginGroup.reset();
+            this.logingroup.reset();
             this.router.navigateByUrl('/tabs',{replaceUrl:true});
           }
           else{
         
             const alert = await this.alertController.create({
               message:"Username or Password is incorrect",
-              buttons:['OK']
+              buttons:['Close']
             });
             await alert.present();
-            this.loginGroup.reset();
+            this.logingroup.reset();
           }
         await lc.dismiss();
       }

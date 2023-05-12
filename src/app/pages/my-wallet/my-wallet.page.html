@@ -1,0 +1,53 @@
+<ion-header class="flex-spaced py-8">
+  <div class="flex-aligned ">
+    <ion-back-button defaultHref="/tabs/account"></ion-back-button>
+    <span class="bf-16">My Wallet</span>
+  </div>
+
+</ion-header>
+
+<ion-content>
+  <div class="p-16 flex-col gap-32">
+    <div class="grid-center">
+      <span class="py-8 rf-12">
+        Available Balance
+      </span>
+      <span class="bf-32">
+        ₹{{data.balance}}/-
+      </span>
+    </div>
+    <div class="p-16 m-b-36">
+      <button class="bf-16 t-btn" (click)="openModal()">
+        Withdraw
+      </button>
+    </div>
+
+    <ion-segment [(ngModel)]="selectedTransaction" value="past" mode="md">
+      <ion-segment-button value="past">
+        Past
+      </ion-segment-button>
+      <ion-segment-button value="pending">
+        Pending
+      </ion-segment-button>
+      <ion-segment-button value="credit">
+        Credit
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-grid class="w-full bordered-card ">
+      <ion-row class="bg-grey round-top bf-12 f-darkgrey  p-8  text-center">
+        <ion-col>Time/Date</ion-col>
+        <ion-col>Particular</ion-col>
+        <ion-col>Amount</ion-col>
+      </ion-row>
+      <ion-row class="rf-10  p-8 text-center" *ngFor="let tran of filteredTransaction()">
+        <ion-col>{{tran.REQUEST_TIME}}</ion-col>
+        <ion-col>{{tran.STATUS}}</ion-col>
+        <ion-col>₹{{tran.REQUESTED_AMOUNT}}</ion-col>
+
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+</ion-content>

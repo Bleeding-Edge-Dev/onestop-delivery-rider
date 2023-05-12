@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-my-target',
@@ -6,20 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./my-target.component.scss'],
 })
 export class MyTargetComponent implements OnInit {
-  targetData = {
-    maxReward:1000,
-    currentReward: 200,
-    ridesPerReward: {
-      10:75,
-      15:150,
-      25:500,
-      50:1000
-    }
-  }
+  @Input() Data : string;
+
+  myTargetData = { 
+    "noOfOrders": [5, 10, 15, 20],
+   "rewards": [100, 150, 200, 250], 
+   "currentMilestone": { "noOfOrders": 5, "amount": 100 }, 
+   "totalOrdersCount": "0" }
+
 
   
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
 }

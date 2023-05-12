@@ -1,0 +1,131 @@
+<app-header></app-header>
+
+<ion-content>
+  <div class="px flex-col gap-16">
+
+    <ion-segment [(ngModel)]="selectedValue" (ionChange)="onSegmentChange()">
+      <ion-segment-button value="daily">
+        Daily
+      </ion-segment-button>
+      <ion-segment-button value="weekly">
+        Weekly
+      </ion-segment-button>
+      <ion-segment-button value="monthly">
+        Monthly
+      </ion-segment-button>
+    </ion-segment>
+    <span class="rf-12 date-filter bordered-card" *ngIf="selectedValue==='daily'">
+      <span>{{selectedDate===todayDate?"Today:":"Date:"}}</span>
+      <ion-datetime
+        placeholder="Select Date"
+        displayFormat="D MMMM YYYY"
+        pickerFormat="MMM D, YYYY"
+        [(ngModel)]="selectedDate"
+        (ionChange)="onDateChange()"
+      >
+      </ion-datetime>
+    </span>
+    <span class="rf-12 date-filter bordered-card flex-aligned gap-4" *ngIf="selectedValue==='weekly'">
+      <span>Week:</span>
+      <ion-datetime
+        placeholder="Select Date"
+        displayFormat="D MMMM YYYY"
+        pickerFormat="MMM D, YYYY"
+        [(ngModel)]="selectedDate"
+        (ionChange)="onDateChange()"
+      >
+
+      </ion-datetime>
+<span class="bf-16 "> - </span>
+      <ion-datetime
+        placeholder="Select Date"
+        displayFormat="D MMMM YYYY"
+        pickerFormat="MMM D, YYYY"
+        [value]="this.calculateEndDate()"
+        class="pointer-events-none"
+
+      >
+      </ion-datetime>
+    </span>
+    <span class="rf-12 date-filter bordered-card" *ngIf="selectedValue==='monthly'">
+      <span>Month:</span>
+      <ion-datetime
+        placeholder="Select Date"
+        displayFormat="MMMM YYYY"
+        pickerFormat="MMMM YYYY"
+        [(ngModel)]="selectedDate"
+        (ionChange)="onDateChange()"
+      >
+      </ion-datetime>
+    </span>
+    
+    <div class="flex gap">
+      <div class="bordered-card w-full grid-center py-8 px">
+        <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">₹{{payoutsData.totalEarning || 0}}</span>
+        <p class="rf-10 w-full text-center">Total Earnings</p>
+      </div>
+      <div class="bordered-card w-full grid-center py-8 px">
+        <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">{{payoutsData.totalTrips}}</span>
+        <p class="rf-10 w-full text-center">Trips Today</p>
+        <button class="bf-10 f-red">Trips <img src="../../assets/icon/chevron_right.svg" /></button>
+      </div>
+      <div class="bordered-card w-full grid-center py-8 px">
+        <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">{{payoutsData.totalHours}}</span>
+        <p class="rf-10 w-full text-center">Total Login Hours</p>
+        <button class="bf-10 f-red">Sessions <img src="../../assets/icon/chevron_right.svg" /></button>
+      </div>
+    </div>
+
+
+
+    <span class="flex bf-16">My Target</span>
+    <app-my-target></app-my-target>
+
+    <div class="flex-col gap-16">
+      <div class="flex-spaced bf-16">
+        <p>My Earnings Today</p>
+        <p>₹{{"300"}}</p>
+      </div>
+
+      <div class="accordian" [ngClass]="{'active': isOrderHistoryOpen}">
+        <div class="header flex-spaced flex-aligned" (click)="toggleOrderHistory()">
+          <div class="flex-aligned gap">
+            <img src="../../../assets/icon/currency2.svg" alt="">
+            <span class="bf-12">Order Pay</span>
+          </div>
+          <div class="flex-aligned gap">
+            <span class="bf-12">₹{{"150"}}</span>
+            <span class="btn"><img src="../../../assets/icon/expand_more.svg" alt=""></span>
+          </div>
+        </div>
+        <div class="body" *ngFor="let order of orderPayHistory">
+          <div class="body-block">
+            <div class="flex-spaced"><span class="rf-10">Order ID: {{order.orderId}}</span> <span class="bf-12">₹{{order.amount}}</span>
+            </div>
+            <div class="flex-spaced"><span class="rf-10">Completed on: {{order.completedOn}}</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="accordian" [ngClass]="{'active': isMyRewardsOpen}">
+        <div class="header flex-spaced flex-aligned" (click)="toggleMyRewardsHistory()">
+          <div class="flex-aligned gap">
+            <img src="../../../assets/icon/rewards.svg" alt="">
+            <span class="bf-12">My Rewards</span>
+          </div>
+          <div class="flex-aligned gap">
+            <span class="bf-12">₹{{"150"}}</span>
+            <span class="btn"><img src="../../../assets/icon/expand_more.svg" alt=""></span>
+          </div>
+        </div>
+        <div class="body" *ngFor="let reward of MyRewardsHistory">
+          <div class="body-block">
+            <div class="flex-spaced"><span class="rf-10">Order ID: {{reward.orderId}}</span> <span class="bf-12">₹{{reward.amount}}</span>
+            </div>
+            <div class="flex-spaced" ><span class="rf-10">Completed on: {{reward.completedOn}}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-payout-rate-card></app-payout-rate-card>
+  </div>
+</ion-content>

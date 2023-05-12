@@ -1,0 +1,74 @@
+<ion-header class="flex-spaced py-8">
+  <div class="flex-aligned ">
+    <ion-back-button class="f-lightgrey" defaultHref="/tabs/feed"></ion-back-button>
+    <span class="bf-16">{{statusData[order.status].headText}}</span>
+  </div>
+  <div class="flex-aligned gap-24 px">
+    <button class="bordered-chip">HELP</button>
+    <button><img src="../../assets/icon/notifications.svg" alt="notification"></button>
+  </div>
+</ion-header>
+<ion-content>
+  <div class="px flex-col-spaced gap-16  h-full">
+    <div class="flex-col gap-16">
+      <div class="bordered-card p-16 flex gap-12">
+        <div class="grid gap-9">
+          <span class="rf-12">{{statusData[order.status].vendorCard?'Pickup from:' :'Customer Address'}}</span>
+          <span>
+            <div class="bf-16">{{statusData[order.status].vendorCard? order.vname : order.deliveryname}}</div>
+            <div class="rf-10">{{statusData[order.status].vendorCard? order.vadd : order.address}}</div>
+          </span>
+          <span class="flex-aligned gap-9">
+            <img src="../../assets/icon/schedule.svg" alt="">
+            <span class="rf-12 f-midgrey ">{{"2"}} mins away</span>
+          </span>
+        </div>
+        <div class="flex-col-spaced">
+          <button class="p-btn">Navigate</button>
+          <button class="s-btn">Call</button>
+        </div>
+      </div>
+      <div class="bordered-card p-16 grid gap-4">
+        <div class="flex-spaced">
+          <span class="rf-12">{{foodPrepared?"Order Details": "Status of Order"}}</span>
+          <span class="flex-aligned gap-4">
+            <img src="../../assets/icon/close-red.svg" alt="">
+            <span class="bf-12 f-red">Reject Order</span>
+          </span>
+        </div>
+        <span class="flex-aligned gap-4"><span class="bf-16">{{foodPrepared? "Order ID: "  : "Being Prepared "}} </span>
+        <span class="bf-16" *ngIf="foodPrepared"> {{order.txnid}} </span></span>
+  
+        <span class="rf-10 tool-tip max-w-65 py-8"  *ngIf="!foodPrepared">You’ll be receiving a notification when the order is ready for
+          pickup.</span>
+        <span class="bf-12 py-8">Order Contains:</span>
+        <div class="grid gap-9 py-8">
+          <span class="rf-10 max-w-65" *ngFor="let menuItem of order.menu">
+            {{menuItem.quantity}} x {{menuItem.dishName}}
+          </span>
+        </div>
+<div *ngIf="statusData[order.status].itemsPresentBlock">
+  <div class="w-full px-40 py" *ngIf="!allItemsPresent">
+    <button class="p-btn w-full" (click)="allItemsPresent = true;this.statusData[42].slideBtnClass = 'pickup-order'" >All Items Present</button>
+  </div>
+  <div class="bf-12 f-green py-8 flex-spaced flex-aligned" *ngIf="allItemsPresent">
+    <p>Successfully verified all items present. </p>
+    <span (click)="allItemsPresent = false;this.statusData[42].slideBtnClass = 'disabled-pickup-order'" class="close-circle"></span>
+  </div>
+</div>
+        <span class="rf-10 f-midgrey">
+          Please verify if the package contains all the above mentioned food items before confirming pickup.
+        </span>
+      </div>
+    </div>
+    <div class="slide-btn-wrapper">
+      <input [classList]="statusData[order.status].slideBtnClass" type="range" value={{sliderValue}} [style.background]="getColor()"
+        (input)="onSliderChange($event)" (touchend)="onSliderTouchEnd()" (mouseup)="onSliderTouchEnd()" min="0"
+        max="100">
+      <div class="thumb-icon" [style.left.px]="25+ sliderValue * 2.2">
+        <img src="../../../assets/icon/keyboard_double_arrow_right.svg">
+      </div>
+
+    </div>
+  </div>
+</ion-content>

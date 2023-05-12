@@ -26,8 +26,8 @@ export class PayoutsPage implements OnInit {
     if (this.selectedValue === 'daily') {
     } else if (this.selectedValue === 'weekly') {
     } else if (this.selectedValue === 'monthly') {
-      // this.selectedDate = new Date().toISOString()
     }
+    this.onDateChange();
   }
   orderPayHistory = [
     {
@@ -56,16 +56,18 @@ export class PayoutsPage implements OnInit {
   onDateChange() {
 
     const formattedDate = this.datePipe.transform(this.selectedDate, 'yyyy/MM/dd');
-    console.log(formattedDate);
     this.selectedDate = formattedDate;
-
-
     if (this.selectedValue === 'daily') {
       this.getPayoutData(this.selectedDate, this.selectedDate)
     } else if (this.selectedValue === 'weekly') {
       this.getPayoutData(this.selectedDate, this.calculateEndDate())
     } else if (this.selectedValue === 'monthly') {
-
+      const selectedDateObj = new Date(this.selectedDate);
+      const firstDate = new Date(selectedDateObj.getFullYear(), selectedDateObj.getMonth(), 1);
+      const lastDate = new Date(selectedDateObj.getFullYear(), selectedDateObj.getMonth() + 1, 0);
+      const formattedFirstDate = this.datePipe.transform(firstDate, 'yyyy/MM/dd');
+      const formattedLastDate = this.datePipe.transform(lastDate, 'yyyy/MM/dd');
+      this.getPayoutData(formattedFirstDate, formattedLastDate)
     }
   }
 

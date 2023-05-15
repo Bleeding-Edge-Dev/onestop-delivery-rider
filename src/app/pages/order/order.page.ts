@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { OrdersService } from 'src/app/services/orders.service';
+import { get } from 'src/app/services/storage';
+
 @Component({
   selector: 'app-order',
   templateUrl: './order.page.html',
@@ -39,9 +42,8 @@ export class OrderPage implements OnInit {
     const currentValue = event.target.value;
     this.sliderValue = currentValue;
 
-
   }
-  onSliderTouchEnd() {
+  async onSliderTouchEnd() {
     if (this.sliderValue > 90) {
       switch(parseInt(this.order.status)) {
         case 4:
@@ -51,6 +53,15 @@ export class OrderPage implements OnInit {
         case 42:
           this.order.status = 5
           break;
+          case 5:
+            let  token = await get("token");
+            token = "Bearer " + token;
+            this.allItemsPresent = true
+            this.ordersService.firstAction(this.order.id, 4,token).subscribe((res) => {
+              console.log(res);
+            })
+            break;
+
         default:
           console.log("invalid status")
       }
@@ -70,7 +81,8 @@ export class OrderPage implements OnInit {
     }
   }
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute,
+    private ordersService: OrdersService) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {

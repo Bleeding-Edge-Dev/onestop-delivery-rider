@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
+import { CheckModalComponent } from 'src/app/components/check-modal/check-modal.component';
+
 import { get } from 'src/app/services/storage';
 import { WalletService } from 'src/app/services/wallet.service';
 
@@ -34,6 +36,7 @@ export class WithdrawModalComponent implements OnInit {
   }
 
   async sendRequest() {
+    this.modalController.dismiss();
     if(isNaN(this.requestAmount) || this.requestAmount == null || this.requestAmount == undefined || this.requestAmount == 0){
       const toast = await this.toastController.create({
         message: `Please enter valid amount`,
@@ -52,17 +55,21 @@ export class WithdrawModalComponent implements OnInit {
       });
       toast.present();
     } else {
-      const toast = await this.toastController.create({
-        message: `Request sent successfully`,
-        duration: 2000,
-        position: "top",
-        cssClass: "toast-success",
+      const modal = await this.modalController.create({
+        component: CheckModalComponent,
+        componentProps:{
+          type:"success",
+          title:"Request Sent",
+          message:"Please wait until the administrator approves your request for payment.",
+          buttonText:"New Orders",
+          route: "/tabs/feed",
+        }
       });
       this.walletService
         .sendAmountRequest(this.token, this.requestAmount)
         .subscribe((res: any) => {
-          toast.present();
-          this.modalController.dismiss();
+          modal.present();
+
         });
     }
   }

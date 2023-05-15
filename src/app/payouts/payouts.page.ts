@@ -74,12 +74,11 @@ export class PayoutsPage implements OnInit {
 
   calculateEndDate(): string {
     const endDate = new Date(this.selectedDate);
-    endDate.setDate(endDate.getDate() + 7); // Add 6 days to get the end date
+    endDate.setDate(endDate.getDate() + 6);
 
-    // Check if the end date is greater than today's date
 
     if (endDate > this.todayDate) {
-      return this.datePipe.transform(this.todayDate, 'yyyy/MM/dd');;; // Return today's date if it exceeds today's date
+      return this.datePipe.transform(this.todayDate, 'yyyy/MM/dd');
     }
 
     return this.datePipe.transform(endDate.toISOString(), 'yyyy/MM/dd');;

@@ -62,18 +62,18 @@ export class NewOrderModalComponent implements OnInit {
   }
   async approve(id) {
     const al = await this.loadingController.create({
-      
+  
       spinner: "dots",
 
     });
     await al.present();
-    // this.ordersService.firstAction(id, 1, this.token).subscribe(async (res) => {
-      // });
-    console.log(id);
-      setTimeout(async () => {
-          await al.dismiss();
-        
-    }, 1000);
+    this.ordersService.firstAction(id, 1, this.token).subscribe(async (res) => {
+
+        setTimeout(async () => {
+            await al.dismiss();
+          
+      }, 1000);
+      });
   }
 
 

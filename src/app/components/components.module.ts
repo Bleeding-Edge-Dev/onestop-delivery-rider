@@ -8,15 +8,19 @@ import { MyTargetComponent } from './my-target/my-target.component';
 import { PayoutRateCardComponent } from './payout-rate-card/payout-rate-card.component';
 import { RateCardModalComponent } from './payout-rate-card/rate-card-modal/rate-card-modal.component';
 import { LanguagePreferedModalComponent } from './language-prefered-modal/language-prefered-modal.component';
+import { CheckModalComponent } from './check-modal/check-modal.component';
 
 
 
 @NgModule({
-  declarations: [NewOrderModalComponent,HeaderComponent,MyTargetComponent,PayoutRateCardComponent,RateCardModalComponent,LanguagePreferedModalComponent],
+  declarations: [NewOrderModalComponent,
+    HeaderComponent,MyTargetComponent,PayoutRateCardComponent,RateCardModalComponent,LanguagePreferedModalComponent,
+    CheckModalComponent
+  ],
   imports: [
     CommonModule,IonicModule
   ],
-  exports: [NewOrderModalComponent,HeaderComponent,MyTargetComponent,PayoutRateCardComponent,RateCardModalComponent,LanguagePreferedModalComponent],
+  exports: [NewOrderModalComponent,HeaderComponent,MyTargetComponent,PayoutRateCardComponent,RateCardModalComponent,CheckModalComponent,LanguagePreferedModalComponent],
 })
 export class ComponentsModule { }
 

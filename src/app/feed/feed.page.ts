@@ -61,7 +61,7 @@ export class FeedPage implements OnInit {
         this.navCtrl.navigateForward('/tabs/tabs/payouts');
         break;
       case 'trips':
-        this.router.navigate(['/trip-history']);
+        this.router.navigate(['/tabs/trip-history']);
         break;
       case 'sessions':
         break

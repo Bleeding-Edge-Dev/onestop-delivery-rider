@@ -1,0 +1,26 @@
+.backdrop {
+
+    width: 100%;
+    height: 100vh;
+    z-index: 99999999;
+
+    .wrapper {
+        animation: prompt-from-bottom 0.2s ease-in-out;
+
+        width: calc(100% - 32px);
+        height: 310px;
+
+    }
+}
+
+@keyframes prompt-from-bottom {
+    from {
+        top: 70%;
+        opacity: 0;
+    }
+
+    to {
+        top: 50%;
+        opacity: 1;
+    }
+}

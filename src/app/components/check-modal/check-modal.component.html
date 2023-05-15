@@ -1,0 +1,21 @@
+
+<div class="backdrop w-full h-screen p-16">
+  <div class="modal-wrapper-bottom wrapper  absolute-center bg-white round p-16 round gap-16 grid-center text-center" >
+    <div class="circle-dismiss-btn" (click)="onDismiss()">
+      <img src="../../../assets/icon/close.svg" alt="" >
+    </div>
+
+      <div>
+        <img [src]="getIcon()">
+      </div>
+      <div class="bf-16">
+        {{title}}
+      </div>
+      <div class="bf-10">
+          {{message}}
+      </div>
+      <button class="t-btn" (click)="handleButton()">
+        {{buttonText}}
+      </button>
+
+</div>

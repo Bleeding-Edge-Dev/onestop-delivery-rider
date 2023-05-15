@@ -16,49 +16,28 @@
     </ion-segment>
     <span class="rf-12 date-filter bordered-card" *ngIf="selectedValue==='daily'">
       <span>{{selectedDate===todayDate?"Today:":"Date:"}}</span>
-      <ion-datetime
-        placeholder="Select Date"
-        displayFormat="D MMMM YYYY"
-        pickerFormat="MMM D, YYYY"
-        [(ngModel)]="selectedDate"
-        (ionChange)="onDateChange()"
-      >
+      <ion-datetime placeholder="Select Date" displayFormat="D MMMM YYYY" pickerFormat="MMM D, YYYY"
+        [(ngModel)]="selectedDate" (ionChange)="onDateChange()">
       </ion-datetime>
     </span>
     <span class="rf-12 date-filter bordered-card flex-aligned gap-4" *ngIf="selectedValue==='weekly'">
       <span>Week:</span>
-      <ion-datetime
-        placeholder="Select Date"
-        displayFormat="D MMMM YYYY"
-        pickerFormat="MMM D, YYYY"
-        [(ngModel)]="selectedDate"
-        (ionChange)="onDateChange()"
-      >
+      <ion-datetime placeholder="Select Date" displayFormat="D MMMM YYYY" pickerFormat="MMM D, YYYY"
+        [(ngModel)]="selectedDate" (ionChange)="onDateChange()">
 
       </ion-datetime>
-<span class="bf-16 "> - </span>
-      <ion-datetime
-        placeholder="Select Date"
-        displayFormat="D MMMM YYYY"
-        pickerFormat="MMM D, YYYY"
-        [value]="this.calculateEndDate()"
-        class="pointer-events-none"
-
-      >
+      <span class="bf-16 "> - </span>
+      <ion-datetime placeholder="Select Date" displayFormat="D MMMM YYYY" pickerFormat="MMM D, YYYY"
+        [value]="this.calculateEndDate()" class="pointer-events-none">
       </ion-datetime>
     </span>
     <span class="rf-12 date-filter bordered-card" *ngIf="selectedValue==='monthly'">
       <span>Month:</span>
-      <ion-datetime
-        placeholder="Select Date"
-        displayFormat="MMMM YYYY"
-        pickerFormat="MMMM YYYY"
-        [(ngModel)]="selectedDate"
-        (ionChange)="onDateChange()"
-      >
+      <ion-datetime placeholder="Select Date" displayFormat="MMMM YYYY" pickerFormat="MMMM YYYY"
+        [(ngModel)]="selectedDate" (ionChange)="onDateChange()">
       </ion-datetime>
     </span>
-    
+
     <div class="flex gap">
       <div class="bordered-card w-full grid-center py-8 px">
         <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">₹{{payoutsData.totalEarning || 0}}</span>
@@ -100,7 +79,8 @@
         </div>
         <div class="body" *ngFor="let order of orderPayHistory">
           <div class="body-block">
-            <div class="flex-spaced"><span class="rf-10">Order ID: {{order.orderId}}</span> <span class="bf-12">₹{{order.amount}}</span>
+            <div class="flex-spaced"><span class="rf-10">Order ID: {{order.orderId}}</span> <span
+                class="bf-12">₹{{order.amount}}</span>
             </div>
             <div class="flex-spaced"><span class="rf-10">Completed on: {{order.completedOn}}</span></div>
           </div>
@@ -119,9 +99,10 @@
         </div>
         <div class="body" *ngFor="let reward of MyRewardsHistory">
           <div class="body-block">
-            <div class="flex-spaced"><span class="rf-10">Order ID: {{reward.orderId}}</span> <span class="bf-12">₹{{reward.amount}}</span>
+            <div class="flex-spaced"><span class="rf-10">Order ID: {{reward.orderId}}</span> <span
+                class="bf-12">₹{{reward.amount}}</span>
             </div>
-            <div class="flex-spaced" ><span class="rf-10">Completed on: {{reward.completedOn}}</span></div>
+            <div class="flex-spaced"><span class="rf-10">Completed on: {{reward.completedOn}}</span></div>
           </div>
         </div>
       </div>

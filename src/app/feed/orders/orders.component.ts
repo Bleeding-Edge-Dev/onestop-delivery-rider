@@ -34,6 +34,7 @@ export class OrdersComponent implements OnInit {
     const allOrders = ongoingOrders.concat(pendingOrders);
     if (!this.showActiveOrders) {
       return allOrders.filter(order => parseInt(order.status) <= 3);
+
     }
 
     return allOrders.filter(order => parseInt(order.status) > 3);

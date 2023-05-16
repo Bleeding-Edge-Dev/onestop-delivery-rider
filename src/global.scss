@@ -782,3 +782,15 @@ ion-toast.toast-success::part(message) {
   }
 }
 
+.search-icon{
+  background-image: url("./assets/icon/search.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 36px;
+  width: 97px;
+  height: 97px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  margin-right: 8px;
+  background-color: #F7F7F7;
+}

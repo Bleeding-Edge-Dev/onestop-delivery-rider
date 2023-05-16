@@ -12,6 +12,7 @@
 
 <div class="orders-wrapper py-8">
   <ion-card class="bordered-card card relative w-full p-16" *ngFor="let order of filteredOrders()">
+   
     <div class="rf-12 ">
       Order ID: {{ order.txnid }}
     </div>
@@ -32,4 +33,17 @@
       {{(showActiveOrders) ? "ACTIVE" : "NEW"}}</span>
     <img (click)="expandOrder(order)" class="expand-btn absolute v-center" src="../../assets/icon/expand_circle_down.svg" />
   </ion-card>
+  <div *ngIf="filteredOrders()" class="grid-center p-32 gap-24" >
+    <span class="search-icon">
+    </span>
+    <div class="flex-col text-center gap-9 ">
+
+      <span class="bf-16">
+        Searching for Orders
+      </span>
+      <div class="rf-14">
+        Currently No {{showActiveOrders? "Active":"New"}} Orders Available
+      </div>
+    </div>
+  </div>
 </div>

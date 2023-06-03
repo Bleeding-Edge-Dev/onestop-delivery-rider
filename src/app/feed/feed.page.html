@@ -1,48 +1,56 @@
-<app-header ></app-header>
-
+<app-header></app-header>
+<div id="google_translate_element"></div>
 <ion-content>
   <div *ngIf="!isRiderOnline">
     <app-offline-banner></app-offline-banner>
   </div>
 
-<div class="px">
-  <div class="todays-progress-wrapper">
-    <span class="flex-spaced ">
-      <p class="bf-16">Today's Progress</p>
-      <button class="bf-12 f-red">see more</button>
-    </span>
-    <div class="flex gap-16 ">
-      <div class="bordered-card w-full grid-center py-8 px">
-        <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">₹{{"0"}}</span>
-        <p class="rf-10 w-full text-center">Total Earnings</p>
-        <button class="bf-10 f-red" (click)="goTo('payouts')">Payouts <img
-            src="../../assets/icon/chevron_right.svg" /></button>
-      </div>
-      <div class="bordered-card w-full grid-center py-8 px">
-        <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">{{"0.0"}}</span>
-        <p class="rf-10 w-full text-center">Trips Today</p>
-        <button class="bf-10 f-red" (click)="goTo('trips')">Trips <img src="../../assets/icon/chevron_right.svg" /></button>
-      </div>
-      <div class="bordered-card w-full grid-center py-8 px">
-        <span class="bg-grey grid-center p-8 round bf-16min-w-36px">{{"0"}}</span>
-        <p class="rf-10 w-full text-center">Total Login Hours</p>
-        <button class="bf-10 f-red" (click)="goTo('sessions')">Sessions <img src="../../assets/icon/chevron_right.svg" /></button>
+  <div class="px">
+    <div class="todays-progress-wrapper">
+      <span class="flex-spaced">
+        <p class="bf-16">Today's Progress</p>
+        <button class="bf-12 f-red">see more</button>
+      </span>
+      <div class="flex gap-16">
+        <div class="bordered-card w-full grid-center py-8 px">
+          <span class="bg-grey grid-center p-8 round bf-16 min-w-36px"
+            >₹{{report?.totalEarning || 0}}</span
+          >
+          <p class="rf-10 w-full text-center">Total Earnings</p>
+          <button class="bf-10 f-red" (click)="goTo('payouts')">
+            Payouts <img src="../../assets/icon/chevron_right.svg" />
+          </button>
+        </div>
+        <div class="bordered-card w-full grid-center py-8 px">
+          <span class="bg-grey grid-center p-8 round bf-16 min-w-36px"
+            >{{ report?.totalTrips||"0"}}</span
+          >
+          <p class="rf-10 w-full text-center">Trips Today</p>
+          <button class="bf-10 f-red" (click)="goTo('trips')">
+            Trips <img src="../../assets/icon/chevron_right.svg" />
+          </button>
+        </div>
+        <div class="bordered-card w-full grid-center py-8 px">
+          <span class="bg-grey grid-center p-8 round bf-16min-w-36px"
+            >{{report?.totalHours }}</span
+          >
+          <p class="rf-10 w-full text-center">Total Login Hours</p>
+          <button class="bf-10 f-red" (click)="goTo('sessions')">
+            Sessions <img src="../../assets/icon/chevron_right.svg" />
+          </button>
+        </div>
       </div>
     </div>
+    <div *ngIf="isRiderOnline">
+      <app-orders></app-orders>
+    </div>
+
+    <span class="flex-aligned gap">
+      <p class="bf-16">My Target</p>
+      <p class="rf-10">{{"(Time: 07:00 PM - 11:00 PM)"}}</p>
+    </span>
+    <app-my-target [myTargetData]="myTargetData"></app-my-target>
+
+    <app-payout-rate-card></app-payout-rate-card>
   </div>
-  <div *ngIf="isRiderOnline">
-    <app-orders></app-orders>
-  </div>
-
-
-
-  <span class="flex-aligned gap">
-    <p class="bf-16">My Target</p>
-    <p class="rf-10">{{"(Time: 07:00 PM - 11:00 PM)"}}</p>
-  </span>
-  <app-my-target [Data]="myTargetData" ></app-my-target>
-
-
-  <app-payout-rate-card></app-payout-rate-card>
-</div>
 </ion-content>

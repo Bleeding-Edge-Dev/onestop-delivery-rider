@@ -12,5 +12,6 @@
       "presentationOptions": ["sound", "alert"]
     }
   },
+  "linuxAndroidStudioPath": "/opt/android-studio/bin/studio.sh",
   "cordova": {}
 }

@@ -6,11 +6,11 @@ import {
 } from "@angular/common/http";
 import { Component, NgZone, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import {
-  Device,
-  LocalNotificationActionPerformed,
-  Modals,
-} from "@capacitor/core";
+// import {
+//   Device,
+//   LocalNotificationActionPerformed,
+//   Modals,
+// } from "@capacitor/core";
 import { Subject } from "rxjs";
 import { finalize, map, takeUntil, takeWhile } from "rxjs/operators";
 import {
@@ -86,22 +86,22 @@ export class Tab1Page implements OnInit {
       },
       async function callback(location, error) {
         if (error) {
-          if (error.code === "NOT_AUTHORIZED") {
-            Modals.confirm({
-              title: "Location Required",
-              message:
-                "This app needs your location, " +
-                "but does not have permission.\n\n" +
-                "Open settings now?",
-            }).then(function ({ value }) {
-              console.log("value from modal", value);
-              if (value) {
-                BackgroundGeolocation.openSettings();
-              } else {
-                navigator["app"].exitApp();
-              }
-            });
-          }
+          // if (error.code === "NOT_AUTHORIZED") {
+          //   Modals.confirm({
+          //     title: "Location Required",
+          //     message:
+          //       "This app needs your location, " +
+          //       "but does not have permission.\n\n" +
+          //       "Open settings now?",
+          //   }).then(function ({ value }) {
+          //     console.log("value from modal", value);
+          //     if (value) {
+          //       BackgroundGeolocation.openSettings();
+          //     } else {
+          //       navigator["app"].exitApp();
+          //     }
+          //   });
+          // }
 
           return console.error(JSON.stringify(error));
         }

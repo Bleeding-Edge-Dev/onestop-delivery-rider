@@ -20,4 +20,5 @@ export interface Order{
     id:any;
     prep:any;
     manual:any;
+    riderStatus:any;
 }

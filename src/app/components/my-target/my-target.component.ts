@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./my-target.component.scss'],
 })
 export class MyTargetComponent implements OnInit {
-  @Input() Data : string;
+  @Input() Data : any;
 
   myTargetData = { 
     "noOfOrders": [5, 10, 15, 20],
@@ -19,6 +19,10 @@ export class MyTargetComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if(this.Data){
+
+      this.myTargetData = this.Data;
+    }
   }
 
 }

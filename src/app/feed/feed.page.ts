@@ -4,7 +4,7 @@ import { NavController } from '@ionic/angular';
 import { StatusService } from 'src/app/services/status.service';
 import { get } from 'src/app/services/storage';
 import { RewardService } from '../services/reward.service';
-
+import { LocationService } from "../services/location.service";
 
 
 @Component({
@@ -14,59 +14,67 @@ import { RewardService } from '../services/reward.service';
 })
 export class FeedPage implements OnInit {
 
+
+
+  todayDate: any = new Date().toISOString();
+
+  payoutsData: any = {
+    totalEarning: null,
+    totalTrips: "0",
+    totalHours: "0:0 Hrs",
+    earningTransactions: []
+  }
+
+
   constructor(private navCtrl: NavController,
     private statusService: StatusService,
     private rewardService: RewardService,
+    private locationService: LocationService,
     private router: Router) { }
-  isRiderOnline: boolean = true;
+  isRiderOnline: boolean;
   token: any;
 
-
-  async ngOnInit() {
-    this.getStatus();
-    this.getRewards();
-
+  async sendLocation(location) {
+    let t = await get("token");
+    t = "Bearer " + t;
+    this.locationService
+      .setLocation(t, location)
+      .subscribe((res) => console.log(res));
   }
-  async getStatus() {
+  async ngOnInit() {
     this.token = await get("token");
     this.token = "Bearer " + this.token;
-    const statusInterval = setInterval(() => {
-      if (this.router.url != '/tabs/tabs/feed') {
-        clearInterval(statusInterval);
-      }
-      this.statusService.getStatus(this.token).subscribe((res: any) => {
-        this.isRiderOnline = res.active == "1" ? true : false;
-      });
-    }, 200);
+    this.getRewards();
+    this.statusService.isRiderOnline.subscribe((res) => {
+      this.isRiderOnline = res;
+    })
+    this.getPayoutData(this.todayDate, this.todayDate);
   }
   myTargetData = { 
     "noOfOrders": [5, 10, 15, 20],
    "rewards": [100, 150, 200, 250], 
-   "currentMilestone": { "noOfOrders": 5, "amount": 100 }, 
+   "currentMilestone": { "noOfOrders": 0, "amount": 0 }, 
    "totalOrdersCount": "0" }
 
   async getRewards() {
-    this.token = await get("token");
-    this.token = "Bearer " + this.token;
     this.rewardService.getReward(this.token).subscribe((res: any) => {
-      console.log(res);
+      this.myTargetData = res;
     });
   }
+  doRefresh(event) {
+    this.getRewards();
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
+  }
 
+  
 
-
-  goTo(here: string) {
-    switch (here) {
-      case 'payouts':
-        this.navCtrl.navigateForward('/tabs/tabs/payouts');
-        break;
-      case 'trips':
-        this.router.navigate(['/tabs/trip-history']);
-        break;
-      case 'sessions':
-        break
-      default:
-        break;
-    }
+  async getPayoutData(from, to) {
+    let token: String = await get("token");
+    token = "Bearer " + token;
+    this.rewardService.getPayoutData(token, from, to).subscribe((res: any) => {
+      this.payoutsData = res;
+    });
   }
 }

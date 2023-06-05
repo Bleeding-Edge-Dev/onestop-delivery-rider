@@ -10,7 +10,7 @@ import { get, remove } from "../../services/storage";
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  isRiderOnline: boolean = true;
+  isRiderOnline: boolean ;
   token: any;
 
   constructor(private modalController: ModalController, private statusService: StatusService) { }
@@ -18,23 +18,22 @@ export class HeaderComponent implements OnInit {
   async ngOnInit() {
     this.token = await get("token");
     this.token = "Bearer " + this.token;
-    this.getStatus();
+    this.statusService.isRiderOnline.subscribe((res) => {
+      this.isRiderOnline = res;
+    })
+
 
   }
 
-  async getStatus() {
-    this.statusService.getStatus(this.token).subscribe((res: any) => {
-      this.isRiderOnline = res.active == "1" ? true : false;
-    });
-  }
+
 
   toggleRiderActiveService(state: boolean) {
     this.statusService
       .setStatus(this.token, state)
       .subscribe((res: any) => {
         if (res.message == "done") {
-          this.isRiderOnline = state;
-        }
+          this.statusService.isRiderOnline.next(!this.isRiderOnline);
+        } 
       });
   }
 

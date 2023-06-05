@@ -9,7 +9,12 @@ import { get } from "./storage";
 export class ReportService {
   constructor(private http: HttpClient) {}
   getTotals(token) {
-    //token = "Bearer "+token;
+
     return this.http.post(Env.apiUrl + "reports.php", { token: token });
+  }
+  getTripHistory(token,from,to) {
+
+    return this.http.post(Env.apiUrl + "getTripHistory.php", { token: token,from:from,to:to });
+    
   }
 }

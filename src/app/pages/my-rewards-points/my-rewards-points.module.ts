@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ListPageRoutingModule } from './list-routing.module';
+import { MyRewardsPointsPageRoutingModule } from './my-rewards-points-routing.module';
 
-import { ListPage } from './list.page';
+import { MyRewardsPointsPage } from './my-rewards-points.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ListPageRoutingModule
+    MyRewardsPointsPageRoutingModule
   ],
-  declarations: [ListPage]
+  declarations: [MyRewardsPointsPage]
 })
-export class ListPageModule {}
+export class MyRewardsPointsPageModule {}

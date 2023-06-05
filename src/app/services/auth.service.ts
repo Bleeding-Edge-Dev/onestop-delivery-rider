@@ -14,12 +14,14 @@ export class AuthService {
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     null
   );
+
   private apiUrl = Env.apiUrl;
   uuid: string;
   constructor(private http: HttpClient, private router: Router) {
     this.checkLogin();
     this.getuid();
   }
+
 
   async checkLogin() {
     const token = await get("token");
@@ -67,7 +69,10 @@ export class AuthService {
     let h = shaObj.getHash("HEX");
     await set("uuid", h);
     this.uuid = h;
-    console.log(this.uuid);
     return h;
+  }
+
+  getProfile(token) {
+    return this.http.post(this.apiUrl + "getProfile.php", { token: token });
   }
 }

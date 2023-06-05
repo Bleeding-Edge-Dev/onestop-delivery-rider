@@ -27,4 +27,7 @@ export class OrdersService {
     };
     return this.http.post(this.apiUrl + "actionsV2.php", pack);
   }
+  getOrder(token, id) {
+    return this.http.post(this.apiUrl + "getOrder.php", { token: token, id: id });
+  }
 }

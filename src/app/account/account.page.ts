@@ -12,9 +12,14 @@ import { LanguagePreferedModalComponent } from '../components/language-prefered-
   styleUrls: ['./account.page.scss'],
 })
 export class AccountPage implements OnInit {
+  profileData = {
+    name: '',
+    phone: '',
+    profileImage: ''
+  }
   objectKeys = Object.keys
   navOptions={
-    'Manage Profile': '/tabs/manage-profile',
+    'Profile': '/tabs/manage-profile',
     'My Reward Points': '',
     'My Wallet': '/tabs/my-wallet',
     'Change Password' : '/tabs/change-password',
@@ -28,8 +33,7 @@ export class AccountPage implements OnInit {
   token
   constructor(private router:Router , private authService:AuthService, private modalController:ModalController) { }
   async logout(){
-    this.token = await get('token');
-    this.token = "Bearer "+this.token;
+
     this.authService.logout(this.token);
 
   }
@@ -40,8 +44,11 @@ export class AccountPage implements OnInit {
       this.router.navigate([this.navOptions[navOption]]);
     }
   }
-  ngOnInit(
+  async ngOnInit(
     ) {
+      this.token = await get('token');
+      this.token = "Bearer "+this.token;
+    this.getProfile();
 
   }
   async presentModal(navOption) {
@@ -49,5 +56,12 @@ export class AccountPage implements OnInit {
       component: this.navOptions[navOption],
     });
     return await modal.present();
+  }
+  async getProfile() {
+    this.authService.getProfile(this.token).subscribe((res: any) => {
+      this.profileData.name = res.details.name;
+      this.profileData.phone = res.details.phone;
+      this.profileData.profileImage = res.details.profileImage;
+    })
   }
 }

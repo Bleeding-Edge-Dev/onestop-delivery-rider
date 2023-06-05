@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
-import { PasswordService } from 'src/app/services/password.service';
-import { get, remove } from 'src/app/services/storage';
+import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { PasswordService } from '../../services/password.service';
+import { get, remove } from '../../services/storage';
+
 
 @Component({
   selector: 'app-change-password',
@@ -13,32 +14,27 @@ import { get, remove } from 'src/app/services/storage';
 export class ChangePasswordPage implements OnInit {
   passwordGroup : FormGroup;
   inv: boolean;
-token;
-constructor(private formBuilder:FormBuilder,private passwordService:PasswordService,private loadingController:LoadingController,private alertController:AlertController,private router:Router) { 
-  this.passwordGroup = this.formBuilder.group({
-    currentPassword: new  FormControl('',[Validators.required]),
-    newPassword : new FormControl('',[Validators.required,Validators.minLength(6)]),
-    confirmNewPassword :new FormControl('',[Validators.required, this.matchValues('newPassword')])
-  })
-}
-matchValues(matchTo: string) {
-  return (control: FormGroup) => {
-    return control?.value === control?.parent?.controls[matchTo].value
-      ? null
-      : { notMatching: true };
+nocPass: any;
+noPass: any;
+noccPass: any;
+  constructor(private formBuilder:FormBuilder,private passwordService:PasswordService,private loadingController:LoadingController,private alertController:AlertController,private router:Router) { 
+    this.passwordGroup = this.formBuilder.group({
+      currentPassword: new  FormControl('',[Validators.required]),
+      newPassword : new FormControl('',[Validators.required]),
+      confirmPassword :new FormControl('',[Validators.required])
+    })
   }
-}
 
-
-  async ngOnInit() {
-  this.token =await get('token');
+  ngOnInit() {
   }
+
   async changePassword(){
     if(this.passwordGroup.valid){
       const lc = await this.loadingController.create({message:'Please Wait..',spinner:'bubbles'});
       await lc.present();
-      this.token = 'Bearer '+this.token;
-      this.passwordService.changepassword(this.token, this.passwordGroup.controls.currentPassword.value,this.passwordGroup.controls.newPassword.value,this.passwordGroup.controls.confirmPassword.value ).subscribe(
+      let token =await get('token');
+      token = 'Bearer '+token;
+      this.passwordService.changepassword(token, this.passwordGroup.controls.currentPassword.value,this.passwordGroup.controls.newPassword.value,this.passwordGroup.controls.confirmPassword.value ).subscribe(
       async (res:any)=>{
         await lc.dismiss();
         const alert = await this.alertController.create({'message':res.message,buttons:['OK']});

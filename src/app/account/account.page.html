@@ -5,11 +5,11 @@
     <div class="p-16 flex-col gap-16">
         <div class="bordered-card flex-aligned p-16 gap-24">
             <span class="user-img bg-grey">
-                <img src="" alt="">
+                <img [src]="'https://onestopdelivery.in/images/rider/'+profileData.profileImage" alt="">
             </span>
             <span class="">
-                <div class="bf-16">{{"Nickhil Nickhil"}}</div>
-                <div class="rf-12">{{"FE1799542"}}</div>
+                <div class="bf-16">{{profileData.name}}</div>
+                <div class="rf-12">{{profileData.phone}}</div>
             </span>
         </div>
         <div class="flex-col gap-9">

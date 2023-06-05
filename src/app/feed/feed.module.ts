@@ -18,7 +18,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     IonicModule,
     FeedPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
   ],
   declarations: [FeedPage, OrdersComponent, OfflineBannerComponent]
 })

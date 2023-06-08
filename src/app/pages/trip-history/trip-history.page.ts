@@ -4,6 +4,7 @@ import { get } from 'src/app/services/storage';
 import { DatePipe } from '@angular/common';
 import { ViewChild } from '@angular/core';
 import { IonDatetime } from '@ionic/angular';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-trip-history',
   templateUrl: './trip-history.page.html',
@@ -25,7 +26,8 @@ export class TripHistoryPage implements OnInit {
 
   constructor(
     private reportService:ReportService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private router: Router
   ) { }
 
 
@@ -106,9 +108,18 @@ export class TripHistoryPage implements OnInit {
   }
 
   getTripHistory(from,to){
-    this.reportService.getTripHistory(this.token,from,to).subscribe((res:any)=>{
-      console.log(res);
-      this.tripHistory = res;
-    })
+    if(this.token){
+      this.reportService.getTripHistory(this.token,from,to).subscribe((res:any)=>{
+        console.log(res);
+        this.tripHistory = res;
+      })
+    }
+  }
+
+  goToTripDetails(trip){
+    console.log(trip);
+    this.router.navigate(['/tabs/trip-history/trip-details'],{ queryParams: { trip: JSON.stringify(trip) }} );
+  
+
   }
 }

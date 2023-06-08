@@ -1,9 +1,52 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>session-history</ion-title>
-  </ion-toolbar>
+<ion-header class="flex-spaced py-8">
+  <div class="flex-aligned ">
+    <ion-back-button class="f-black" defaultHref="/tabs/feed"></ion-back-button>
+    <span class="bf-16">Session History</span>
+  </div>
+  <div class="flex-aligned gap-24 px">
+    <button class="bordered-chip">HELP</button>
+    <button><img src="../../assets/icon/notifications.svg" alt="notification"></button>
+  </div>
 </ion-header>
 
+
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <div class="p-16 flex-col h-full ">
+    <div class="rf-12 date-filter dark-border flex-aligned flex-spaced gap-8 py-12" (click)="openDatePicker()">
+      <ion-datetime placeholder="Select Date" displayFormat="D MMMM YYYY" pickerFormat="MMM D, YYYY"
+        [(ngModel)]="selectedDate" (ionChange)="onDateChange()" (click)="$event.stopPropagation()"
+        [max]="getCurrentDate()">
+      </ion-datetime>
+      <div class="arrow-down"></div>
+    </div>
+    <div>
+
+
+    </div>
+    <div  *ngIf="sessionHistory.length==0"  class="grid-center p-32 gap-24 h-full">
+      <div class="grid-center gap-24">
+        <div class="bf-12 text-center ">
+          No Session For The Selected Date.
+        </div>
+      </div>
+    </div>
+    <ion-grid class="w-full" *ngIf="sessionHistory.length>0">
+      <ion-row class="round-top bf-12  p-8  text-center">
+        <ion-col>Sessions</ion-col>
+        <ion-col>Time Range</ion-col>
+        <ion-col>Hours</ion-col>
+      </ion-row>
+      <ion-row class="rf-10  p-8 text-center" *ngFor="let sess of sessionHistory">
+        <ion-col>{{sess.sessionId}}</ion-col>
+        <ion-col>{{sess.timeRange}}</ion-col>
+        <ion-col>{{sess.hours}}</ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </div>
 
 </ion-content>

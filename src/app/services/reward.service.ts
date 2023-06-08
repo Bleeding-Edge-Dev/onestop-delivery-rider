@@ -13,7 +13,7 @@ export class RewardService {
     return this.http.post(Env.apiUrl + "getRewardInfo.php", { token: token });
   }
 
-  getPayoutData(token,fromData, toDate){
-    return this.http.post(Env.apiUrl + "riderReport.php", { token: token, from: fromData, to: toDate });
+  getPayoutData(token,from, to){
+    return this.http.post(Env.apiUrl + "riderReport.php", { token: token, from: from, to: to });
   }
 }

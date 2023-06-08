@@ -138,10 +138,12 @@ export class PayoutsPage implements OnInit {
   }
 
   async getPayoutData(from, to) {
+   if(this.token){
     this.rewardService.getPayoutData(this.token, from, to).subscribe((res: any) => {
-      console.log(res)
+
       this.payoutsData = res;
     });
+   }
   }
   myTargetData = { 
     "noOfOrders": [5, 10, 15, 20],
@@ -150,9 +152,11 @@ export class PayoutsPage implements OnInit {
    "totalOrdersCount": "0" }
 
   async getRewards() {
-    this.rewardService.getReward(this.token).subscribe((res: any) => {
-      this.myTargetData = res;
-    });
+    if(this.token){
+      this.rewardService.getReward(this.token).subscribe((res: any) => {
+        this.myTargetData = res;
+      });
+    }
   }
 
 }

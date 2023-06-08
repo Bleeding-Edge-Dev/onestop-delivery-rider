@@ -26,7 +26,7 @@ export class AccountPage implements OnInit {
     'Rate Card': RateCardModalComponent,
     'Language Preferences':LanguagePreferedModalComponent,
     'Trip History':'/tabs/trip-history',
-    'Session History':'',
+    'Session History':'/tabs/session-history',
     'Issues & Tickets':'',
 
   }

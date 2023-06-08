@@ -17,4 +17,9 @@ export class ReportService {
     return this.http.post(Env.apiUrl + "getTripHistory.php", { token: token,from:from,to:to });
     
   }
+  getSessionHistory(token,from,to) {
+      
+      return this.http.post(Env.apiUrl + "getSessionHistory.php", { token: token,from:from,to:to });
+      
+  }
 }

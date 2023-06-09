@@ -27,7 +27,7 @@ export class AccountPage implements OnInit {
     'Language Preferences':LanguagePreferedModalComponent,
     'Trip History':'/tabs/trip-history',
     'Session History':'/tabs/session-history',
-    'Issues & Tickets':'',
+    'Issues & Tickets':'/tabs/support-tickets',
 
   }
   token

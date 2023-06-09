@@ -55,14 +55,14 @@ const routes: Routes = [
         path: 'rewards',
         loadChildren: () => import('../pages/my-rewards-points/my-rewards-points.module').then( m => m.MyRewardsPointsPageModule)
       },
-      // {
-      //   path: 'new-ticket',
-      //   loadChildren: () => import('../pages/new-ticket/new-ticket.module').then(m => m.NewTicketPageModule)
-      // },
-      // {
-      //   path: 'support-tickets',
-      //   loadChildren: () => import('../pages/support-tickets/support-tickets.module').then(m => m.SupportTicketsPageModule)
-      // },
+      {
+        path: 'new-ticket',
+        loadChildren: () => import('../pages/new-ticket/new-ticket.module').then(m => m.NewTicketPageModule)
+      },
+      {
+        path: 'support-tickets',
+        loadChildren: () => import('../pages/support-tickets/support-tickets.module').then(m => m.SupportTicketsPageModule)
+      },
     
       {
         path: '',

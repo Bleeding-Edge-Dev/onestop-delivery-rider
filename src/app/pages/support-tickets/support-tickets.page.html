@@ -1,0 +1,45 @@
+<ion-header class="flex-spaced py-8 flex-aligned">
+  <div class="flex-aligned ">
+    <ion-back-button class="f-black" defaultHref="/tabs/account"></ion-back-button>
+    <span class="bf-16">Support Tickets</span>
+  </div>
+  <div class="p-16">
+
+    <div *ngIf="tickets.length >0" class="bordered-chip uppercase bf-10" routerLink="/tabs/new-ticket" >
+  New Ticket
+    </div>
+  </div>
+</ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div class="p-16 flex-col gap-8 h-full">
+    <div class="grid-center h-full" *ngIf="tickets.length===0">
+     <div class="flex-col gap-8 text-center w-full">
+      <span class="bf-14">No Previous Tickets</span>
+      <span class="bf-14">Would you like to raise one?</span>
+      <div class="p-16">
+        <button class="t-btn uppercase bf-12" routerLink="/tabs/new-ticket">
+          New Ticket
+          </button>
+      </div>
+     </div>
+
+    </div>
+    <div class="bordered-card p-16" *ngFor="let ticket of tickets">
+      <div class="flex-spaced">
+        <span class="bf-12">
+         ID: {{ticket.ID}} - {{ticket.MESSAGE}}
+        </span>
+        <span class="bf-12">
+          {{ticket.STATUS}}
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-content>

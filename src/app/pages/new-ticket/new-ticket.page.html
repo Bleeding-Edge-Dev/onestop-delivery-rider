@@ -1,0 +1,69 @@
+<ion-header class="flex-spaced py-8 flex-aligned">
+  <div class="flex-aligned ">
+    <ion-back-button class="f-black" defaultHref="/tabs/account"></ion-back-button>
+    <span class="bf-16">New Ticket</span>
+  </div>
+</ion-header>
+<ion-content>
+<!-- <div class="p-16 flex-col gap-24">
+ <div class="flex-col gap-8">
+  <span class="bf-12">Ticket Title</span>
+  <input type="text" class="input-field"
+  placeholder="Enter Ticket Title Here..."
+  [(ngModel)]="ticketTitle"
+  >
+ </div>
+ <div class="flex-col gap-8">
+  <span class="bf-12">Ticket Description</span>
+  <input type="text" class="input-field"
+  placeholder="Enter Ticket Description Here..."
+  [(ngModel)]="ticketDescription"
+  >
+ </div>
+</div> -->
+
+<div class="p-16 h-full">
+  <form [formGroup]="ticketFields" class="flex-col-spaced gap-16" >
+    <div class="flex-col gap-8">
+      <span class="bf-12">
+        Order ID:
+      </span>
+      <input type="text" class="input-field"
+      formControlName="orderId" placeholder="Enter your Order ID"
+  >
+    </div>
+    <div class="flex-col gap-8">
+      <span class="bf-12">
+         Issue:
+      </span>
+      <textarea type="text" class="input-field"
+      formControlName="issue"   placeholder="Some details about the issue you faced with this order"
+  ></textarea>
+    </div>
+    <div class="flex-col gap-8">
+      <span class="bf-12">
+        Contact:
+      </span>
+      <input type="text" class="input-field"
+      formControlName="contact"   placeholder="Enter your Mobile Number / Email ID"
+  >
+    </div>
+    <div class="flex-col gap-8">
+      <span class="bf-12">
+        Files:
+      </span>
+      <input type="file" class="input-field"
+      #fileInput (change)="uploadFile($event)" hidden="true" accept="image/*"
+  ><span><button class="s-btn form-control" (click)="selectImageSource()"> Upload File</button> &nbsp;<span class="iname">{{imageName}}</span></span>
+    </div>
+
+
+
+  </form>
+  <div class="slide-btn-wrapper">
+    <input type="range" value={{sliderValue}} [style.background]="getColor()" (input)="onSliderChange($event)"
+      (touchend)="onSliderTouchEnd()" (mouseup)="onSliderTouchEnd()" min="0" max="100">
+  </div>
+</div>
+
+</ion-content>

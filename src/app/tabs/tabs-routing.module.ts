@@ -48,15 +48,11 @@ const routes: Routes = [
         loadChildren: () => import('../pages/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
       },
       {
-        path: 'my-wallet',
+        path: 'wallet',
         loadChildren: () => import('../pages/my-wallet/my-wallet.module').then( m => m.MyWalletPageModule)
       },
       {
-        path: 'my-wallet',
-        loadChildren: () => import('../pages/my-wallet/my-wallet.module').then( m => m.MyWalletPageModule)
-      },
-      {
-        path: 'my-rewards-points',
+        path: 'rewards',
         loadChildren: () => import('../pages/my-rewards-points/my-rewards-points.module').then( m => m.MyRewardsPointsPageModule)
       },
       // {

@@ -9,7 +9,7 @@ export class TransactionsService {
 
   constructor(private http: HttpClient) {}
   getRewardInfo(token) {
-    //token = "Bearer "+token;
+
     return this.http.post(Env.apiUrl + "getRewardInfo.php", { token: token });
   }
   request(token,points){

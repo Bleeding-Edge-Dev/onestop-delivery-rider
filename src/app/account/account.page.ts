@@ -20,8 +20,8 @@ export class AccountPage implements OnInit {
   objectKeys = Object.keys
   navOptions={
     'Profile': '/tabs/manage-profile',
-    'My Reward Points': '',
-    'My Wallet': '/tabs/my-wallet',
+    'My Reward Points': '/tabs/rewards',
+    'My Wallet': '/tabs/wallet',
     'Change Password' : '/tabs/change-password',
     'Rate Card': RateCardModalComponent,
     'Language Preferences':LanguagePreferedModalComponent,

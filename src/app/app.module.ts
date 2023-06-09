@@ -24,8 +24,10 @@ import { AndroidPermissions } from "@ionic-native/android-permissions/ngx";
 import { AppVersion } from "@ionic-native/app-version/ngx";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { DatePipe } from "@angular/common";
+import { NetWorkFailureInterceptor } from "./interceptor/networkFailure.interceptor";
+import { NetworkFailureModalComponent } from "./components/network-failure-modal/network-failure-modal.component";
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,NetworkFailureModalComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -39,6 +41,11 @@ import { DatePipe } from "@angular/common";
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: NetWorkFailureInterceptor,
+      multi: true,
+    },
     StatusBar,
     HTTP,
     OneSignal,

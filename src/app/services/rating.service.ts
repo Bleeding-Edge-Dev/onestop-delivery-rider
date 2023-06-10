@@ -1,6 +1,6 @@
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Device } from '@capacitor/core';
+import { Device } from "@capacitor/device";
 import jsSHA from 'jssha';
 import { set } from './storage';
 @Injectable({
@@ -8,41 +8,37 @@ import { set } from './storage';
 })
 export class RatingService {
   uuid: string;
-  constructor(private http: HttpClient, 
-    private back: HttpBackend, private httpOg: HttpClient, 
+  constructor(private http: HttpClient,
+    private back: HttpBackend, private httpOg: HttpClient,
     private httpOld: HttpClient) {
     this.http = new HttpClient(back);
   }
-  raiseTicket(token,orderId,issue,contact,image,imagename){
-    token = 'Bearer '+token;
-    console.log(token)
-    console.log(orderId)
-    console.log(issue)
-    console.log(contact)
-    console.log(image)
-    console.log(imagename)
+  raiseTicket(token, orderId, issue, contact, image, imagename) {
+    token = 'Bearer ' + token;
+
     const formData = new FormData();
-    formData.append('file',image);
-    formData.append('token',token);
-    formData.append('orderId',orderId);
-    formData.append('issue',issue);
-    formData.append('contact',contact);
-    formData.append('type','1');
-    formData.append('imagename',imagename)
+    formData.append('file', image);
+    formData.append('token', token);
+    formData.append('orderId', orderId);
+    formData.append('issue', issue);
+    formData.append('contact', contact);
+    formData.append('type', '1');
+formData.append('imagename', imagename)
 
-    return this.httpOld.post("https://onestopdelivery.in/api/riderApp/api/raiseTicket.php",formData);
+    return this.httpOld.post("https://onestopdelivery.in/api/riderApp/api/raiseTicket.php", formData);
   }
-  getTicket(token){
+  getTicket(token) {
 
-    return this.httpOld.post('https://onestopdelivery.in/api/riderApp/api/getTickets.php',{token});
+    return this.httpOld.post('https://onestopdelivery.in/api/riderApp/api/getTickets.php', { token });
   }
   async getuid() {
-    const info = await Device.getInfo();
-    let shaObj = new jsSHA('SHA-256', 'TEXT');
-    shaObj.update(info.uuid);
-    let h = shaObj.getHash('HEX');
-    await set('uuid', h);
+    const info = await Device.getId();
+    let shaObj = new jsSHA("SHA-256", "TEXT");
+    shaObj.update(info.identifier);
+    let h = shaObj.getHash("HEX");
+    await set("uuid", h);
     this.uuid = h;
+    console.log(this.uuid);
     return h;
   }
 

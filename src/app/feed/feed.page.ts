@@ -5,7 +5,7 @@ import { StatusService } from 'src/app/services/status.service';
 import { get } from 'src/app/services/storage';
 import { RewardService } from '../services/reward.service';
 import { LocationService } from "../services/location.service";
-
+import { IRiderReport } from "../shared/IRiderReport";
 
 @Component({
   selector: 'app-feed',
@@ -18,12 +18,7 @@ export class FeedPage implements OnInit {
 
   todayDate: any = new Date().toISOString();
 
-  payoutsData: any = {
-    totalEarning: null,
-    totalTrips: "0",
-    totalHours: "0:0 Hrs",
-    earningTransactions: []
-  }
+  payoutsData: IRiderReport;
 
 
   constructor(private navCtrl: NavController,

@@ -4,6 +4,7 @@ import { RewardService } from '../services/reward.service';
 import { DatePipe } from '@angular/common';
 import { ViewChild } from '@angular/core';
 import { IonDatetime } from '@ionic/angular';
+import { IRiderReport } from "../shared/IRiderReport";
 @Component({
   selector: 'app-payouts',
   templateUrl: './payouts.page.html',
@@ -22,25 +23,12 @@ export class PayoutsPage implements OnInit {
   }
 
   constructor(private rewardService: RewardService, private datePipe: DatePipe) { }
-  payoutsData: any = {
-    totalEarning: null,
-    totalTrips: "0",
-    totalHours: "0:0 Hrs",
-    earningTransactions: [],
-    orderPay: '',
-    rewardTransactions: [],
-    rewards: 0
-  }
+  payoutsData: IRiderReport;
 
   isMyRewardsOpen: boolean = false;
 
   onSegmentChange() {
-    this.payoutsData = {
-      totalEarning: null,
-      totalTrips: "0",
-      totalHours: "0:0 Hrs",
-      earningTransactions: []
-    }
+    this.payoutsData = null;
     this.selectedDate = new Date().toISOString();
     if (this.selectedValue === 'weekly') {
       const sixDaysAgo = new Date();

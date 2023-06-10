@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-// import { CameraResultType, CameraSource, Camera } from '@capacitor/camera';
+import { CameraResultType, CameraSource, Camera } from '@capacitor/camera';
 import {
   ActionSheetController,
   Platform,

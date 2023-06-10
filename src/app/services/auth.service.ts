@@ -3,8 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
 import { get, remove, set } from "./storage";
 import { Router } from "@angular/router";
-import { Plugins } from "@capacitor/core";
-const { Device } = Plugins;
+import { Device } from "@capacitor/device";
 import jsSHA from "jssha";
 import { Env } from "../shared/apiConfig";
 @Injectable({
@@ -63,12 +62,13 @@ export class AuthService {
     this.router.navigateByUrl("/login", { replaceUrl: true });
   }
   async getuid() {
-    const info = await Device.getInfo();
+    const info = await Device.getId();
     let shaObj = new jsSHA("SHA-256", "TEXT");
-    shaObj.update(info.uuid);
+    shaObj.update(info.identifier);
     let h = shaObj.getHash("HEX");
     await set("uuid", h);
     this.uuid = h;
+    console.log(this.uuid);
     return h;
   }
 

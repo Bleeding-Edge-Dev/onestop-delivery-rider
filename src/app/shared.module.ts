@@ -7,13 +7,14 @@ import {
   OnDestroy,
   Input,
   ElementRef,
-} from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { MenuPopoverComponent } from "./menu-popover/menu-popover.component";
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MenuPopoverComponent } from './menu-popover/menu-popover.component';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [MenuPopoverComponent],
-  exports: [MenuPopoverComponent],
+  declarations: [],
+  exports: [],
 })
 export class SharedModule {}

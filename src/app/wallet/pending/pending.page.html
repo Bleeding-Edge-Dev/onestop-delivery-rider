@@ -18,11 +18,11 @@
     <ion-item *ngFor="let trans of transactions">
       <ion-label>
         <div style="display: flex; justify-content: space-between; width: 100%">
-          <div slot="start" class="date">{{trans.REQUEST_TIME}}</div>
-          <div slot="end" class="amount">{{trans.REQUESTED_AMOUNT}}/-</div>
+          <div slot="start" class="date">{{trans?.REQUEST_TIME}}</div>
+          <div slot="end" class="amount">{{trans?.REQUESTED_AMOUNT}}/-</div>
         </div>
         <ion-text class="comment">
-          <p>{{trans.STATUS}}</p>
+          <p>{{trans?.STATUS}}</p>
         </ion-text>
       </ion-label>
     </ion-item>

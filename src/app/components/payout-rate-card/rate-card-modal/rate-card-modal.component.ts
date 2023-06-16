@@ -7,22 +7,21 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./rate-card-modal.component.scss'],
 })
 export class RateCardModalComponent implements OnInit {
+  constructor(private modalController: ModalController) {}
 
-  constructor(private modalController: ModalController) { }
-
-  onDismiss(event: { target: HTMLElement; }) {
-    if (event.target.classList.contains('backdrop') || event.target.classList.contains('circle-dismiss-btn')) {
+  onDismiss(event: any) {
+    if (
+      event.target.classList.contains('backdrop') ||
+      event.target.classList.contains('circle-dismiss-btn')
+    ) {
       this.modalController.dismiss();
     }
-
   }
   onConfirm() {
     this.modalController.dismiss({
-      role: 'confirm'
+      role: 'confirm',
     });
   }
 
-
   ngOnInit() {}
-
 }

@@ -8,41 +8,34 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./check-modal.component.scss'],
 })
 export class CheckModalComponent implements OnInit {
-  @Input() type: String;
-  @Input() title: String;
-  @Input() message: String;
-  @Input() route: String;
-  @Input() buttonText: String;
+  @Input() type: string = '';
+  @Input() title: string = '';
+  @Input() message: string = '';
+  @Input() route: string = '';
+  @Input() buttonText: string = '';
 
-  constructor(private modalController: ModalController,private router:Router) { }
-  getIcon(){
-    if(this.type == "success"){
-      return "../../../assets/icon/tick-success.svg"
+  constructor(
+    private modalController: ModalController,
+    private router: Router
+  ) {}
+  getIcon() {
+    if (this.type == 'success') {
+      return '../../../assets/icon/tick-success.svg';
+    } else if (this.type == 'failure') {
+      return '../../../assets/icon/tick-failure.svg';
+    } else {
+      return '';
     }
-    else if(this.type == "failure"){
-      return "../../../assets/icon/tick-failure.svg"
-
-    }
-    // else if(this.type == "warning"){
-    //   return "alert-circle-outline"
-    // }
-    // else{
-    //   return "information-circle-outline"
-    // }
   }
 
   ngOnInit() {
-    console.log(this.type)
+    console.log(this.type);
   }
   onDismiss() {
     this.modalController.dismiss();
   }
-  handleButton(){
+  handleButton() {
     this.router.navigate([this.route]);
     this.modalController.dismiss();
   }
-
-
-  
-
 }

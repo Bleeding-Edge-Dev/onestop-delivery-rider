@@ -11,81 +11,81 @@ import { get } from 'src/app/services/storage';
 })
 export class OrderPage implements OnInit {
   order: any;
-  foodPrepared: boolean= false;
-  allItemsPresent: boolean= false;
+  foodPrepared: boolean = false;
+  allItemsPresent: boolean = false;
 
-  statusData = {
+  statusData: any = {
     4: {
-      headText: "1: Reach Restaurant",
+      headText: '1: Reach Restaurant',
       vendorCard: true,
       itemsPresentBlock: false,
-      slideBtnClass: "reach-restaurant",
+      slideBtnClass: 'reach-restaurant',
     },
 
     42: {
-      headText: "2: pickup order",
+      headText: '2: pickup order',
       vendorCard: true,
       itemsPresentBlock: true,
-      slideBtnClass: "disabled-pickup-order",
+      slideBtnClass: 'disabled-pickup-order',
     },
     5: {
-      headText: "3: deliver order",
+      headText: '3: deliver order',
       vendorCard: false,
       itemsPresentBlock: false,
-      slideBtnClass: "deliver-order",
-
-    }
-  }
+      slideBtnClass: 'deliver-order',
+    },
+  };
 
   sliderValue: number = 0;
   onSliderChange(event: any) {
     const currentValue = event.target.value;
     this.sliderValue = currentValue;
-
   }
   async onSliderTouchEnd() {
     if (this.sliderValue > 90) {
-      switch(parseInt(this.order.status)) {
-        case 4:
-          this.foodPrepared = true
-          this.order.status = 42
+      switch (this.order.status) {
+        case '4':
+          this.foodPrepared = true;
+          this.order.status = '42';
           break;
-        case 42:
-          this.order.status = 5
+        case '42':
+          this.order.status = '5';
           break;
-          case 5:
-            let  token = await get("token");
-            token = "Bearer " + token;
-            this.allItemsPresent = true
-            this.ordersService.firstAction(this.order.id, 4,token).subscribe((res) => {
+        case '5':
+          let token = await get('token');
+          token = 'Bearer ' + token;
+          this.allItemsPresent = true;
+          this.ordersService
+            .firstAction(this.order.id, 4, token)
+            .subscribe((res) => {
               console.log(res);
-            })
-            break;
+            });
+          break;
 
         default:
-          console.log("invalid status")
+          console.log('invalid status');
       }
     }
 
-      setTimeout(() => {
-        this.sliderValue = 0;
-      }, 100);
-
+    setTimeout(() => {
+      this.sliderValue = 0;
+    }, 100);
   }
   getColor() {
     if (this.sliderValue > 90) {
       return '#4FCB6D';
-    }
-    else {
+    } else {
       return '#FF6565';
     }
   }
 
-  constructor(private activatedRoute: ActivatedRoute,
-    private ordersService: OrdersService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private ordersService: OrdersService
+  ) {}
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params.subscribe((params) => {
       this.order = history.state.order;
       console.log(this.order);
     });

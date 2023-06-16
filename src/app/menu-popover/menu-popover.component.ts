@@ -8,12 +8,11 @@ import { Order } from 'src/app/shared/order';
   styleUrls: ['./menu-popover.component.scss'],
 })
 export class MenuPopoverComponent implements OnInit {
-order:Order;
-  constructor(private navParams:NavParams) { }
+  order: any;
+  constructor(private navParams: NavParams) {}
 
-  ngOnInit() { 
+  ngOnInit() {
     this.order = this.navParams.get('order');
-    console.log(this.order.menu)
+    console.log(this.order.menu);
   }
-
 }

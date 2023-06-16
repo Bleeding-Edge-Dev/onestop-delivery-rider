@@ -8,8 +8,8 @@ import { WalletService } from 'src/app/services/wallet.service';
   styleUrls: ['./past.page.scss'],
 })
 export class PastPage implements OnInit {
-  transactions = [];
-  token;
+  transactions: any[] = [];
+  token: any;
   constructor(private trans: WalletService) {}
 
   async ngOnInit() {

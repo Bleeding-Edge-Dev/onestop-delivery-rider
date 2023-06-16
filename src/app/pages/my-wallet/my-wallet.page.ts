@@ -10,31 +10,30 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./my-wallet.page.scss'],
 })
 export class MyWalletPage implements OnInit {
-  token;
+  token: string = '';
 
-  data={
-    balance:0,
+  data = {
+    balance: 0,
   };
-  selectedTransaction = "past";
-  pastTransactions = [];
-  pendingTransactions = [];
-  creditTransactions = [];
+  selectedTransaction = 'past';
+  pastTransactions: any[] = [];
+  pendingTransactions: any[] = [];
+  creditTransactions: any[] = [];
   constructor(
     private walletService: WalletService,
     private modalController: ModalController
-
-  ) { }
-  filteredTransaction(){
-    if(this.selectedTransaction == "past"){
+  ) {}
+  filteredTransaction() {
+    if (this.selectedTransaction == 'past') {
       return this.pastTransactions;
-    }else if(this.selectedTransaction == "pending"){
+    } else if (this.selectedTransaction == 'pending') {
       return this.pendingTransactions;
-    }else{
+    } else {
       return this.creditTransactions;
     }
   }
   async ngOnInit() {
-    this.token = await get("token");
+    this.token = await get('token');
     this.walletService.getWalletDetails(this.token).subscribe((data: any) => {
       data.reedamableAmount =
         Math.round(Number(data.reedamableAmount * 100)) / 100;
@@ -50,10 +49,12 @@ export class MyWalletPage implements OnInit {
     this.walletService.getAllTransactions(this.token).subscribe((res: any) => {
       this.pastTransactions = res;
     });
-    this.walletService.getPendingTransactions(this.token).subscribe((res: any) => {
-      this.pendingTransactions = res;
-      console.log(res)
-    });
+    this.walletService
+      .getPendingTransactions(this.token)
+      .subscribe((res: any) => {
+        this.pendingTransactions = res;
+        console.log(res);
+      });
     this.walletService.getCreditNotes(this.token).subscribe((res: any) => {
       this.creditTransactions = res;
     });
@@ -64,5 +65,5 @@ export class MyWalletPage implements OnInit {
       animated: false,
     });
     await modal.present();
-}
+  }
 }

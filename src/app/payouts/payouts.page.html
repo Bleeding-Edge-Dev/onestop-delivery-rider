@@ -18,6 +18,8 @@
         pickerFormat="MMM D, YYYY"
         [(ngModel)]="selectedDate"
         (ionChange)="onDateChange()"
+        [preferWheel]="true"
+        presentation="date"
       >
       </ion-datetime>
     </span>

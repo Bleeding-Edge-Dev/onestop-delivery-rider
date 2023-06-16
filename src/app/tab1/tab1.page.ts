@@ -3,64 +3,59 @@ import {
   HttpHandler,
   HttpHeaders,
   HttpXhrBackend,
-} from "@angular/common/http";
-import { Component, NgZone, OnInit, ViewChild } from "@angular/core";
-import { Router } from "@angular/router";
-// import {
-//   Device,
-//   LocalNotificationActionPerformed,
-//   Modals,
-// } from "@capacitor/core";
-import { Subject } from "rxjs";
-import { finalize, map, takeUntil, takeWhile } from "rxjs/operators";
+} from '@angular/common/http';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { finalize, map, takeUntil, takeWhile } from 'rxjs/operators';
 import {
   AlertController,
   LoadingController,
   Platform,
   PopoverController,
-} from "@ionic/angular";
-import { AuthService } from "../services/auth.service";
-import { OrdersService } from "../services/orders.service";
-import { get, remove } from "../services/storage";
-import { Order } from "../shared/order";
-import { LogoutComponent } from "./logout/logout.component";
-import { MenuPopoverComponent } from "../menu-popover/menu-popover.component";
-import { Plugins } from "@capacitor/core";
-import { StatusService } from "../services/status.service";
+} from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
+import { OrdersService } from '../services/orders.service';
+import { get, remove } from '../services/storage';
+import { Order } from '../shared/order';
+import { LogoutComponent } from './logout/logout.component';
+import { MenuPopoverComponent } from '../menu-popover/menu-popover.component';
+import { Plugins } from '@capacitor/core';
+import { StatusService } from '../services/status.service';
 
-import { FcmService } from "../services/fcm.service";
+import { FcmService } from '../services/fcm.service';
 // Capacitor 2.x
-import { BackgroundGeolocationPlugin } from "@capacitor-community/background-geolocation";
-import { LocationService } from "../services/location.service";
+import { BackgroundGeolocationPlugin } from '@capacitor-community/background-geolocation';
+import { LocationService } from '../services/location.service';
 
-const BackgroundGeolocation =
-  Plugins.BackgroundGeolocation as BackgroundGeolocationPlugin;
-import jsSHA from "jssha";
+import { registerPlugin } from '@capacitor/core';
+const BackgroundGeolocation: any = registerPlugin('BackgroundGeolocation');
+import jsSHA from 'jssha';
 
 @Component({
-  selector: "app-tab1",
-  templateUrl: "tab1.page.html",
-  styleUrls: ["tab1.page.scss"],
+  selector: 'app-tab1',
+  templateUrl: 'tab1.page.html',
+  styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page implements OnInit {
-  name: string;
+  name: string = '';
   token: any;
   ongoingOrders: Order[] = [];
   completedOrders: Order[] = [];
   completeCount = 0;
   ongoingCount = 0;
-  ongoingIndexes = [];
-  completedIndexes = [];
-  pendingOrders = [];
-  pendingIndexes = [];
+  ongoingIndexes: any[] = [];
+  completedIndexes: any[] = [];
+  pendingOrders: any[] = [];
+  pendingIndexes: any[] = [];
   active: boolean = true;
-  updating;
-  watcher_id;
+  updating: any;
+  watcher_id: any;
   //====timer
   private stop$ = new Subject<any>();
   private value_: number = 0.5;
   private buffer_: number = 0;
-  timer$;
+  timer$: any;
   timer: any;
   constructor(
     private ordersService: OrdersService,
@@ -78,13 +73,13 @@ export class Tab1Page implements OnInit {
     const watcher_id = BackgroundGeolocation.addWatcher(
       {
         backgroundMessage:
-          "Onestop Delivery will track your location to provide you with orders.",
-        backgroundTitle: "Tracking You.",
+          'Onestop Delivery will track your location to provide you with orders.',
+        backgroundTitle: 'Tracking You.',
         requestPermissions: true,
         stale: false,
         distanceFilter: 0,
       },
-      async function callback(location, error) {
+      async function callback(location: any, error: any) {
         if (error) {
           // if (error.code === "NOT_AUTHORIZED") {
           //   Modals.confirm({
@@ -108,43 +103,43 @@ export class Tab1Page implements OnInit {
         const httpClient = new HttpClient(
           new HttpXhrBackend({ build: () => new XMLHttpRequest() })
         );
-        let token = await get("token");
-        token = "Bearer " + token;
-        let h = await get("uuid");
+        let token = await get('token');
+        token = 'Bearer ' + token;
+        let h = await get('uuid');
         // console.log(JSON.stringify({token,location,key:h}))
         httpClient
           .post(
-            "https://onestopdelivery.in/api/riderApp/api/getRiderLocation.php",
+            'https://onestopdelivery.in/api/riderApp/api/getRiderLocation.php',
             { token, location, key: h }
           )
           .subscribe((res) => {
-            console.log("response", res);
+            console.log('response', res);
           });
         return JSON.stringify(location);
       }
     );
   }
-  async sendLocation(location) {
-    let t = await get("token");
-    t = "Bearer " + t;
+  async sendLocation(location: any) {
+    let t = await get('token');
+    t = 'Bearer ' + t;
     this.locationService
       .setLocation(t, location)
       .subscribe((res) => console.log(res));
   }
   async ngOnInit() {
     const lc = await this.loadingController.create({
-      message: "Please Wait..",
-      spinner: "dots",
+      message: 'Please Wait..',
+      spinner: 'dots',
     });
     await lc.present();
-    this.name = await get("name");
-    this.token = await get("token");
-    this.token = "Bearer " + this.token;
+    this.name = await get('name');
+    this.token = await get('token');
+    this.token = 'Bearer ' + this.token;
 
     this.notificationService.initPush(this.token);
     //status service
     this.statusService.getStatus(this.token).subscribe((res: any) => {
-      if (res.active == "1") {
+      if (res.active == '1') {
         this.active = true;
       } else {
         this.active = false;
@@ -153,12 +148,10 @@ export class Tab1Page implements OnInit {
     //status service end
     this.getAllOrders();
     lc.dismiss();
-    this.ordersService
-      .getCompletedOrders(this.token)
-      .subscribe((res: Order[]) => {
-        this.completedOrders = res;
-        this.completeCount = res.length;
-      });
+    this.ordersService.getCompletedOrders(this.token).subscribe((res: any) => {
+      this.completedOrders = res;
+      this.completeCount = res.length;
+    });
 
     //live location==================================================
     //===============================================================
@@ -168,9 +161,9 @@ export class Tab1Page implements OnInit {
   keepupdating() {
     this.ordersService.getOngoingOrders(this.token).subscribe((res: any) => {
       res = res.ongoing;
-      res.forEach((order) => (order.menu = JSON.parse(order.menu)));
-      let currentIndexes = [];
-      res.forEach((order, index) => {
+      res.forEach((order: any) => (order.menu = JSON.parse(order.menu)));
+      let currentIndexes: any = [];
+      res.forEach((order: any, index: any) => {
         if (Number(order.status) > 3) {
           currentIndexes.push(order.txnid);
           if (!this.ongoingIndexes.includes(order.txnid)) {
@@ -209,7 +202,7 @@ export class Tab1Page implements OnInit {
       });
       this.pendingOrders.forEach((order, index) => {
         let removed = true;
-        res.forEach((o) => {
+        res.forEach((o: any) => {
           if (o.txnid == order.txnid) {
             removed = false;
           }
@@ -222,37 +215,35 @@ export class Tab1Page implements OnInit {
       this.ongoingCount = this.ongoingOrders.length;
     });
     //ongoing service ends
-    this.ordersService
-      .getCompletedOrders(this.token)
-      .subscribe((res: Order[]) => {
-        this.completedOrders = res;
+    this.ordersService.getCompletedOrders(this.token).subscribe((res: any) => {
+      this.completedOrders = res;
 
-        if (this.completeCount != res.length) {
-          this.completeCount = res.length;
-        }
-      });
+      if (this.completeCount != res.length) {
+        this.completeCount = res.length;
+      }
+    });
   }
 
-  async approve(id) {
+  async approve(id: any) {
     const al = await this.loadingController.create({
-      message: "Please Wait..",
-      spinner: "bubbles",
+      message: 'Please Wait..',
+      spinner: 'bubbles',
     });
     await al.present();
     this.ordersService.firstAction(id, 1, this.token).subscribe(async (res) => {
       await al.dismiss();
     });
   }
-  async declineorder(id) {
+  async declineorder(id: any) {
     const al = await this.loadingController.create({
-      message: "Please Wait..",
-      spinner: "bubbles",
+      message: 'Please Wait..',
+      spinner: 'bubbles',
     });
     await al.present();
     this.ordersService
       .firstAction(id, 2, this.token)
       .subscribe(async (res: any) => {
-        if (res.message == "Success") {
+        if (res.message == 'Success') {
           this.pendingOrders.forEach((order, index) => {
             if (id == order.txnid) {
               this.pendingOrders.splice(index, 1);
@@ -262,62 +253,62 @@ export class Tab1Page implements OnInit {
         await al.dismiss();
       });
   }
-  async picked(id) {
+  async picked(id: any) {
     const al = await this.loadingController.create({
-      message: "Please Wait..",
-      spinner: "bubbles",
+      message: 'Please Wait..',
+      spinner: 'bubbles',
     });
     await al.present();
     this.ordersService
       .firstAction(id, 3, this.token)
       .subscribe(async (res: any) => {
         await al.dismiss();
-        if (res.message == "Success") {
+        if (res.message == 'Success') {
           const salert = await this.alertController.create({
-            message: "Picked Up!",
-            buttons: ["OK"],
+            message: 'Picked Up!',
+            buttons: ['OK'],
           });
           await salert.present();
         }
       });
   }
-  async deliver(id) {
+  async deliver(id: any) {
     const al = await this.loadingController.create({
-      message: "Please Wait..",
-      spinner: "bubbles",
+      message: 'Please Wait..',
+      spinner: 'bubbles',
     });
     await al.present();
     this.ordersService
       .firstAction(id, 4, this.token)
       .subscribe(async (res: any) => {
         await al.dismiss();
-        if (res.message == "Success") {
+        if (res.message == 'Success') {
           const salert = await this.alertController.create({
-            message: "Order Delivered!",
-            buttons: ["OK"],
+            message: 'Order Delivered!',
+            buttons: ['OK'],
           });
           await salert.present();
         }
       });
   }
 
-  async reject(data) {
+  async reject(data: any) {
     let id = data.id;
     let msg = data.rejectmsg;
     const al = await this.loadingController.create({
-      message: "Please Wait..",
-      spinner: "bubbles",
+      message: 'Please Wait..',
+      spinner: 'bubbles',
     });
     await al.present();
     this.ordersService
       .firstAction(id, 5, this.token, msg)
       .subscribe(async (res: any) => {
         await al.dismiss();
-        console.log("rejected", res);
-        if (res.message == "Success") {
+        console.log('rejected', res);
+        if (res.message == 'Success') {
           const salert = await this.alertController.create({
-            message: "Order Rejected by Customer!",
-            buttons: ["OK"],
+            message: 'Order Rejected by Customer!',
+            buttons: ['OK'],
           });
           await salert.present();
         }
@@ -332,7 +323,7 @@ export class Tab1Page implements OnInit {
     await pop.present();
   }
 
-  async openlog($ev) {
+  async openlog($ev: any) {
     const logPop = await this.popoverController.create({
       component: LogoutComponent,
       event: $ev,
@@ -341,14 +332,14 @@ export class Tab1Page implements OnInit {
     let rdata: any = await logPop.onWillDismiss();
     if (rdata.data) {
       if (rdata.data.log) {
-        await remove("token");
+        await remove('token');
         await this.authService.checkLogin();
-        this.router.navigateByUrl("/login");
+        this.router.navigateByUrl('/login');
       }
     }
   }
   //toggle=================================
-  async toogleChanged($event) {
+  async toogleChanged($event: any) {
     this.statusService
       .setStatus(this.token, $event.detail.checked)
       .subscribe((res: any) => {
@@ -374,10 +365,10 @@ export class Tab1Page implements OnInit {
     clearInterval(this.updating);
     clearInterval(this.timer);
   }
-  navigateVendor(lat, lng) {
-    console.log("clad");
+  navigateVendor(lat: any, lng: any) {
+    console.log('clad');
     this.router.navigateByUrl(
-      "https://www.google.com/maps/search/?api=1&query=" + lat + "," + lng
+      'https://www.google.com/maps/search/?api=1&query=' + lat + ',' + lng
     );
   }
   updateTime() {
@@ -395,22 +386,22 @@ export class Tab1Page implements OnInit {
       }
     });
   }
-  async decline(id) {
+  async decline(id: any) {
     const alert = await this.alertController.create({
-      cssClass: "my-custom-class",
-      header: "Confirm!",
-      message: "<strong>Do you want to reject this order?</strong>!!!",
+      cssClass: 'my-custom-class',
+      header: 'Confirm!',
+      message: '<strong>Do you want to reject this order?</strong>!!!',
       buttons: [
         {
-          text: "Cancel",
-          role: "cancel",
-          cssClass: "secondary",
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
           handler: (blah) => {
-            console.log("Confirm Cancel: blah");
+            console.log('Confirm Cancel: blah');
           },
         },
         {
-          text: "Okay",
+          text: 'Okay',
           handler: () => {
             this.declineorder(id);
           },
@@ -420,22 +411,22 @@ export class Tab1Page implements OnInit {
 
     await alert.present();
   }
-  async pickedup(id) {
+  async pickedup(id: any) {
     const alert = await this.alertController.create({
-      cssClass: "my-custom-class",
-      header: "Are you sure",
-      message: "<strong>Picked up the order?</strong>!!!",
+      cssClass: 'my-custom-class',
+      header: 'Are you sure',
+      message: '<strong>Picked up the order?</strong>!!!',
       buttons: [
         {
-          text: "No",
-          role: "cancel",
-          cssClass: "secondary",
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
           handler: (blah) => {
-            console.log("Confirm Cancel: blah");
+            console.log('Confirm Cancel: blah');
           },
         },
         {
-          text: "Yes",
+          text: 'Yes',
           handler: () => {
             this.picked(id);
           },
@@ -445,22 +436,22 @@ export class Tab1Page implements OnInit {
 
     await alert.present();
   }
-  async delivered(id) {
+  async delivered(id: any) {
     const alert = await this.alertController.create({
-      cssClass: "my-custom-class",
-      header: "Good job!",
-      message: "<strong>Are you sure?</strong>!!!",
+      cssClass: 'my-custom-class',
+      header: 'Good job!',
+      message: '<strong>Are you sure?</strong>!!!',
       buttons: [
         {
-          text: "No",
-          role: "cancel",
-          cssClass: "secondary",
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
           handler: (blah) => {
-            console.log("Confirm Cancel: blah");
+            console.log('Confirm Cancel: blah');
           },
         },
         {
-          text: "Yes",
+          text: 'Yes',
           handler: () => {
             this.deliver(id);
           },
@@ -470,30 +461,30 @@ export class Tab1Page implements OnInit {
 
     await alert.present();
   }
-  async rejected(id) {
+  async rejected(id: any) {
     const alert = await this.alertController.create({
-      cssClass: "my-custom-class",
-      header: "Reason for rejection",
+      cssClass: 'my-custom-class',
+      header: 'Reason for rejection',
 
       inputs: [
         {
-          name: "rejectmsg",
-          type: "text",
-          placeholder: "",
-          cssClass: "rinput",
+          name: 'rejectmsg',
+          type: 'text',
+          placeholder: '',
+          cssClass: 'rinput',
         },
       ],
       buttons: [
         {
-          text: "Cancel",
-          role: "cancel",
-          cssClass: "secondary",
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
           handler: () => {
-            console.log("Confirm Cancel: blah");
+            console.log('Confirm Cancel: blah');
           },
         },
         {
-          text: "Submit",
+          text: 'Submit',
           handler: (rejectmsg) => {
             let data = { ...rejectmsg, id };
             this.reject(data);
@@ -516,7 +507,7 @@ export class Tab1Page implements OnInit {
       }
       this.pendingOrders.forEach((order, index) => {
         let present = false;
-        pending.forEach((o) => {
+        pending.forEach((o: any) => {
           if (o.txnid == order.txnid) {
             present = true;
           }
@@ -552,10 +543,10 @@ export class Tab1Page implements OnInit {
       this.ongoingOrders.forEach((order, index) => {
         let present = false;
         console.log(order, ongoing);
-        ongoing.forEach((o) => {
+        ongoing.forEach((o: any) => {
           if (o.txnid == order.txnid) {
             present = true;
-            console.log("making true", o.txnid, order.txnid);
+            console.log('making true', o.txnid, order.txnid);
             this.ongoingOrders[index].status = o.status;
           }
           console.log(present);
@@ -563,7 +554,7 @@ export class Tab1Page implements OnInit {
         if (present == false) {
           // o.timeLeft = Date.parse(o.time)+(5*60) - Date.now()
           // this.pendingOrders.push(o);
-          console.log("not present");
+          console.log('not present');
           this.ongoingOrders.splice(index, 1);
         }
       });
@@ -583,14 +574,12 @@ export class Tab1Page implements OnInit {
       });
       // console.log(this.pendingOrders);
     });
-    this.ordersService
-      .getCompletedOrders(this.token)
-      .subscribe((res: Order[]) => {
-        this.completedOrders = res;
+    this.ordersService.getCompletedOrders(this.token).subscribe((res: any) => {
+      this.completedOrders = res;
 
-        if (this.completeCount != res.length) {
-          this.completeCount = res.length;
-        }
-      });
+      if (this.completeCount != res.length) {
+        this.completeCount = res.length;
+      }
+    });
   }
 }

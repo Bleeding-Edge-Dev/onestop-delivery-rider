@@ -1,15 +1,15 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Env } from "../shared/apiConfig";
-import { get } from "./storage";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Env } from '../shared/apiConfig';
+import { get } from './storage';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ReportService {
   constructor(private http: HttpClient) {}
-  getTotals(token) {
+  getTotals(token: any) {
     //token = "Bearer "+token;
-    return this.http.post(Env.apiUrl + "reports.php", { token: token });
+    return this.http.post(Env.apiUrl + 'reports.php', { token: token });
   }
 }

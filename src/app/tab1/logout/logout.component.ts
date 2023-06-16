@@ -10,18 +10,21 @@ import { get } from 'src/app/services/storage';
   styleUrls: ['./logout.component.scss'],
 })
 export class LogoutComponent implements OnInit {
-
-  constructor(private popoverController:PopoverController,private router:Router , private authService:AuthService) { }
-token
+  constructor(
+    private popoverController: PopoverController,
+    private router: Router,
+    private authService: AuthService
+  ) {}
+  token: any;
   ngOnInit() {}
-async logout(){
-  this.token = await get('token');
-  this.token = "Bearer "+this.token;
-  this.authService.logout(this.token);
-  this.popoverController.dismiss();
-}
-change(){
-this.router.navigateByUrl('/change-password');
-this.popoverController.dismiss();
-}
+  async logout() {
+    this.token = await get('token');
+    this.token = 'Bearer ' + this.token;
+    this.authService.logout(this.token);
+    this.popoverController.dismiss();
+  }
+  change() {
+    this.router.navigateByUrl('/change-password');
+    this.popoverController.dismiss();
+  }
 }

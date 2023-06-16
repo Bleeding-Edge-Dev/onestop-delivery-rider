@@ -1,6 +1,6 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 // import {
 //   Capacitor,
 //   Plugins,
@@ -12,34 +12,34 @@ import { Router } from "@angular/router";
 // const { PushNotifications } = Plugins;
 // import { FullScreenNotification } from "capacitor-fullscreen-notification";
 //const { Device } = Plugins;
-import jsSHA from "jssha";
-import { Env } from "../shared/apiConfig";
+import jsSHA from 'jssha';
+import { Env } from '../shared/apiConfig';
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class FcmService {
-  uuid: string;
+  uuid: string = '';
   private apiUrl = Env.apiUrl;
   constructor(private http: HttpClient, private router: Router) {}
 
-  setId(token, id) {
+  setId(token: string, id: any) {
     this.getuid();
     let data = {
       token: token,
       id: id,
       uid: this.uuid,
     };
-    console.log("Setting firebase" + JSON.stringify(data));
-    return this.http.post(this.apiUrl + "notification.php", data);
+    console.log('Setting firebase' + JSON.stringify(data));
+    return this.http.post(this.apiUrl + 'notification.php', data);
   }
 
-  public initPush(token) {
+  public initPush(token: any) {
     // if (Capacitor.platform !== "web") {
     //   this.registerPush(token);
     // }
   }
 
-  private registerPush(tk) {
+  private registerPush(tk: any) {
     // PushNotifications.requestPermission().then((permission) => {
     //   if (permission.granted) {
     //     PushNotifications.register();

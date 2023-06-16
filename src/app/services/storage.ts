@@ -1,4 +1,4 @@
-import { Preferences } from "@capacitor/preferences";
+import { Preferences } from '@capacitor/preferences';
 
 export async function set(key: string, value: any): Promise<void> {
   await Preferences.set({
@@ -8,7 +8,7 @@ export async function set(key: string, value: any): Promise<void> {
 }
 
 export async function get(key: string): Promise<any> {
-  const item = await Preferences.get({ key: key });
+  const item: any = await Preferences.get({ key: key });
   return JSON.parse(item.value);
 }
 

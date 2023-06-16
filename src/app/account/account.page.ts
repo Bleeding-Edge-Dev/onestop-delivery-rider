@@ -12,39 +12,38 @@ import { LanguagePreferedModalComponent } from '../components/language-prefered-
   styleUrls: ['./account.page.scss'],
 })
 export class AccountPage implements OnInit {
-  objectKeys = Object.keys
-  navOptions={
+  objectKeys = Object.keys;
+  navOptions: any = {
     'Manage Profile': '/tabs/manage-profile',
     'My Reward Points': '',
     'My Wallet': '/tabs/my-wallet',
-    'Change Password' : '/tabs/change-password',
+    'Change Password': '/tabs/change-password',
     'Rate Card': RateCardModalComponent,
-    'Language Preferences':LanguagePreferedModalComponent,
-    'Trip History':'/tabs/trip-history',
-    'Session History':'',
-    'Issues & Tickets':'',
-
-  }
-  token
-  constructor(private router:Router , private authService:AuthService, private modalController:ModalController) { }
-  async logout(){
+    'Language Preferences': LanguagePreferedModalComponent,
+    'Trip History': '/tabs/trip-history',
+    'Session History': '',
+    'Issues & Tickets': '',
+  };
+  token: any;
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private modalController: ModalController
+  ) {}
+  async logout() {
     this.token = await get('token');
-    this.token = "Bearer "+this.token;
+    this.token = 'Bearer ' + this.token;
     this.authService.logout(this.token);
-
   }
-  handleNavRoutes(navOption){
-    if(navOption == "Rate Card" || navOption == "Language Preferences"){
+  handleNavRoutes(navOption: any) {
+    if (navOption == 'Rate Card' || navOption == 'Language Preferences') {
       this.presentModal(navOption);
-    }else{
+    } else {
       this.router.navigate([this.navOptions[navOption]]);
     }
   }
-  ngOnInit(
-    ) {
-
-  }
-  async presentModal(navOption) {
+  ngOnInit() {}
+  async presentModal(navOption: any) {
     const modal = await this.modalController.create({
       component: this.navOptions[navOption],
     });

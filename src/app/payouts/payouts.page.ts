@@ -1,17 +1,17 @@
-import { Component, OnInit } from "@angular/core";
-import { get } from "../services/storage";
-import { RewardService } from "../services/reward.service";
-import { DatePipe } from "@angular/common";
-import { IRiderReport } from "../shared/IRiderReport";
+import { Component, OnInit } from '@angular/core';
+import { get } from '../services/storage';
+import { RewardService } from '../services/reward.service';
+import { DatePipe } from '@angular/common';
+import { IRiderReport } from '../shared/IRiderReport';
 
 @Component({
-  selector: "app-payouts",
-  templateUrl: "./payouts.page.html",
-  styleUrls: ["./payouts.page.scss"],
+  selector: 'app-payouts',
+  templateUrl: './payouts.page.html',
+  styleUrls: ['./payouts.page.scss'],
 })
 export class PayoutsPage implements OnInit {
   isOrderHistoryOpen: boolean = false;
-  selectedValue: string = "daily";
+  selectedValue: string = 'daily';
   selectedDate: any = new Date().toISOString();
   todayDate: any = new Date().toISOString();
 
@@ -19,12 +19,12 @@ export class PayoutsPage implements OnInit {
     private rewardService: RewardService,
     private datePipe: DatePipe
   ) {}
-  payoutsData: IRiderReport;
+  payoutsData: any;
 
   onSegmentChange() {
-    if (this.selectedValue === "daily") {
-    } else if (this.selectedValue === "weekly") {
-    } else if (this.selectedValue === "monthly") {
+    if (this.selectedValue === 'daily') {
+    } else if (this.selectedValue === 'weekly') {
+    } else if (this.selectedValue === 'monthly') {
     }
     this.onDateChange();
   }
@@ -32,12 +32,12 @@ export class PayoutsPage implements OnInit {
     {
       orderId: 1234567,
       amount: 20,
-      completedOn: "17 March, 4:23 PM",
+      completedOn: '17 March, 4:23 PM',
     },
     {
       orderId: 1234568,
       amount: 35,
-      completedOn: "17 March, 4:23 PM",
+      completedOn: '17 March, 4:23 PM',
     },
   ];
   isMyRewardsOpen: boolean = false;
@@ -45,21 +45,21 @@ export class PayoutsPage implements OnInit {
     {
       orderId: 1234567,
       amount: 20,
-      completedOn: "17 March, 4:23 PM",
+      completedOn: '17 March, 4:23 PM',
     },
   ];
 
   onDateChange() {
     const formattedDate = this.datePipe.transform(
       this.selectedDate,
-      "yyyy/MM/dd"
+      'yyyy/MM/dd'
     );
     this.selectedDate = formattedDate;
-    if (this.selectedValue === "daily") {
+    if (this.selectedValue === 'daily') {
       this.getPayoutData(this.selectedDate, this.selectedDate);
-    } else if (this.selectedValue === "weekly") {
+    } else if (this.selectedValue === 'weekly') {
       this.getPayoutData(this.selectedDate, this.calculateEndDate());
-    } else if (this.selectedValue === "monthly") {
+    } else if (this.selectedValue === 'monthly') {
       const selectedDateObj = new Date(this.selectedDate);
       const firstDate = new Date(
         selectedDateObj.getFullYear(),
@@ -73,22 +73,22 @@ export class PayoutsPage implements OnInit {
       );
       const formattedFirstDate = this.datePipe.transform(
         firstDate,
-        "yyyy/MM/dd"
+        'yyyy/MM/dd'
       );
-      const formattedLastDate = this.datePipe.transform(lastDate, "yyyy/MM/dd");
+      const formattedLastDate = this.datePipe.transform(lastDate, 'yyyy/MM/dd');
       this.getPayoutData(formattedFirstDate, formattedLastDate);
     }
   }
 
-  calculateEndDate(): string {
+  calculateEndDate() {
     const endDate = new Date(this.selectedDate);
     endDate.setDate(endDate.getDate() + 6);
 
     if (endDate > this.todayDate) {
-      return this.datePipe.transform(this.todayDate, "yyyy/MM/dd");
+      return this.datePipe.transform(this.todayDate, 'yyyy/MM/dd');
     }
 
-    return this.datePipe.transform(endDate.toISOString(), "yyyy/MM/dd");
+    return this.datePipe.transform(endDate.toISOString(), 'yyyy/MM/dd');
   }
 
   async ngOnInit() {
@@ -103,9 +103,9 @@ export class PayoutsPage implements OnInit {
     this.isMyRewardsOpen = !this.isMyRewardsOpen;
   }
 
-  async getPayoutData(from, to) {
-    let token: String = await get("token");
-    token = "Bearer " + token;
+  async getPayoutData(from: any, to: any) {
+    let token: string = await get('token');
+    token = 'Bearer ' + token;
     this.rewardService.getPayoutData(token, from, to).subscribe((res: any) => {
       this.payoutsData = res;
     });

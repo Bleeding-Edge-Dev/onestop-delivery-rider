@@ -3,8 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { NewOrderModalComponent } from 'src/app/components/new-order-modal/new-order-modal.component';
 import { Router } from '@angular/router';
 import { OrdersService } from 'src/app/services/orders.service';
-import { get, remove } from "../../services/storage";
-
+import { get, remove } from '../../services/storage';
 
 @Component({
   selector: 'app-orders',
@@ -12,18 +11,16 @@ import { get, remove } from "../../services/storage";
   styleUrls: ['./orders.component.scss'],
 })
 export class OrdersComponent implements OnInit {
-  stepText = {
-    4: "1: Reach Restaurant",
-    42: "2: pickup order",
-    5: "3: deliver order",
-  }
-
+  stepText: any = {
+    4: '1: Reach Restaurant',
+    42: '2: pickup order',
+    5: '3: deliver order',
+  };
 
   orders: any = {
     ongoing: [],
-    pending: []
+    pending: [],
   };
-  
 
   showActiveOrders = true;
   token: any;
@@ -33,61 +30,53 @@ export class OrdersComponent implements OnInit {
     const pendingOrders = this.orders.pending;
     const allOrders = ongoingOrders.concat(pendingOrders);
     if (!this.showActiveOrders) {
-      return allOrders.filter(order => parseInt(order.status) <= 3);
-
+      return allOrders.filter((order: any) => parseInt(order.status) <= 3);
     }
 
-    return allOrders.filter(order => parseInt(order.status) > 3);
+    return allOrders.filter((order: any) => parseInt(order.status) > 3);
   }
-  
+
   constructor(
     private modalController: ModalController,
     private router: Router,
     private ordersService: OrdersService,
     private cdRef: ChangeDetectorRef
-  ) { }
+  ) {}
 
-  async openNewOrder(order) {
-      const modal = await this.modalController.create({
-        component: NewOrderModalComponent,
-        animated: false,
-        componentProps: {
-          order: order
-        }
-      });
-      await modal.present();
-      const { data } = await modal.onDidDismiss();
-      if(data && data.role === 'confirm') {
-        // this.isRiderOnline = true;
-      }
+  async openNewOrder(order: any) {
+    const modal = await this.modalController.create({
+      component: NewOrderModalComponent,
+      animated: false,
+      componentProps: {
+        order: order,
+      },
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    if (data && data.role === 'confirm') {
+      // this.isRiderOnline = true;
+    }
   }
   expandOrder(order: any) {
     if (this.showActiveOrders) {
-      
       this.router.navigate(['/tabs/order'], { state: { order: order } });
-
     } else {
       this.openNewOrder(order);
     }
     this.cdRef.detectChanges();
   }
-  
-  
+
   async ngOnInit() {
-    this.token = await get("token");
-    this.token = "Bearer " + this.token;
+    this.token = await get('token');
+    this.token = 'Bearer ' + this.token;
     setInterval(() => {
-
       this.getAllOrders();
-    },500
-    )
-
+    }, 500);
   }
-  getOrders(){
-    this.ordersService.getOngoingOrders(this.token).subscribe((res)=>{
+  getOrders() {
+    this.ordersService.getOngoingOrders(this.token).subscribe((res) => {
       this.orders = res;
-
-    })
+    });
   }
   getAllOrders() {
     this.ordersService.getOngoingOrders(this.token).subscribe((res: any) => {
@@ -99,9 +88,9 @@ export class OrdersComponent implements OnInit {
       if (!ongoing) {
         ongoing = [];
       }
-      this.orders.pending.forEach((order, index) => {
+      this.orders.pending.forEach((order: any, index: number) => {
         let present = false;
-        pending.forEach((o) => {
+        pending.forEach((o: any) => {
           if (o.txnid == order.txnid) {
             present = true;
           }
@@ -112,12 +101,12 @@ export class OrdersComponent implements OnInit {
       });
       pending.forEach((order: any) => {
         let present = false;
-        this.orders.pending.forEach((o, index) => {
+        this.orders.pending.forEach((o: any, index: number) => {
           if (o.txnid == order.txnid) {
             present = true;
           }
         });
-  
+
         if (!present) {
           let ot = new Date(order.allot_time);
           let ct = new Date();
@@ -128,10 +117,10 @@ export class OrdersComponent implements OnInit {
           this.openNewOrder(order);
         }
       });
-  
-      this.orders.ongoing.forEach((order, index) => {
+
+      this.orders.ongoing.forEach((order: any, index: number) => {
         let present = false;
-        ongoing.forEach((o) => {
+        ongoing.forEach((o: any) => {
           if (o.txnid == order.txnid) {
             present = true;
             this.orders.ongoing[index].status = o.status;
@@ -143,7 +132,7 @@ export class OrdersComponent implements OnInit {
       });
       ongoing.forEach((order: any) => {
         let present = false;
-        this.orders.ongoing.forEach((o, index) => {
+        this.orders.ongoing.forEach((o: any, index: number) => {
           if (o.txnid == order.txnid) {
             present = true;
             this.orders.ongoing[index].status = o.status;
@@ -153,11 +142,8 @@ export class OrdersComponent implements OnInit {
         if (!present) {
           order.menu = JSON.parse(order.menu);
           this.orders.ongoing.push(order);
-
         }
       });
     });
   }
-  
-
 }

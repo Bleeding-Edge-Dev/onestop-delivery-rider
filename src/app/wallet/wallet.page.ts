@@ -1,19 +1,19 @@
-import { Component, OnInit } from "@angular/core";
-import { AlertController, ToastController } from "@ionic/angular";
+import { Component, OnInit } from '@angular/core';
+import { AlertController, ToastController } from '@ionic/angular';
 
-import { get } from "../services/storage";
-import { WalletService } from "../services/wallet.service";
+import { get } from '../services/storage';
+import { WalletService } from '../services/wallet.service';
 
 @Component({
-  selector: "app-wallet",
-  templateUrl: "./wallet.page.html",
-  styleUrls: ["./wallet.page.scss"],
+  selector: 'app-wallet',
+  templateUrl: './wallet.page.html',
+  styleUrls: ['./wallet.page.scss'],
 })
 export class WalletPage implements OnInit {
-  token;
-  details;
-  requestAmount;
-  date;
+  token: string = '';
+  details: any;
+  requestAmount: any;
+  date: any;
   constructor(
     private walletService: WalletService,
     private toastController: ToastController,
@@ -21,7 +21,7 @@ export class WalletPage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.token = await get("token");
+    this.token = await get('token');
     this.date = this.getRedeemDate();
     this.walletService.getWalletDetails(this.token).subscribe((data: any) => {
       data.reedamableAmount =
@@ -40,16 +40,16 @@ export class WalletPage implements OnInit {
   async sendRequest() {
     if (isNaN(this.requestAmount)) {
       const toast = await this.toastController.create({
-        message: "Invalid Amount.",
+        message: 'Invalid Amount.',
         duration: 2000,
-        position: "top",
+        position: 'top',
       });
       toast.present();
     } else if (this.requestAmount > this.details.reedamableAmount) {
       const toast = await this.toastController.create({
-        message: "Invalid Amount.",
+        message: 'Invalid Amount.',
         duration: 2000,
-        position: "top",
+        position: 'top',
       });
     } else {
       this.walletService
@@ -61,11 +61,11 @@ export class WalletPage implements OnInit {
   }
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
-      header: "Request Sent",
-      message: "Please wait while admin verifies and settles your request.",
+      header: 'Request Sent',
+      message: 'Please wait while admin verifies and settles your request.',
       buttons: [
         {
-          text: "Okay",
+          text: 'Okay',
           handler: () => {
             this.ngOnInit();
           },

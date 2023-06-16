@@ -8,8 +8,8 @@ import { WalletService } from 'src/app/services/wallet.service';
   styleUrls: ['./credit-notes.page.scss'],
 })
 export class CreditNotesPage implements OnInit {
-  token;
-  transactions = [];
+  token: any;
+  transactions: any[] = [];
   constructor(private trans: WalletService) {}
 
   async ngOnInit() {

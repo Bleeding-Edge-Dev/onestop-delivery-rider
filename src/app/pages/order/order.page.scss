@@ -12,12 +12,16 @@
     content: "Confirm to Pick Up";
     left: 85px !important;
 }
-.deliver-order:before {
-    content: "Order Delivered";
+.disabled-deliver-order:before {
+    content: "Waiting For Payment";
     left: 85px !important;
 }
+.deliver-order:before {
+    content: "Order Delivered";
+    left: 100px !important;
+}
 
-div> :has(.disabled-pickup-order) {
+.slide-btn-wrapper .disabled-pickup-order,.slide-btn-wrapper .disabled-deliver-order  {
     filter: grayscale(0.9);
     pointer-events: none;
     opacity: 0.5;

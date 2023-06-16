@@ -30,4 +30,16 @@ export class OrdersService {
   getOrder(token, id) {
     return this.http.post(this.apiUrl + "getOrder.php", { token: token, id: id });
   }
+  generatePaymentLink(token, id) {
+    return this.http.post(this.apiUrl + "createUpiLink.php", {
+      token: token,
+      orderId: id,
+    });
+  }
+  checkPaymentStatus(token, id) {
+    return this.http.post(this.apiUrl + "checkPaymentStatus.php", {
+      token: token,
+      id: id,
+    });
+  }
 }

@@ -69,14 +69,26 @@
         </span>
       </div>
     </div>
-    <div class="slide-btn-wrapper py">
-      <input [classList]="statusData[order.status].slideBtnClass" type="range" value={{sliderValue}}
-        [style.background]="getColor()" (input)="onSliderChange($event)" (touchend)="onSliderTouchEnd()"
-        (mouseup)="onSliderTouchEnd()" min="0" max="100">
-      <div class="thumb-icon" [style.left.px]="25+ sliderValue * 2.2">
-        <img src="../../../assets/icon/keyboard_double_arrow_right.svg">
-      </div>
+    <div class="flex-col gap-12">
+      <div class="grid-center px-40" *ngIf="order.status==='5' && order.ptype==='Cash'">
+        <button class="p-btn w-full" (click)="generatePaymentLink()" *ngIf="paymentStatus ==='pending'">
+          Generate Payment Link
+        </button>
+        <span class="bf-12 f-green" *ngIf="paymentStatus === 'waiting'">
+          Waiting For Payment
+        </span>
+        <span class="bf-12 f-green" *ngIf="paymentStatus === 'paid'">
+          Custumer Paid
+        </span>
 
+      </div>
+      <div class="slide-btn-wrapper py">
+        <input [classList]="statusData[order.status].slideBtnClass" type="range" value={{sliderValue}}
+          [style.background]="getColor()" (input)="onSliderChange($event)" (touchend)="onSliderTouchEnd()"
+          (mouseup)="onSliderTouchEnd()" min="0" max="100">
+       
+  
+      </div>
     </div>
   </div>
 </ion-content>

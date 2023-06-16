@@ -12,6 +12,7 @@ import { Order } from 'src/app/shared/order';
   styleUrls: ['./order.page.scss'],
 })
 export class OrderPage implements OnInit {
+  paymentStatus='pending';
   token;
   orderId;
   order: Order ={
@@ -63,7 +64,7 @@ export class OrderPage implements OnInit {
       headText: "3: deliver order",
       vendorCard: false,
       itemsPresentBlock: false,
-      slideBtnClass: "deliver-order",
+      slideBtnClass:  "disabled-deliver-order"  ,
 
     }
   }
@@ -103,7 +104,14 @@ export class OrderPage implements OnInit {
       return '#FF6565';
     }
   }
-
+  async generatePaymentLink() {
+    this.ordersService.generatePaymentLink(this.token, this.order.id).subscribe((res: any) => {
+      console.log(res);
+      if(res.message === "Link generated successfully"){
+        this.paymentStatus = 'waiting'
+      }
+    })
+  }
   constructor(
     private activatedRoute: ActivatedRoute,
     private loadingController: LoadingController,
@@ -137,19 +145,30 @@ export class OrderPage implements OnInit {
   async ionViewDidEnter() {
     this.orderInterval = setInterval(() => {
       this.getOrder();
+      if(this.order.ptype==='Cash' ){
+        this.checkPaymentStatus();
+      }
     }, 3000);
   }
 
   ionViewDidLeave() {
     clearInterval(this.orderInterval);
   }
-
+  async checkPaymentStatus(){
+    this.ordersService.checkPaymentStatus(this.token, this.order.id).subscribe((res: any) => {
+      console.log(res);
+      
+    })
+  }
   async getOrder(){
     this.ordersService.getOrder( this.token,this.orderId).subscribe((res: any) => {
       console.log(res);
       let order = res.order;
       order.menu = JSON.parse(order.menu);
       this.order = order;
+      if(this.order.ptype!=='Cash' ){
+        this.statusData[5].slideBtnClass = "deliver-order"
+      }
       console.log(this.order);
       // this.foodPrepared = this.order.prep;
       // this.allItemsPresent = this.order.manual;

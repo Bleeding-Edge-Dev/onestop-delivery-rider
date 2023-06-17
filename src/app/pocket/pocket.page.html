@@ -44,13 +44,18 @@
             <span class="bf-16">Transactions</span>
         </span>
         <div>
-            <span class="rf-12 date-filter bordered-card">
-              <span>Date:</span>
-              <ion-datetime placeholder="Select Date " displayFormat="D MMMM YYYY" pickerFormat="MMM D, YYYY"
-                [(ngModel)]="selectedDate" (ionChange)="filterTransactionsByDate()">
-                Date:
-              </ion-datetime>
-            </span>
+              
+              <ion-datetime-button class="bf-12 date-filter dark-border flex-aligned flex-spaced gap-8"
+                     datetime="date">
+    </ion-datetime-button>
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime id="date" presentation="date" prefer-wheel="false" showDefaultButtons="true"
+          [value]="selectedDate || todayDate" (ionChange)="onDateChange($event)" placeholder="Select Date" [max]="todayDate">
+        </ion-datetime>
+
+      </ng-template>
+    </ion-modal>
           </div>
           
           <div class="flex-col gap-9">

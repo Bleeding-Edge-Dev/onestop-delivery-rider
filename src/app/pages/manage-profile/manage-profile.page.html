@@ -10,14 +10,14 @@
 </ion-header>
 
 <ion-content>
-<div class="p-16 flex-col gap-16">
+<div class="p-16 flex-col gap-16" *ngIf="!isloading">
   <div class="bordered-card flex-aligned p-16 gap-24">
     <span class="user-img bg-grey">
-      <img [src]="'https://onestopdelivery.in/images/rider/'+profileData.profileImage" alt="">
+      <img [src]="'https://onestopdelivery.in/images/rider/'+profileData?.profileImage" alt="">
     </span>
     <span class="">
-        <div class="bf-16">{{profileData.name}}</div>
-        <div class="rf-12">{{profileData.phone}}</div>
+        <div class="bf-16">{{profileData?.name}}</div>
+        <div class="rf-12">{{profileData?.phone}}</div>
     </span>
 </div>
 
@@ -27,15 +27,15 @@
 <div class="bordered-card p-16 flex-col gap-12">
 <div class="flex-spaced f-darkgrey">
   <span class="bf-12">Alternate Phone</span>
-  <span class="rf-12">{{profileData.alternatePhone || 'Not Available'}}</span>
+  <span class="rf-12">{{profileData?.alternatePhone || 'Not Available'}}</span>
 </div>
 <div class="flex-spaced f-darkgrey">
   <span class="bf-12">DL No</span>
-  <span class="rf-12">{{profileData.drivingLicenseNumber || 'Not Available'}}</span>
+  <span class="rf-12">{{profileData?.drivingLicenseNumber || 'Not Available'}}</span>
 </div>
 <div class="flex-spaced f-darkgrey">
   <span class="bf-12">DL Expiry</span>
-  <span class="rf-12">{{profileData.drivingLicenseExpiry || 'Not Available'}}</span>
+  <span class="rf-12">{{profileData?.drivingLicenseExpiry || 'Not Available'}}</span>
 </div>
 </div>
 <div class="bf-16">
@@ -44,15 +44,15 @@
 <div class="bordered-card p-16 flex-col gap-12">
   <div class="flex-spaced f-darkgrey">
     <span class="bf-12">Bank Name</span>
-    <span class="rf-12">{{profileData.bankName || 'Not Available'}}</span>
+    <span class="rf-12">{{profileData?.bankName || 'Not Available'}}</span>
   </div>
   <div class="flex-spaced f-darkgrey">
     <span class="bf-12">Account Number</span>
-    <span class="rf-12">{{profileData.accountNumber || 'Not Available'}}</span>
+    <span class="rf-12">{{profileData?.accountNumber || 'Not Available'}}</span>
   </div>
   <div class="flex-spaced f-darkgrey">
     <span class="bf-12">IFSC Code</span>
-    <span class="rf-12">{{profileData.ifscCode || 'Not Available'}}</span>
+    <span class="rf-12">{{profileData?.ifscCode || 'Not Available'}}</span>
   </div>
   </div>
 <div class="bf-16">
@@ -61,15 +61,15 @@
 <div class="bordered-card p-16 flex-col gap-12">
   <div class="flex-spaced f-darkgrey">
     <span class="bf-12">Total Orders Till Date</span>
-    <span class="rf-12">{{profileData.totalOrders || '0'}}</span>
+    <span class="rf-12">{{profileData?.totalOrders || '0'}}</span>
   </div>
   <div class="flex-spaced f-darkgrey">
     <span class="bf-12">Total Earnings</span>
-    <span class="rf-12">₹{{profileData.totalEarnings || '0'}}</span>
+    <span class="rf-12">₹{{profileData?.totalEarnings || '0'}}</span>
   </div>
   <div class="flex-spaced f-darkgrey">
     <span class="bf-12">Total Distance</span>
-    <span class="rf-12">{{profileData.totalDistance || '0KM'}}</span>
+    <span class="rf-12">{{profileData?.totalDistance || '0KM'}}</span>
   </div>
   </div>
 

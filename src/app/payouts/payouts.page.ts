@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { get } from '../services/storage';
 import { RewardService } from '../services/reward.service';
 import { DatePipe } from '@angular/common';
-import { ViewChild } from '@angular/core';
-import { IonDatetime, IonInput } from '@ionic/angular';
 import { IRiderReport } from "../shared/IRiderReport";
+import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-payouts',
   templateUrl: './payouts.page.html',
@@ -15,18 +14,15 @@ export class PayoutsPage implements OnInit {
   selectedValue: string = "daily";
   selectedDate: any = new Date().toISOString();
   todayDate: any = new Date().toISOString();
-  @ViewChild(IonInput)
-  datetimePicker!: IonInput;
   token: string = '';
 
-  openDatePicker() {
-    this.datetimePicker.setFocus();
-  }
-
-  constructor(private rewardService: RewardService, private datePipe: DatePipe) { }
+  constructor(private rewardService: RewardService, private datePipe: DatePipe,
+private loadingController: LoadingController
+    ) { }
   payoutsData: IRiderReport | any = null;
 
   isMyRewardsOpen: boolean = false;
+  isLoading: boolean = false;
 
   onSegmentChange() {
     this.payoutsData = null;
@@ -38,15 +34,19 @@ export class PayoutsPage implements OnInit {
     }
     this.getData();
   }
-  changeWeeklyLabel(val: string) {
-    const weeklyStartDate: any = this.datePipe.transform(this.selectedDate, 'MMM d, y', 'en-US');
+  changePickerLabel(val?: string) {
+    let weeklyStartDate: any = this.datePipe.transform(this.selectedDate, 'MMM d, y', 'en-US');
+    if (this.selectedValue === 'monthly') {
+      weeklyStartDate = this.datePipe.transform(this.selectedDate, 'MMMM y ', 'en-US');
+    }
+
       const weeklyEndDate: any = this.datePipe.transform(val, 'MMM d, y', 'en-US');
-    const element = document.getElementById("weekly-picker");
-    console.log(element?.shadowRoot)
+    const element = document.getElementById("date-picker");
+
     if (element && element.shadowRoot) {
       const targetElement = element.shadowRoot.querySelector("#date-button");
       if (targetElement) {
-        targetElement.textContent = weeklyStartDate + " - " + weeklyEndDate;
+        targetElement.textContent = weeklyEndDate? (weeklyStartDate + " - " + weeklyEndDate) : (weeklyStartDate);
       }
     }
   }
@@ -59,7 +59,7 @@ export class PayoutsPage implements OnInit {
   }
   onDateChange(event?: any) {
     this.selectedDate = event.detail.value;
-    console.log(this.selectedDate)
+
     this.getData();
   }
   getData() {
@@ -69,11 +69,12 @@ export class PayoutsPage implements OnInit {
     );
     if (this.selectedValue === 'daily') {
       this.getPayoutData(formattedDate, formattedDate);
+      this.changePickerLabel();
     } else if (this.selectedValue === 'weekly') {
       const endDate: any = this.calculateEndDate(formattedDate);
       const formattedEndDate: any = this.datePipe.transform(endDate, 'yyyy/MM/dd');
       
-      this.changeWeeklyLabel(formattedEndDate);
+      this.changePickerLabel(formattedEndDate);
       this.getPayoutData(formattedDate, formattedEndDate);
     } else if (this.selectedValue === 'monthly') {
       const selectedDateObj = new Date(formattedDate);
@@ -95,6 +96,7 @@ export class PayoutsPage implements OnInit {
         lastDate,
         'yyyy/MM/dd'
       );
+      this.changePickerLabel();
       this.getPayoutData(formattedFirstDate, formattedLastDate);
     }
   }
@@ -128,10 +130,10 @@ export class PayoutsPage implements OnInit {
 
 
   async ngOnInit() {
-    console.log(this.selectedDate);
+
     this.token = await get("token");
     this.token = "Bearer " + this.token;
-    this.getPayoutData(this.selectedDate, this.selectedDate);
+    this.getData();
   }
 
   toggleOrderHistory() {
@@ -144,11 +146,17 @@ export class PayoutsPage implements OnInit {
 
   async getPayoutData(from: string, to: string) {
     if (this.token) {
+      const loadingMOdal = await this.loadingController.create({
+        spinner: 'lines-small',
+        showBackdrop: false,
+        animated: false,
+      });
+      this.isLoading = true;
+      await loadingMOdal.present();
       this.rewardService.getPayoutData(this.token, from, to).subscribe((res: any) => {
         this.payoutsData = res;
-        if (this.selectedValue === 'weekly') {
-          this.changeWeeklyLabel(to);
-        }
+        this.isLoading = false;
+        loadingMOdal.dismiss();
       });
     }
   }

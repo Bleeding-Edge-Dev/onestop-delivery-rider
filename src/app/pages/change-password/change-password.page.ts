@@ -32,11 +32,12 @@ export class ChangePasswordPage implements OnInit {
         Validators.required,
         Validators.minLength(6),
       ]),
-      confirmNewPassword: new FormControl('', [
+      confirmPassword: new FormControl('', [
         Validators.required,
         this.matchValues('newPassword'),
       ]),
     });
+    
   }
   matchValues(matchTo: string) {
     return (control: any) => {

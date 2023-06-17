@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ReportService } from 'src/app/services/report.service';
 import { get } from 'src/app/services/storage';
 import { DatePipe } from '@angular/common';
-import { ViewChild } from '@angular/core';
-import {  IonInput } from '@ionic/angular';
+
+import {   LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-trip-history',
@@ -15,19 +15,17 @@ export class TripHistoryPage implements OnInit {
   selectedValue: string = "daily";
   selectedDate: any = new Date().toISOString();
   todayDate: any = new Date().toISOString();
-  @ViewChild(IonInput)
-  datetimePicker!: IonInput;
+
   tripHistory: any = [];
-  openDatePicker() {
-    this.datetimePicker.setFocus();
-  }
+
 
 
 
   constructor(
     private reportService:ReportService,
     private datePipe: DatePipe,
-    private router: Router
+    private router: Router,
+    private loadingController: LoadingController
   ) { }
 
 
@@ -39,7 +37,7 @@ export class TripHistoryPage implements OnInit {
       sixDaysAgo.setDate(sixDaysAgo.getDate() - 6);
       this.selectedDate = sixDaysAgo.toISOString();
     }
-    this.onDateChange();
+    this.getData();
   }
   getCurrentDate(): string {
     return this.todayDate;
@@ -49,21 +47,44 @@ export class TripHistoryPage implements OnInit {
     const currentMonth = new Date().toISOString().split('T')[0].substr(0, 7);
     return currentMonth;
   }
-  onDateChange() {
+  onDateChange(event?: any) {
+    console.log(event);
+    this.selectedDate = event.detail.value;
 
-    const formattedDate = this.datePipe.transform(
+    this.getData();
+  }
+  changePickerLabel(val?: string) {
+    let weeklyStartDate: any = this.datePipe.transform(this.selectedDate, 'MMM d, y', 'en-US');
+    if (this.selectedValue === 'monthly') {
+      weeklyStartDate = this.datePipe.transform(this.selectedDate, 'MMMM y ', 'en-US');
+    }
+
+      const weeklyEndDate: any = this.datePipe.transform(val, 'MMM d, y', 'en-US');
+    const element = document.getElementById("date-picker");
+
+    if (element && element.shadowRoot) {
+      const targetElement = element.shadowRoot.querySelector("#date-button");
+      if (targetElement) {
+        targetElement.textContent = weeklyEndDate? (weeklyStartDate + " - " + weeklyEndDate) : (weeklyStartDate);
+      }
+    }
+  }
+  getData() {
+    const formattedDate: any = this.datePipe.transform(
       this.selectedDate,
       'yyyy/MM/dd'
     );
-    this.selectedDate = formattedDate;
     if (this.selectedValue === 'daily') {
-      this.getTripHistory(this.selectedDate, this.selectedDate);
+      this.getTripHistory(formattedDate, formattedDate);
+      this.changePickerLabel();
     } else if (this.selectedValue === 'weekly') {
-      const endDate:any = this.calculateEndDate(this.selectedDate);
-      const formattedEndDate:any = this.datePipe.transform(endDate, 'yyyy/MM/dd');
-      this.getTripHistory(this.selectedDate, formattedEndDate);
+      const endDate: any = this.calculateEndDate(formattedDate);
+      const formattedEndDate: any = this.datePipe.transform(endDate, 'yyyy/MM/dd');
+      
+      this.changePickerLabel(formattedEndDate);
+      this.getTripHistory(formattedDate, formattedEndDate);
     } else if (this.selectedValue === 'monthly') {
-      const selectedDateObj = new Date(this.selectedDate);
+      const selectedDateObj = new Date(formattedDate);
       const firstDate = new Date(
         selectedDateObj.getFullYear(),
         selectedDateObj.getMonth(),
@@ -74,19 +95,18 @@ export class TripHistoryPage implements OnInit {
         selectedDateObj.getMonth() + 1,
         0
       );
-      const formattedFirstDate:any = this.datePipe.transform(
+      const formattedFirstDate: any = this.datePipe.transform(
         firstDate,
         'yyyy/MM/dd'
       );
-      const formattedLastDate:any = this.datePipe.transform(
+      const formattedLastDate: any = this.datePipe.transform(
         lastDate,
         'yyyy/MM/dd'
       );
+      this.changePickerLabel();
       this.getTripHistory(formattedFirstDate, formattedLastDate);
     }
   }
-
-
 
 
   calculateEndDate(selectedDate: any): string | null {
@@ -107,11 +127,17 @@ export class TripHistoryPage implements OnInit {
     this.getTripHistory(this.selectedDate,this.selectedDate);
   }
 
-  getTripHistory(from:string,to:string){
+  async getTripHistory(from:string,to:string){
     if(this.token){
+      const loadingMOdal = await this.loadingController.create({
+        spinner: 'lines-small',
+        animated: true,
+      });
+      await loadingMOdal.present();
       this.reportService.getTripHistory(this.token,from,to).subscribe((res:any)=>{
         console.log(res);
         this.tripHistory = res;
+        loadingMOdal.dismiss();
       })
     }
   }

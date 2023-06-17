@@ -760,21 +760,23 @@ ion-grid{
   padding: 0 ;
 }
 ion-toast {
-  --background: #ffffff;
+  // --background: #ffffff;
   --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
 
 }
 
 ion-toast::part(message) {
-@extend .bf-12;
-}
-ion-toast.toast-error::part(message) {
-@extend .f-red;
-}
-ion-toast.toast-success::part(message) {
-@extend .f-green;
+  @extend .bf-12,.f-white;
+
 }
 
+ion-toast.toast-error {
+  --background: #FF6565;
+}
+
+ion-toast.toast-success {
+  --background: #4FCB6D;
+}
 
 // .date-filter {
 //   display: flex;

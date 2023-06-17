@@ -22,41 +22,16 @@
         Monthly
       </ion-segment-button>
     </ion-segment>
-    <div class="rf-12 date-filter dark-border flex-aligned flex-spaced gap-8" *ngIf="selectedValue==='daily'"
-      (click)="openDatePicker()">
-      <ion-datetime placeholder="Select Date" displayFormat="D MMMM YYYY" pickerFormat="MMM D, YYYY"
-        [(ngModel)]="selectedDate" (ionChange)="onDateChange()" (click)="$event.stopPropagation()"
-        [max]="getCurrentDate()">
-      </ion-datetime>
-      <div class="arrow-down"></div>
-    </div>
-    <div class="rf-12 date-filter dark-border flex-aligned flex-spaced gap-8" *ngIf="selectedValue==='weekly'"
-      (click)="openDatePicker()">
-      <span class="flex-aligned ">
-        <ion-datetime placeholder="Select Date" displayFormat="D MMMM YYYY" pickerFormat="MMM D, YYYY"
-          [(ngModel)]="selectedDate" (ionChange)="onDateChange()" (click)="$event.stopPropagation()"
-          [max]="getCurrentDate()">
+    <ion-datetime-button id="date-picker" class="bf-12 date-filter dark-border flex-aligned flex-spaced gap-8" [datetime]="selectedValue">
+    </ion-datetime-button>
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime [id]="selectedValue" [presentation]="this.selectedValue=='monthly'?'month-year':'date'" prefer-wheel="false" showDefaultButtons="true"
+          [value]="selectedDate" (ionChange)="onDateChange($event)" placeholder="Select Date" [max]="todayDate">
         </ion-datetime>
-        <div class="bf-16  grid-center date-seperator ">
-          <span>
-            -
-          </span>
-        </div>
-        <ion-datetime class="endDate-week-picker" placeholder="Select Date" displayFormat="D MMMM YYYY"
-          pickerFormat="MMM D, YYYY" [value]="this.calculateEndDate(selectedDate)" class="pointer-events-none"
-          (click)="$event.stopPropagation()" [max]="getCurrentDate()">
-        </ion-datetime>
-      </span>
-      <div class="arrow-down"></div>
-    </div>
-    <div class="rf-12 date-filter dark-border flex-aligned flex-spaced gap-8" *ngIf="selectedValue==='monthly'"
-      (click)="openDatePicker()">
-      <ion-datetime placeholder="Select Date" displayFormat="MMMM YYYY" pickerFormat="MMMM YYYY"
-        [(ngModel)]="selectedDate" (ionChange)="onDateChange()" (click)="$event.stopPropagation()"
-        [max]="getCurrentMonth()">
-      </ion-datetime>
-      <div class="arrow-down"></div>
-    </div>
+
+      </ng-template>
+    </ion-modal>
 
     <div *ngIf="tripHistory.length==0"  class="grid-center p-32 gap-24 h-full">
       <div class="grid-center gap-24">

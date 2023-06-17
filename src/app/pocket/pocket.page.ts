@@ -12,11 +12,26 @@ import { PocketService } from '../services/pocket.service';
   styleUrls: ['./pocket.page.scss'],
 })
 export class PocketPage implements OnInit {
+onDateChange($event: Event) {
+  this.selectedDate = ($event.target as HTMLInputElement).value;
+  if (!this.selectedDate) {
+    this.filteredTransactions = this.pockedData.transaction;
+  } else {
+    const selectedDateObj = new Date(this.selectedDate);
+    this.filteredTransactions = this.pockedData.transaction.filter(
+      (trans: any) => {
+        const transDate = new Date(trans.datetime);
+        return transDate.toDateString() === selectedDateObj.toDateString();
+      }
+    );
+  }
+}
   constructor(
     private modalController: ModalController,
     private pocketService: PocketService,
     private datePipe: DatePipe
   ) {}
+  todayDate: any = new Date().toISOString();
   token: any;
   inHandCash = {
     currentAmount: 300,
@@ -29,21 +44,8 @@ export class PocketPage implements OnInit {
     transaction: [],
   };
   filteredTransactions: any[] = [];
-  selectedDate: string = '';
+  selectedDate: any = '';
 
-  filterTransactionsByDate() {
-    if (!this.selectedDate) {
-      this.filteredTransactions = this.pockedData.transaction;
-    } else {
-      const selectedDateObj = new Date(this.selectedDate);
-      this.filteredTransactions = this.pockedData.transaction.filter(
-        (trans: any) => {
-          const transDate = new Date(trans.datetime);
-          return transDate.toDateString() === selectedDateObj.toDateString();
-        }
-      );
-    }
-  }
 
   async openModal() {
     const modal = await this.modalController.create({

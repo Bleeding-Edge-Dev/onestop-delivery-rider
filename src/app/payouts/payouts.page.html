@@ -19,141 +19,95 @@
       </ion-segment-button>
     </ion-segment>
 
-    <ion-datetime-button class="bf-12 date-filter dark-border flex-aligned flex-spaced gap-8"
-      *ngIf="selectedValue==='daily'" datetime="daily">
+    <ion-datetime-button id="date-picker" class="bf-12 date-filter dark-border flex-aligned flex-spaced gap-8" [datetime]="selectedValue">
     </ion-datetime-button>
     <ion-modal [keepContentsMounted]="true">
       <ng-template>
-        <ion-datetime id="daily" presentation="date" prefer-wheel="false" showDefaultButtons="true"
+        <ion-datetime [id]="selectedValue" [presentation]="selectedValue==='monthly'?'month-year':'date'" prefer-wheel="false" showDefaultButtons="true"
           [value]="selectedDate" (ionChange)="onDateChange($event)" placeholder="Select Date" [max]="todayDate">
         </ion-datetime>
 
       </ng-template>
     </ion-modal>
 
-
-    <ion-datetime-button id="weekly-picker" class="bf-12 date-filter dark-border flex-aligned flex-spaced gap-8"
-    *ngIf="selectedValue==='weekly'" datetime="weekly">
-  </ion-datetime-button>
-  <ion-modal [keepContentsMounted]="true">
-    <ng-template>
-      <ion-datetime id="weekly" presentation="date" prefer-wheel="false" showDefaultButtons="true"
-        [value]="selectedDate" (ionChange)="onDateChange($event)" placeholder="Select Date" [max]="todayDate">
-      </ion-datetime>
-
-    </ng-template>
-  </ion-modal>
-
-    <!-- <div class="rf-12 date-filter dark-border flex-aligned flex-spaced gap-8" *ngIf="selectedValue==='weekly'"
-      (click)="openDatePicker()">
-      <span class="flex-aligned ">
-        <ion-datetime placeholder="Select Date" displayFormat="D MMMM YYYY" pickerFormat="MMM D, YYYY"
-          [(ngModel)]="selectedDate" (ionChange)="onDateChange()" (click)="$event.stopPropagation()"
-          [max]="todayDate()">
-        </ion-datetime>
-        <div class="bf-16  grid-center date-seperator ">
-          <span>
-            -
-          </span>
-        </div>
-        <ion-datetime class="endDate-week-picker" placeholder="Select Date" displayFormat="D MMMM YYYY"
-          pickerFormat="MMM D, YYYY" [value]="this.calculateEndDate(selectedDate)" class="pointer-events-none"
-          (click)="$event.stopPropagation()" [max]="todayDate" disabled="true">
-        </ion-datetime>
-      </span>
-      <div class="arrow-down"></div>
-    </div> -->
+<div class="flex-col gap-16" *ngIf="!isLoading">
+  <div class="flex gap">
+    <div class="bordered-card w-full grid-center py-8 px">
+      <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">₹{{payoutsData?.totalEarning || 0}}</span>
+      <p class="rf-10 w-full text-center">Total Earnings</p>
+    </div>
+    <div class="bordered-card w-full grid-center py-8 px">
+      <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">{{payoutsData?.totalTrips}}</span>
+      <p class="rf-10 w-full text-center">Trips Today</p>
+      <button class="bf-10 f-red">Trips <img src="../../assets/icon/chevron_right.svg" /></button>
+    </div>
+    <div class="bordered-card w-full grid-center py-8 px">
+      <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">{{payoutsData?.totalHours}}</span>
+      <p class="rf-10 w-full text-center">Total Login Hours</p>
+      <button class="bf-10 f-red">Sessions <img src="../../assets/icon/chevron_right.svg" /></button>
+    </div>
+  </div>
 
 
 
+  <div class="flex-col gap-9" *ngIf="this.selectedValue==='daily'">
+    <span class="flex bf-16">My Target</span>
+    <app-my-target [Data]="this.myTargetData"></app-my-target>
 
-    <ion-datetime-button class="bf-12 date-filter dark-border flex-aligned flex-spaced gap-8"
-      *ngIf="selectedValue==='monthly'" datetime="monthly">
-    </ion-datetime-button>
-    <ion-modal [keepContentsMounted]="true">
-      <ng-template>
-        <ion-datetime id="monthly" presentation="month-year" prefer-wheel="false" showDefaultButtons="true"
-
-          [value]="selectedDate" (ionChange)="onDateChange($event)" placeholder="Select Date" [max]="todayDate">
-        </ion-datetime>
-
-      </ng-template>
-    </ion-modal>
-
-
-    <div class="flex gap">
-      <div class="bordered-card w-full grid-center py-8 px">
-        <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">₹{{payoutsData?.totalEarning || 0}}</span>
-        <p class="rf-10 w-full text-center">Total Earnings</p>
-      </div>
-      <div class="bordered-card w-full grid-center py-8 px">
-        <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">{{payoutsData?.totalTrips}}</span>
-        <p class="rf-10 w-full text-center">Trips Today</p>
-        <button class="bf-10 f-red">Trips <img src="../../assets/icon/chevron_right.svg" /></button>
-      </div>
-      <div class="bordered-card w-full grid-center py-8 px">
-        <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">{{payoutsData?.totalHours}}</span>
-        <p class="rf-10 w-full text-center">Total Login Hours</p>
-        <button class="bf-10 f-red">Sessions <img src="../../assets/icon/chevron_right.svg" /></button>
-      </div>
+  </div>
+  <div class="flex-col gap-16">
+    <div class="flex-spaced bf-16">
+      <p>My Earnings Today</p>
+      <p>₹{{payoutsData?.rewards ++ payoutsData?.orderPay || '0'}}</p>
     </div>
 
-
-
-    <div class="flex-col gap-9" *ngIf="this.selectedValue==='daily'">
-      <span class="flex bf-16">My Target</span>
-      <app-my-target [Data]="this.myTargetData"></app-my-target>
-
-    </div>
-    <div class="flex-col gap-16">
-      <div class="flex-spaced bf-16">
-        <p>My Earnings Today</p>
-        <p>₹{{payoutsData?.rewards ++ payoutsData?.orderPay || '0'}}</p>
-      </div>
-
-      <div class="accordian" [ngClass]="{'active': isOrderHistoryOpen}">
-        <div class="header flex-spaced flex-aligned" (click)="toggleOrderHistory()">
-          <div class="flex-aligned gap">
-            <img src="../../../assets/icon/currency2.svg" alt="">
-            <span class="bf-12">Order Pay</span>
-          </div>
-          <div class="flex-aligned gap">
-            <span class="bf-12">₹{{payoutsData?.orderPay || '0'}}</span>
-            <span class="btn" *ngIf="payoutsData?.orderPay"><img src="../../../assets/icon/expand_more.svg"
-                alt=""></span>
-          </div>
+    <div class="accordian" [ngClass]="{'active': isOrderHistoryOpen}">
+      <div class="header flex-spaced flex-aligned" (click)="toggleOrderHistory()">
+        <div class="flex-aligned gap">
+          <img src="../../../assets/icon/currency2.svg" alt="">
+          <span class="bf-12">Order Pay</span>
         </div>
-        <div class="body" *ngFor="let order of payoutsData?.earningTransactions">
-          <div class="body-block">
-            <div class="flex-spaced"><span class="rf-10">Order ID: {{order.txnid}}</span> <span
-                class="bf-12">₹{{order.dcharge}}</span>
-            </div>
-            <div class="flex-spaced"><span class="rf-10">Completed on: {{order.time}}</span></div>
-          </div>
+        <div class="flex-aligned gap">
+          <span class="bf-12">₹{{payoutsData?.orderPay || '0'}}</span>
+          <span class="btn" *ngIf="payoutsData?.orderPay"><img src="../../../assets/icon/expand_more.svg"
+              alt=""></span>
         </div>
       </div>
-      <div class="accordian" [ngClass]="{'active': isMyRewardsOpen}">
-        <div class="header flex-spaced flex-aligned" (click)="toggleMyRewardsHistory()">
-          <div class="flex-aligned gap">
-            <img src="../../../assets/icon/rewards.svg" alt="">
-            <span class="bf-12">My Rewards</span>
+      <div class="body" *ngFor="let order of payoutsData?.earningTransactions">
+        <div class="body-block">
+          <div class="flex-spaced"><span class="rf-10">Order ID: {{order.txnid}}</span> <span
+              class="bf-12">₹{{order.dcharge}}</span>
           </div>
-          <div class="flex-aligned gap">
-            <span class="bf-12">₹{{payoutsData?.rewards || '0'}}</span>
-            <span class="btn" *ngIf="payoutsData?.rewards"><img src="../../../assets/icon/expand_more.svg"
-                alt=""></span>
-          </div>
-        </div>
-        <div class="body" *ngFor="let reward of payoutsData?.rewardTransactions">
-          <div class="body-block">
-            <div class="flex-spaced"><span class="rf-10">Order ID: {{reward.txnid}}</span> <span
-                class="bf-12">₹{{reward.dcharge}}</span>
-            </div>
-            <div class="flex-spaced"><span class="rf-10">Completed on: {{reward.time}}</span></div>
-          </div>
+          <div class="flex-spaced"><span class="rf-10">Completed on: {{order.time}}</span></div>
         </div>
       </div>
     </div>
-    <app-payout-rate-card></app-payout-rate-card>
+    <div class="accordian" [ngClass]="{'active': isMyRewardsOpen}">
+      <div class="header flex-spaced flex-aligned" (click)="toggleMyRewardsHistory()">
+        <div class="flex-aligned gap">
+          <img src="../../../assets/icon/rewards.svg" alt="">
+          <span class="bf-12">My Rewards</span>
+        </div>
+        <div class="flex-aligned gap">
+          <span class="bf-12">₹{{payoutsData?.rewards || '0'}}</span>
+          <span class="btn" *ngIf="payoutsData?.rewards"><img src="../../../assets/icon/expand_more.svg"
+              alt=""></span>
+        </div>
+      </div>
+      <div class="body" *ngFor="let reward of payoutsData?.rewardTransactions">
+        <div class="body-block">
+          <div class="flex-spaced"><span class="rf-10">Order ID: {{reward.txnid}}</span> <span
+              class="bf-12">₹{{reward.dcharge}}</span>
+          </div>
+          <div class="flex-spaced"><span class="rf-10">Completed on: {{reward.time}}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-payout-rate-card></app-payout-rate-card>
+</div>
+
+
+    
   </div>
 </ion-content>

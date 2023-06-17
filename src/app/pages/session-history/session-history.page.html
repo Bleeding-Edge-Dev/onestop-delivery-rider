@@ -1,12 +1,10 @@
 <ion-header class="flex-spaced py-8">
   <div class="flex-aligned ">
-    <ion-back-button class="f-black" defaultHref="/tabs/feed"></ion-back-button>
+    <ion-back-button class="f-black" defaultHref="/tabs/account"></ion-back-button>
+
     <span class="bf-16">Session History</span>
   </div>
-  <div class="flex-aligned gap-24 px">
-    <button class="bordered-chip">HELP</button>
-    <button><img src="../../assets/icon/notifications.svg" alt="notification"></button>
-  </div>
+
 </ion-header>
 
 
@@ -16,13 +14,18 @@
   </ion-refresher>
   
   <div class="p-16 flex-col h-full ">
-    <div class="rf-12 date-filter dark-border flex-aligned flex-spaced gap-8 py-12" (click)="openDatePicker()">
-      <ion-datetime placeholder="Select Date" displayFormat="D MMMM YYYY" pickerFormat="MMM D, YYYY"
-        [(ngModel)]="selectedDate" (ionChange)="onDateChange()" (click)="$event.stopPropagation()"
-        [max]="getCurrentDate()">
-      </ion-datetime>
-      <div class="arrow-down"></div>
-    </div>
+              
+    <ion-datetime-button class="bf-12 date-filter dark-border flex-aligned flex-spaced gap-8"
+    datetime="date">
+</ion-datetime-button>
+<ion-modal [keepContentsMounted]="true">
+<ng-template>
+<ion-datetime id="date" presentation="date" prefer-wheel="false" showDefaultButtons="true"
+[value]="selectedDate" (ionChange)="onDateChange($event)" placeholder="Select Date" [max]="getCurrentDate()">
+</ion-datetime>
+
+</ng-template>
+</ion-modal>
     <div>
 
 

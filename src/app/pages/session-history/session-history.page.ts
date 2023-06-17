@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReportService } from 'src/app/services/report.service';
 import { get } from 'src/app/services/storage';
 import { DatePipe } from '@angular/common';
-import { IonDatetime, IonInput } from '@ionic/angular';
+
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-session-history',
@@ -14,39 +15,33 @@ export class SessionHistoryPage implements OnInit {
   sessionInterval: any = null;
   token = '';
   selectedDate: string = new Date().toISOString();
-  @ViewChild(IonInput)
-  datetimePicker!: IonInput;
+
   sessionHistory: any[] = [];
 
   constructor(
     private reportService: ReportService,
     private datePipe: DatePipe,
-    private router: Router
+    private router: Router,
+    public loadingController: LoadingController
   ) {}
 
   getCurrentDate(): string {
-    const todayDate = new Date().toISOString().split('T')[0];
-    return todayDate;
+    return new Date().toISOString().split('T')[0];
   }
 
-  openDatePicker() {
-    this.datetimePicker.setFocus();
-  }
-
-  onDateChange() {
-    const formattedDate = this.datePipe.transform(this.selectedDate, 'yyyy/MM/dd');
-    this.selectedDate = formattedDate || '';
-    this.getSessionhistory(this.selectedDate, this.selectedDate);
+  onDateChange(event?: Event) {
+    this.selectedDate = (event?.target as HTMLInputElement).value;
+    this.getSessionhistory();
   }
 
   onIonViewWillEnter() {
     this.sessionInterval = setInterval(() => {
-      this.getSessionhistory(this.selectedDate, this.selectedDate);
+      this.getSessionhistory();
     }, 1000);
   }
 
   doRefresh(event: any) {
-    this.onDateChange();
+    this.getSessionhistory();
     setTimeout(() => {
       event.target.complete();
     }, 200);
@@ -58,35 +53,40 @@ export class SessionHistoryPage implements OnInit {
 
   async ngOnInit() {
     this.token = 'Bearer ' + (await get('token'));
-    this.onDateChange();
+    this.getSessionhistory();
   }
 
-  async getSessionhistory(from: string, to: string) {
+  async getSessionhistory() {
+    this.sessionHistory = [];
+    const loadingMOdal = await this.loadingController.create({
+      spinner: 'lines-small',
+      animated: true,
+    });
+    await loadingMOdal.present();
+    const formattedDate: any = this.datePipe.transform(this.selectedDate, 'yyyy/MM/dd');
     if (this.token) {
-      this.reportService.getSessionHistory(this.token, from, to).subscribe(
+      this.reportService.getSessionHistory(this.token, formattedDate, formattedDate).subscribe(
         (res: any) => {
           console.log(res);
-          this.sessionHistory = res.map((session: any) => {
-            // Convert timeRange format for each session
-            session.timeRange = this.convertTimeRange(session.timeRange);
-            return session;
-          });
+          this.sessionHistory = res.map((session: any) => ({
+            ...session,
+            timeRange: this.convertTimeRange(session.timeRange)
+          }));
+          loadingMOdal.dismiss()
         },
         (err) => {
           console.log(err);
-        }
+          loadingMOdal.dismiss()
+        },
+
       );
     }
   }
 
   convertTimeRange(timeRange: string): string {
-    // Split the time range into start and end times
     const [startTime, endTime] = timeRange.split(' - ');
 
-    // Parse the start time into a Date object
     const startDate = new Date(Date.parse(startTime.trim()));
-
-    // Format the start time
     const formattedStartTime = startDate.toLocaleTimeString([], {
       hour: '2-digit',
       minute: '2-digit',
@@ -94,23 +94,20 @@ export class SessionHistoryPage implements OnInit {
 
     let formattedEndTime = '';
 
-    // Check if the end time is "Still Active"
     if (endTime.trim() === 'Still Active') {
       formattedEndTime = 'Still Active';
     } else {
-      // Parse the end time into a Date object
       const endDate = new Date(Date.parse(endTime.trim()));
-
-      // Format the end time
       formattedEndTime = endDate.toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
       });
     }
 
-    // Combine the formatted start and end times
-    const formattedTimeRange = `${formattedStartTime} - ${formattedEndTime}`;
+    return `${formattedStartTime} - ${formattedEndTime}`;
+  }
 
-    return formattedTimeRange;
+  ionViewWillEnter() {
+    this.getSessionhistory();
   }
 }

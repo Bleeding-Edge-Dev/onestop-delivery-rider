@@ -9,7 +9,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuPopoverComponent } from './menu-popover/menu-popover.component';
+
 import { IonicModule } from '@ionic/angular';
 
 @NgModule({

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { get } from '../services/storage';
 import { RewardService } from '../services/reward.service';
 import { DatePipe } from '@angular/common';
-import { IRiderReport } from '../shared/IRiderReport';
-
+import { ViewChild } from '@angular/core';
+import { IonDatetime, IonInput } from '@ionic/angular';
+import { IRiderReport } from "../shared/IRiderReport";
 @Component({
   selector: 'app-payouts',
   templateUrl: './payouts.page.html',
@@ -11,56 +12,71 @@ import { IRiderReport } from '../shared/IRiderReport';
 })
 export class PayoutsPage implements OnInit {
   isOrderHistoryOpen: boolean = false;
-  selectedValue: string = 'daily';
+  selectedValue: string = "daily";
   selectedDate: any = new Date().toISOString();
   todayDate: any = new Date().toISOString();
+  @ViewChild(IonInput)
+  datetimePicker!: IonInput;
+  token: string = '';
 
-  constructor(
-    private rewardService: RewardService,
-    private datePipe: DatePipe
-  ) {}
-  payoutsData: any;
+  openDatePicker() {
+    this.datetimePicker.setFocus();
+  }
+
+  constructor(private rewardService: RewardService, private datePipe: DatePipe) { }
+  payoutsData: IRiderReport | any = null;
+
+  isMyRewardsOpen: boolean = false;
 
   onSegmentChange() {
-    if (this.selectedValue === 'daily') {
-    } else if (this.selectedValue === 'weekly') {
-    } else if (this.selectedValue === 'monthly') {
+    this.payoutsData = null;
+    this.selectedDate = new Date().toISOString();
+    if (this.selectedValue === 'weekly') {
+      const sixDaysAgo = new Date();
+      sixDaysAgo.setDate(sixDaysAgo.getDate() - 6);
+      this.selectedDate = sixDaysAgo.toISOString();
     }
-    this.onDateChange();
+    this.getData();
   }
-  orderPayHistory = [
-    {
-      orderId: 1234567,
-      amount: 20,
-      completedOn: '17 March, 4:23 PM',
-    },
-    {
-      orderId: 1234568,
-      amount: 35,
-      completedOn: '17 March, 4:23 PM',
-    },
-  ];
-  isMyRewardsOpen: boolean = false;
-  MyRewardsHistory = [
-    {
-      orderId: 1234567,
-      amount: 20,
-      completedOn: '17 March, 4:23 PM',
-    },
-  ];
+  changeWeeklyLabel(val: string) {
+    const weeklyStartDate: any = this.datePipe.transform(this.selectedDate, 'MMM d, y', 'en-US');
+      const weeklyEndDate: any = this.datePipe.transform(val, 'MMM d, y', 'en-US');
+    const element = document.getElementById("weekly-picker");
+    console.log(element?.shadowRoot)
+    if (element && element.shadowRoot) {
+      const targetElement = element.shadowRoot.querySelector("#date-button");
+      if (targetElement) {
+        targetElement.textContent = weeklyStartDate + " - " + weeklyEndDate;
+      }
+    }
+  }
+  
 
-  onDateChange() {
-    const formattedDate = this.datePipe.transform(
+
+  getCurrentMonth(): string {
+    const currentMonth = new Date().toISOString().split('T')[0].substr(0, 7);
+    return currentMonth;
+  }
+  onDateChange(event?: any) {
+    this.selectedDate = event.detail.value;
+    console.log(this.selectedDate)
+    this.getData();
+  }
+  getData() {
+    const formattedDate: any = this.datePipe.transform(
       this.selectedDate,
       'yyyy/MM/dd'
     );
-    this.selectedDate = formattedDate;
     if (this.selectedValue === 'daily') {
-      this.getPayoutData(this.selectedDate, this.selectedDate);
+      this.getPayoutData(formattedDate, formattedDate);
     } else if (this.selectedValue === 'weekly') {
-      this.getPayoutData(this.selectedDate, this.calculateEndDate());
+      const endDate: any = this.calculateEndDate(formattedDate);
+      const formattedEndDate: any = this.datePipe.transform(endDate, 'yyyy/MM/dd');
+      
+      this.changeWeeklyLabel(formattedEndDate);
+      this.getPayoutData(formattedDate, formattedEndDate);
     } else if (this.selectedValue === 'monthly') {
-      const selectedDateObj = new Date(this.selectedDate);
+      const selectedDateObj = new Date(formattedDate);
       const firstDate = new Date(
         selectedDateObj.getFullYear(),
         selectedDateObj.getMonth(),
@@ -71,17 +87,22 @@ export class PayoutsPage implements OnInit {
         selectedDateObj.getMonth() + 1,
         0
       );
-      const formattedFirstDate = this.datePipe.transform(
+      const formattedFirstDate: any = this.datePipe.transform(
         firstDate,
         'yyyy/MM/dd'
       );
-      const formattedLastDate = this.datePipe.transform(lastDate, 'yyyy/MM/dd');
+      const formattedLastDate: any = this.datePipe.transform(
+        lastDate,
+        'yyyy/MM/dd'
+      );
       this.getPayoutData(formattedFirstDate, formattedLastDate);
     }
   }
 
-  calculateEndDate() {
-    const endDate = new Date(this.selectedDate);
+
+
+  calculateEndDate(selectedDate: any): string | null {
+    const endDate = new Date(selectedDate);
     endDate.setDate(endDate.getDate() + 6);
 
     if (endDate > this.todayDate) {
@@ -91,7 +112,25 @@ export class PayoutsPage implements OnInit {
     return this.datePipe.transform(endDate.toISOString(), 'yyyy/MM/dd');
   }
 
+
+
+
+
+
+
+
+  doRefresh(event: any) {
+    this.getData();
+    setTimeout(() => {
+      event.target.complete();
+    }, 500);
+  }
+
+
   async ngOnInit() {
+    console.log(this.selectedDate);
+    this.token = await get("token");
+    this.token = "Bearer " + this.token;
     this.getPayoutData(this.selectedDate, this.selectedDate);
   }
 
@@ -103,11 +142,29 @@ export class PayoutsPage implements OnInit {
     this.isMyRewardsOpen = !this.isMyRewardsOpen;
   }
 
-  async getPayoutData(from: any, to: any) {
-    let token: string = await get('token');
-    token = 'Bearer ' + token;
-    this.rewardService.getPayoutData(token, from, to).subscribe((res: any) => {
-      this.payoutsData = res;
-    });
+  async getPayoutData(from: string, to: string) {
+    if (this.token) {
+      this.rewardService.getPayoutData(this.token, from, to).subscribe((res: any) => {
+        this.payoutsData = res;
+        if (this.selectedValue === 'weekly') {
+          this.changeWeeklyLabel(to);
+        }
+      });
+    }
   }
+  myTargetData: any = {
+    "noOfOrders": [5, 10, 15, 20],
+    "rewards": [100, 150, 200, 250],
+    "currentMilestone": { "noOfOrders": 0, "amount": 0 },
+    "totalOrdersCount": "0"
+  }
+
+  async getRewards() {
+    if (this.token) {
+      this.rewardService.getReward(this.token).subscribe((res: any) => {
+        this.myTargetData = res;
+      });
+    }
+  }
+
 }

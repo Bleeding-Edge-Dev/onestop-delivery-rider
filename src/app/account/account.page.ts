@@ -12,41 +12,56 @@ import { LanguagePreferedModalComponent } from '../components/language-prefered-
   styleUrls: ['./account.page.scss'],
 })
 export class AccountPage implements OnInit {
-  objectKeys = Object.keys;
-  navOptions: any = {
-    'Manage Profile': '/tabs/manage-profile',
-    'My Reward Points': '',
-    'My Wallet': '/tabs/my-wallet',
-    'Change Password': '/tabs/change-password',
-    'Rate Card': RateCardModalComponent,
-    'Language Preferences': LanguagePreferedModalComponent,
-    'Trip History': '/tabs/trip-history',
-    'Session History': '',
-    'Issues & Tickets': '',
-  };
-  token: any;
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-    private modalController: ModalController
-  ) {}
-  async logout() {
-    this.token = await get('token');
-    this.token = 'Bearer ' + this.token;
-    this.authService.logout(this.token);
+  profileData = {
+    name: '',
+    phone: '',
+    profileImage: ''
   }
-  handleNavRoutes(navOption: any) {
-    if (navOption == 'Rate Card' || navOption == 'Language Preferences') {
+  objectKeys = Object.keys
+  navOptions:any={
+    'Profile': '/tabs/manage-profile',
+    'My Reward Points': '/tabs/rewards',
+    'My Wallet': '/tabs/wallet',
+    'Change Password' : '/tabs/change-password',
+    'Rate Card': RateCardModalComponent,
+    'Language Preferences':LanguagePreferedModalComponent,
+    'Trip History':'/tabs/trip-history',
+    'Session History':'/tabs/session-history',
+    'Issues & Tickets':'/tabs/support-tickets',
+
+  }
+  token: any;
+  constructor(private router:Router , private authService:AuthService, private modalController:ModalController) { }
+  async logout(){
+
+    this.authService.logout(this.token);
+
+  }
+  handleNavRoutes(navOption:any){
+    if(navOption == "Rate Card" || navOption == "Language Preferences"){
       this.presentModal(navOption);
-    } else {
+    }else{
       this.router.navigate([this.navOptions[navOption]]);
     }
   }
-  ngOnInit() {}
-  async presentModal(navOption: any) {
+  async ngOnInit(
+    ) {
+      this.token = await get('token');
+      this.token = "Bearer "+this.token;
+    this.getProfile();
+
+  }
+  async presentModal(navOption:any) {
     const modal = await this.modalController.create({
       component: this.navOptions[navOption],
     });
     return await modal.present();
+  }
+  async getProfile() {
+    this.authService.getProfile(this.token).subscribe((res: any) => {
+      this.profileData.name = res.details.name;
+      this.profileData.phone = res.details.phone;
+      this.profileData.profileImage = res.details.profileImage;
+    })
   }
 }

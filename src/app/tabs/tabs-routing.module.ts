@@ -24,22 +24,6 @@ const routes: Routes = [
         loadChildren: () => import('../account/account.module').then( m => m.AccountPageModule)
       },
       {
-        path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
-      },
-      {
-        path: 'tab2',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
-      },
-      {
-        path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
-      },
-      {
-        path: 'wallet',
-        loadChildren: () => import('../wallet/wallet.module').then(m => m.WalletPageModule)
-      },
-      {
         path: 'order',
         loadChildren: () => import('../pages/order/order.module').then( m => m.OrderPageModule)
       },
@@ -64,8 +48,20 @@ const routes: Routes = [
         loadChildren: () => import('../pages/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
       },
       {
-        path: 'my-wallet',
+        path: 'wallet',
         loadChildren: () => import('../pages/my-wallet/my-wallet.module').then( m => m.MyWalletPageModule)
+      },
+      {
+        path: 'rewards',
+        loadChildren: () => import('../pages/my-rewards-points/my-rewards-points.module').then( m => m.MyRewardsPointsPageModule)
+      },
+      {
+        path: 'new-ticket',
+        loadChildren: () => import('../pages/new-ticket/new-ticket.module').then(m => m.NewTicketPageModule)
+      },
+      {
+        path: 'support-tickets',
+        loadChildren: () => import('../pages/support-tickets/support-tickets.module').then(m => m.SupportTicketsPageModule)
       },
     
       {

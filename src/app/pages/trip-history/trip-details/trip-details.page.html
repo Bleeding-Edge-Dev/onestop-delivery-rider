@@ -1,0 +1,49 @@
+<ion-header class="flex-spaced py-8">
+  <div class="flex-aligned ">
+    <ion-back-button class="f-black" defaultHref="/tabs/feed"></ion-back-button>
+    <span class="bf-16">ID:{{trip.orderId}}</span>
+  </div>
+  <div class="flex-aligned gap-24 px">
+    <button class="bordered-chip">HELP</button>
+    <button><img src="../../assets/icon/notifications.svg" alt="notification"></button>
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="p-16 flex-col gap-16">
+    <div class="bordered-card p-16 flex-col gap-9">
+      <div class="flex-spaced">
+        <span class="bf-16">
+          {{trip.vendorName}}
+        </span>
+        <span class="bf-12">
+          Dist: {{trip.distance}} KM
+        </span>
+      </div>
+      <span class="rf-10 f-darkgrey">{{trip.time}}</span>
+      <div class="flex-spaced flex-aligned">
+        <span class="rf-10">Cash collected: ₹{{trip.amountCollected}}</span>
+        <span class="bf-12">Fee: ₹{{trip.deliveryCharge}}</span>
+      </div>
+      <span class="bf-12">
+        Payment method: {{trip.paymentType}}
+      </span>
+    </div>
+    <div class="bordered-card p-16 flex-col gap-9 ">
+      <div class="bf-12">
+        Pickup Address
+      </div>
+      <div class="rf-10">
+        {{trip.pickupAddress}}
+        </div>
+      <div class="bf-12">
+        Drop Address
+      </div>
+      <div class="rf-10">
+        {{trip.deliveryAddress}}
+        </div>
+
+    </div>
+  </div>
+
+</ion-content>

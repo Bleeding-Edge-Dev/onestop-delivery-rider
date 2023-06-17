@@ -33,7 +33,7 @@
       {{(showActiveOrders) ? "ACTIVE" : "NEW"}}</span>
     <img (click)="expandOrder(order)" class="expand-btn absolute v-center" src="../../assets/icon/expand_circle_down.svg" />
   </ion-card>
-  <div *ngIf="filteredOrders()" class="grid-center p-32 gap-24" >
+  <div *ngIf="filteredOrders().length ===0" class="grid-center p-32 gap-24" >
     <span class="search-icon">
     </span>
     <div class="flex-col text-center gap-9 ">

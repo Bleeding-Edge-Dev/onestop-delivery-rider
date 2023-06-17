@@ -4,8 +4,8 @@ import { NavController } from '@ionic/angular';
 import { StatusService } from 'src/app/services/status.service';
 import { get } from 'src/app/services/storage';
 import { RewardService } from '../services/reward.service';
-import { ReportService } from '../services/report.service';
-import { IRiderReport } from '../shared/IRiderReport';
+import { LocationService } from "../services/location.service";
+import { IRiderReport } from "../shared/IRiderReport";
 
 @Component({
   selector: 'app-feed',
@@ -13,73 +13,57 @@ import { IRiderReport } from '../shared/IRiderReport';
   styleUrls: ['./feed.page.scss'],
 })
 export class FeedPage implements OnInit {
-  constructor(
-    private navCtrl: NavController,
+
+  todayDate: any = new Date().toISOString();
+
+  payoutsData: IRiderReport | any = null; 
+
+
+  constructor(private navCtrl: NavController,
     private statusService: StatusService,
     private rewardService: RewardService,
-    private router: Router
-  ) {}
-  isRiderOnline: boolean = true;
+    private locationService: LocationService,
+    private router: Router) { }
+  isRiderOnline: boolean = false;
   token: any;
-  myTargetData = {
-    noOfOrders: [],
-    rewards: [],
-    currentMilestone: { noOfOrders: 0, amount: 0 },
-    totalOrdersCount: '0',
-  };
-  report: any;
+
+  async sendLocation(location:any) {
+    let t = await get("token");
+    t = "Bearer " + t;
+    this.locationService
+      .setLocation(t, location)
+      .subscribe((res) => console.log(res));
+  }
   async ngOnInit() {
-    this.getStatus();
+    this.token = await get("token");
+    this.token = "Bearer " + this.token;
     this.getRewards();
-    this.getReport();
+    this.statusService.isRiderOnline.subscribe((res) => {
+      this.isRiderOnline = res;
+    })
+    this.getPayoutData(this.todayDate, this.todayDate);
   }
-  async getReport() {
-    this.token = await get('token');
-    this.token = 'Bearer ' + this.token;
-    this.rewardService
-      .getPayoutData(
-        this.token,
-        new Date().toISOString(),
-        new Date().toISOString()
-      )
-      .subscribe((res: any) => {
-        this.report = res;
-        console.log(this.report);
-      });
-  }
-  async getStatus() {
-    this.token = await get('token');
-    this.token = 'Bearer ' + this.token;
-    const statusInterval = setInterval(() => {
-      if (this.router.url != '/tabs/tabs/feed') {
-        clearInterval(statusInterval);
-      }
-      this.statusService.getStatus(this.token).subscribe((res: any) => {
-        this.isRiderOnline = res.active == '1' ? true : false;
-      });
-    }, 200);
-  }
+  myTargetData:any = { 
+    "noOfOrders": [5, 10, 15, 20],
+   "rewards": [100, 150, 200, 250], 
+   "currentMilestone": { "noOfOrders": 0, "amount": 0 }, 
+   "totalOrdersCount": "0" }
 
   async getRewards() {
-    this.token = await get('token');
-    this.token = 'Bearer ' + this.token;
     this.rewardService.getReward(this.token).subscribe((res: any) => {
       this.myTargetData = res;
     });
   }
+  doRefresh(event:any) {
+    this.getRewards();
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
+  }
 
-  goTo(here: string) {
-    switch (here) {
-      case 'payouts':
-        this.navCtrl.navigateForward('/tabs/tabs/payouts');
-        break;
-      case 'trips':
-        this.router.navigate(['/tabs/trip-history']);
-        break;
-      case 'sessions':
-        break;
-      default:
-        break;
-    }
+  async getPayoutData(from:string, to:string) {
+    this.rewardService.getPayoutData(this.token, from, to).subscribe((res: any) => {
+      this.payoutsData = res;
+    });
   }
 }

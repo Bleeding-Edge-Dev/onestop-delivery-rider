@@ -77,4 +77,8 @@ export class AuthService {
     console.log(this.uuid);
     return h;
   }
+
+  getProfile(token:string) {
+    return this.http.post(this.apiUrl + "getProfile.php", { token: token });
+  }
 }

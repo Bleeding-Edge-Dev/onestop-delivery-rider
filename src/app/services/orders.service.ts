@@ -25,6 +25,20 @@ export class OrdersService {
       token: token,
       msg: msg,
     };
-    return this.http.post(this.apiUrl + 'actionsV2.php', pack);
+    return this.http.post(this.apiUrl + 'actionsV2.php', pack);}
+  getOrder(token:string, id:string) {
+    return this.http.post(this.apiUrl + "getOrder.php", { token: token, id: id });
+  }
+  generatePaymentLink(token:string, id:string) {
+    return this.http.post(this.apiUrl + "createUpiLink.php", {
+      token: token,
+      orderId: id,
+    });
+  }
+  checkPaymentStatus(token:string, id:string) {
+    return this.http.post(this.apiUrl + "checkPaymentStatus.php", {
+      token: token,
+      id: id,
+    });
   }
 }

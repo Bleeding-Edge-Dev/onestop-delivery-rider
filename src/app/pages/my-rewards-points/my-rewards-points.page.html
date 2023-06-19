@@ -7,10 +7,47 @@
 </ion-header>
 
 <ion-content>
-<div class="p-16">
-<div class="grid">
+  <div class="p-16 flex-col gap-16">
+    <div class="flex gap">
+      <div class="bordered-card w-full grid-center py-8 px">
+        <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">{{pointsInfo?.availablePoints || 0}}</span>
+        <p class="rf-10 w-full text-center">Available</p>
+      </div>
+      <div class="bordered-card w-full grid-center py-8 px">
+        <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">{{pointsInfo?.reedemedPoints || 0}}</span>
+        <p class="rf-10 w-full text-center">Redeemed</p>
 
-</div>
-</div>
+      </div>
+      <div class="bordered-card w-full grid-center py-8 px">
+        <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">{{pointsInfo?.totalPoints || 0}}</span>
+        <p class="rf-10 w-full text-center">Total</p>
+      </div>
+    </div>
+    <div class="bf-12">
+      Redeem Points
+    </div>
+    <input type="number" class="input-field" [(ngModel)]="request_points" placeholder="Enter Points to Redeem">
+    <div class="p-16">
+      <button class="t-btn" (click)="sendRequest()">
+        Redeem Points
+      </button>
+    </div>
+    <div class="bf-12">
+      Reward Point Transactions
+    </div>
+    <ion-grid class="w-full bordered-card ">
+      <ion-row class="bg-grey round-top bf-12 f-darkgrey  p-8  text-center">
+        <ion-col>Time/Date</ion-col>
+        <ion-col>Particular</ion-col>
+        <ion-col>Amount</ion-col>
+      </ion-row>
+      <ion-row class="rf-10  p-8 text-center" *ngFor="let hist of rewardsHistory">
+        <ion-col>{{hist.TIME}}</ion-col>
+        <ion-col>{{hist.QUESTION}}</ion-col>
+        <ion-col>{{(hist.POINTS > 0) ? ("+" + hist.POINTS):hist.POINTS}}</ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </div>
 
 </ion-content>

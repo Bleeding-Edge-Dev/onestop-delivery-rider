@@ -8,7 +8,6 @@ import { Env } from '../shared/apiConfig';
 export class TransactionsService {
   constructor(private http: HttpClient) {}
   getRewardInfo(token: string) {
-    //token = "Bearer "+token;
     return this.http.post(Env.apiUrl + 'getRewardInfo.php', { token: token });
   }
   request(token: string, points: any) {
@@ -19,5 +18,16 @@ export class TransactionsService {
   }
   getRewardReport(token: string) {
     return this.http.post(Env.apiUrl + 'getRewardReport.php', { token });
+  }
+
+  getPayoutData(token: string, fromData: any, toDate: any) {
+    return this.http.post(Env.apiUrl + 'riderReport.php', {
+      token: token,
+      from: fromData,
+      to: toDate,
+    });
+  }
+  getRewardsPoints(token: string) {
+    return this.http.post(Env.apiUrl + 'getRewardPointsDetails.php', { token });
   }
 }

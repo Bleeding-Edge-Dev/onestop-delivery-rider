@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { StatusService } from 'src/app/services/status.service';
 import { get } from 'src/app/services/storage';
-import { RewardService } from '../services/reward.service';
+
 import { LocationService } from "../services/location.service";
 import { IRiderReport } from "../shared/IRiderReport";
+import { TransactionsService } from '../services/transactions.service';
 
 @Component({
   selector: 'app-feed',
@@ -21,7 +22,7 @@ export class FeedPage implements OnInit {
 
   constructor(private navCtrl: NavController,
     private statusService: StatusService,
-    private rewardService: RewardService,
+    private transactionService: TransactionsService,
     private locationService: LocationService,
     private router: Router) { }
   isRiderOnline: boolean = false;
@@ -50,7 +51,7 @@ export class FeedPage implements OnInit {
    "totalOrdersCount": "0" }
 
   async getRewards() {
-    this.rewardService.getReward(this.token).subscribe((res: any) => {
+    this.transactionService.getRewardInfo(this.token).subscribe((res: any) => {
       this.myTargetData = res;
     });
   }
@@ -62,7 +63,7 @@ export class FeedPage implements OnInit {
   }
 
   async getPayoutData(from:string, to:string) {
-    this.rewardService.getPayoutData(this.token, from, to).subscribe((res: any) => {
+    this.transactionService.getPayoutData(this.token, from, to).subscribe((res: any) => {
       this.payoutsData = res;
     });
   }

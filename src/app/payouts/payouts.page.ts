@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { get } from '../services/storage';
-import { RewardService } from '../services/reward.service';
+
 import { DatePipe } from '@angular/common';
 import { IRiderReport } from "../shared/IRiderReport";
 import { LoadingController } from '@ionic/angular';
+import { TransactionsService } from '../services/transactions.service';
 @Component({
   selector: 'app-payouts',
   templateUrl: './payouts.page.html',
@@ -16,7 +17,9 @@ export class PayoutsPage implements OnInit {
   todayDate: any = new Date().toISOString();
   token: string = '';
 
-  constructor(private rewardService: RewardService, private datePipe: DatePipe,
+  constructor(
+private transactionService: TransactionsService,
+    private datePipe: DatePipe,
 private loadingController: LoadingController
     ) { }
   payoutsData: IRiderReport | any = null;
@@ -153,7 +156,7 @@ private loadingController: LoadingController
       });
       this.isLoading = true;
       await loadingMOdal.present();
-      this.rewardService.getPayoutData(this.token, from, to).subscribe((res: any) => {
+      this.transactionService.getPayoutData(this.token, from, to).subscribe((res: any) => {
         this.payoutsData = res;
         this.isLoading = false;
         loadingMOdal.dismiss();
@@ -169,7 +172,7 @@ private loadingController: LoadingController
 
   async getRewards() {
     if (this.token) {
-      this.rewardService.getReward(this.token).subscribe((res: any) => {
+      this.transactionService.getRewardInfo(this.token).subscribe((res: any) => {
         this.myTargetData = res;
       });
     }

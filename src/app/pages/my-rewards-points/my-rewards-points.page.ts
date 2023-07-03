@@ -42,6 +42,12 @@ export class MyRewardsPointsPage implements OnInit {
   async presentToast(msg:string,classs?:string){
     this.toastController.create({message:msg,duration:2000,cssClass: classs }).then((toast:any)=>toast.present());
    }
+   async doRefresh(event:any){
+    this.getRewardsHistory()
+    setTimeout(() => {
+      event.target.complete();
+    }, 200);
+   }
   async sendRequest(){
     const loadingMOdal = await this.loadingController.create({
       spinner: 'lines-small',

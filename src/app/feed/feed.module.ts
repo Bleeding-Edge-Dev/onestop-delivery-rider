@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { FeedPageRoutingModule } from './feed-routing.module';
 
 import { FeedPage } from './feed.page';
-import { OrdersComponent } from './orders/orders.component';
+
 import { OfflineBannerComponent } from './offline-banner/offline-banner.component';
 import { ComponentsModule } from 'src/app/components/components.module';
 
@@ -20,6 +20,6 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FeedPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [FeedPage, OrdersComponent, OfflineBannerComponent]
+  declarations: [FeedPage, OfflineBannerComponent]
 })
 export class FeedPageModule { }

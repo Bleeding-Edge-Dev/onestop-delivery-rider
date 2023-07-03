@@ -9,6 +9,7 @@ import { PayoutRateCardComponent } from './payout-rate-card/payout-rate-card.com
 import { RateCardModalComponent } from './payout-rate-card/rate-card-modal/rate-card-modal.component';
 import { LanguagePreferedModalComponent } from './language-prefered-modal/language-prefered-modal.component';
 import { CheckModalComponent } from './check-modal/check-modal.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -18,7 +19,7 @@ import { CheckModalComponent } from './check-modal/check-modal.component';
     CheckModalComponent
   ],
   imports: [
-    CommonModule,IonicModule
+    CommonModule,IonicModule,RouterModule
   ],
   exports: [NewOrderModalComponent,HeaderComponent,MyTargetComponent,PayoutRateCardComponent,RateCardModalComponent,CheckModalComponent,LanguagePreferedModalComponent],
 })

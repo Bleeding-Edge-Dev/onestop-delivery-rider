@@ -7,6 +7,9 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div class="p-16 flex-col gap-16">
     <div class="flex gap">
       <div class="bordered-card w-full grid-center py-8 px">
@@ -39,7 +42,7 @@
       <ion-row class="bg-grey round-top bf-12 f-darkgrey  p-8  text-center">
         <ion-col>Time/Date</ion-col>
         <ion-col>Particular</ion-col>
-        <ion-col>Amount</ion-col>
+        <ion-col>Points</ion-col>
       </ion-row>
       <ion-row class="rf-10  p-8 text-center" *ngFor="let hist of rewardsHistory">
         <ion-col>{{hist.TIME}}</ion-col>

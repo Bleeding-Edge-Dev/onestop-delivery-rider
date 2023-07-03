@@ -1,0 +1,23 @@
+.orders-wrapper {
+    display: grid;
+    gap: 8px;
+
+    .card {
+        .chip {
+            right: 16px;
+            top: 16px;
+        }
+
+        .pick-up {
+            margin-top: 16px;
+            margin-bottom: 4px;
+        }
+
+        .expand-btn {
+            right: 18px;
+        }
+
+    }
+
+}
+

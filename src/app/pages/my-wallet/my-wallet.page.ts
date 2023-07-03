@@ -11,19 +11,24 @@ import { ModalController } from '@ionic/angular';
 })
 export class MyWalletPage implements OnInit {
   token: string = '';
-
+  walletInterval:any;
   data = {
     balance: 0,
+    reedamableAmount: 0,
+    amount_received: 0,
+    amount_deducted: 0,
+    lifetimeEarning: 0
   };
-  selectedTransaction = 'past';
-  pastTransactions: any[] = [];
-  pendingTransactions: any[] = [];
-  creditTransactions: any[] = [];
+  selectedTransaction = "past";
+  pastTransactions = [];
+  pendingTransactions = [];
+  creditTransactions = [];
   constructor(
     private walletService: WalletService,
     private modalController: ModalController
-  ) {}
-  filteredTransaction() {
+
+  ) { }
+  filteredTransaction(): any {
     if (this.selectedTransaction == 'past') {
       return this.pastTransactions;
     } else if (this.selectedTransaction == 'pending') {
@@ -32,9 +37,48 @@ export class MyWalletPage implements OnInit {
       return this.creditTransactions;
     }
   }
+
   async ngOnInit() {
-    this.token = await get('token');
+    this.token = await get("token");
+    this.getWalletData()
+  } 
+  getRedeemDate() {
+    return new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000);
+  }
+
+  async doRefresh(event:any){
+    this.getWalletData()
+    setTimeout(() => {
+      event.target.complete();
+    }, 200);
+  }
+  async ionViewWillEnter() {
+    this.resetData()
+    this.getWalletData()
+    this.walletInterval = setInterval(() => {
+      this.getWalletData()
+    },4000)}
+    ionViewDidLeave() {
+      clearInterval(this.walletInterval)
+    }
+    resetData(){
+      this.data = {
+        balance: 0,
+        reedamableAmount: 0,
+        amount_received: 0,
+        amount_deducted: 0,
+        lifetimeEarning : 0
+      };
+      this.pastTransactions = [];
+      this.pendingTransactions = [];
+      this.creditTransactions = [];
+    }
+  async getWalletData() {
+
+
+
     this.walletService.getWalletDetails(this.token).subscribe((data: any) => {
+
       data.reedamableAmount =
         Math.round(Number(data.reedamableAmount * 100)) / 100;
       data.balance = Math.round(Number(data.balance * 100)) / 100;
@@ -47,16 +91,18 @@ export class MyWalletPage implements OnInit {
       this.data = data;
     });
     this.walletService.getAllTransactions(this.token).subscribe((res: any) => {
-      this.pastTransactions = res;
+
+      this.pastTransactions = res.reverse();
+
     });
-    this.walletService
-      .getPendingTransactions(this.token)
-      .subscribe((res: any) => {
-        this.pendingTransactions = res;
-        console.log(res);
-      });
+    this.walletService.getPendingTransactions(this.token).subscribe((res: any) => {
+      this.pendingTransactions = res.reverse();
+    });
     this.walletService.getCreditNotes(this.token).subscribe((res: any) => {
-      this.creditTransactions = res;
+
+      this.creditTransactions = res.reverse();
+
+
     });
   }
   async openModal() {

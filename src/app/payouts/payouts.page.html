@@ -39,12 +39,12 @@
     <div class="bordered-card w-full grid-center py-8 px">
       <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">{{payoutsData?.totalTrips}}</span>
       <p class="rf-10 w-full text-center">Trips Today</p>
-      <button class="bf-10 f-red">Trips <img src="../../assets/icon/chevron_right.svg" /></button>
+      <button class="bf-10 f-red" routerLink="/tabs/trip-history" >Trips <img src="../../assets/icon/chevron_right.svg" /></button>
     </div>
     <div class="bordered-card w-full grid-center py-8 px">
       <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">{{payoutsData?.totalHours}}</span>
       <p class="rf-10 w-full text-center">Total Login Hours</p>
-      <button class="bf-10 f-red">Sessions <img src="../../assets/icon/chevron_right.svg" /></button>
+      <button class="bf-10 f-red" routerLink="/tabs/session-history">Sessions <img src="../../assets/icon/chevron_right.svg" /></button>
     </div>
   </div>
 

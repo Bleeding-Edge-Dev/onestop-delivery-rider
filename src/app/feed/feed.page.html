@@ -32,12 +32,70 @@
       <div class="bordered-card w-full grid-center py-8 px">
         <span class="bg-grey grid-center p-8 round bf-16 min-w-36px">{{payoutsData?.totalHours}}</span>
         <p class="rf-10 w-full text-center">Total Login Hours</p>
-        <button class="bf-10 f-red">Sessions <img src="../../assets/icon/chevron_right.svg" /></button>
+        <button class="bf-10 f-red" routerLink="/tabs/session-history">Sessions <img src="../../assets/icon/chevron_right.svg" /></button>
       </div>
     </div>
   </div>
   <div *ngIf="isRiderOnline">
-    <app-orders></app-orders>
+<span class="flex">
+  <p class="bf-16">Orders</p>
+</span>
+<ion-segment  [(ngModel)]="segmentValue" >
+  <ion-segment-button value="active"  >
+    <span class="flex-aligned gap-4">
+
+      Active
+      <span class="badge bg-red rf-10">{{filteredOrders("active").length}}</span>
+    </span>
+    
+  </ion-segment-button>
+  <ion-segment-button value="new" >
+    <span class="flex-aligned gap-4">
+
+      New
+      <span class="badge bg-red rf-10">{{filteredOrders("new").length}}</span>
+    </span>
+  </ion-segment-button>
+</ion-segment>
+
+<div class="orders-wrapper py-8">
+  <ion-card class="bordered-card card relative w-full p-16" *ngFor="let order of filteredOrders(segmentValue)">
+   
+    <div class="rf-12 ">
+      Order ID: {{ order.txnid }}
+    </div>
+    <div class="bf-16 capitalize" *ngIf="segmentValue=== 'active'">Step {{stepText[order.status]}}</div>
+    <div class="rf-12 pick-up">
+      Pickup from:
+    </div>
+    <div>
+      <div class="bf-16">
+        {{ order.vname }}
+      </div>
+      <div class="rf-10">
+        {{ order.vadd }}
+      </div>
+    </div>
+    <span class="chip absolute"
+      [ngClass]="{'red-chip': segmentValue=== 'active' && order.status > 3, 'green-chip': segmentValue=== 'new'}">
+      {{(segmentValue=== 'active') ? "ACTIVE" : "NEW"}}</span>
+    <img (click)="expandOrder(order)" class="expand-btn absolute v-center" src="../../assets/icon/expand_circle_down.svg" />
+  </ion-card>
+  <div *ngIf="filteredOrders(segmentValue).length ===0" class="grid-center p-32 gap-24" >
+    <span class="search-icon">
+    </span>
+    <div class="flex-col text-center gap-9 ">
+
+      <span class="bf-16">
+        Searching for Orders
+      </span>
+      <div class="rf-14">
+        Currently No {{segmentValue}} Orders Available
+      </div>
+    </div>
+  </div>
+</div>
+
   </div>
 
 

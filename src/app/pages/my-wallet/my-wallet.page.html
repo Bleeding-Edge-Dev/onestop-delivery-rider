@@ -7,14 +7,47 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div class="p-16 flex-col gap-32">
     <div class="grid-center">
       <span class="py-8 rf-12">
-        Available Balance
+        Redeemable Balance
       </span>
       <span class="bf-32">
-        ₹{{data.balance}}/-
+        ₹{{data.reedamableAmount}}/-
       </span>
+      <div class="text-center rf-12" >
+        (Amount till {{getRedeemDate() | date: 'dd MMM yyyy' }})
+      </div>
+    </div>
+    <div class="flex-spaced">
+      <div class="flex-col text-center">
+        <div class="py-8 rf-10">
+          Available Balance
+        </div>
+        <div class="bf-16">
+          ₹{{data.balance}}/-
+        </div>
+      </div>
+
+      <div class="flex-col text-center">
+        <div class="py-8 rf-10">
+          Amount Received
+        </div>
+        <div class="bf-16">
+          ₹{{data.amount_received}}/-
+        </div>
+      </div>
+      <div class="flex-col text-center">
+        <div class="py-8 rf-10">
+          Amount Deducted
+        </div>
+        <div class="bf-16">
+          ₹{{data.amount_deducted}}/-
+        </div>
+      </div>
     </div>
     <div class="p-16 m-b-36">
       <button class="bf-16 t-btn" (click)="openModal()">
@@ -22,15 +55,28 @@
       </button>
     </div>
 
-    <ion-segment [(ngModel)]="selectedTransaction" value="past" mode="md">
+
+    <ion-segment class="flex-spaced px" [(ngModel)]="selectedTransaction" value="past" mode="md">
       <ion-segment-button value="past">
-        Past
+        <span class="flex-aligned gap-4">
+
+          Past
+          <span class="badge bg-red rf-10">{{pastTransactions.length}}</span>
+        </span>
       </ion-segment-button>
       <ion-segment-button value="pending">
-        Pending
+        <span class="flex-aligned gap-4">
+          Pending
+
+          <span class="badge bg-red rf-10">{{pendingTransactions.length}}</span>
+        </span>
       </ion-segment-button>
       <ion-segment-button value="credit">
-        Credit
+        <span class="flex-aligned gap-4">
+
+          Credit
+          <span class="badge bg-red rf-10">{{creditTransactions.length}}</span>
+        </span>
       </ion-segment-button>
     </ion-segment>
 

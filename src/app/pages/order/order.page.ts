@@ -66,7 +66,7 @@ export class OrderPage implements OnInit {
           this.delivered(this.order.txnid)
           break
         default:
-          console.log("invalid status")
+
       }
     }
 
@@ -85,7 +85,7 @@ export class OrderPage implements OnInit {
   }
   async generatePaymentLink() {
     this.ordersService.generatePaymentLink(this.token, this.order.id).subscribe((res: any) => {
-      console.log(res);
+
       if (res.message === "Link generated successfully") {
         this.paymentStatus = 'waiting'
       }

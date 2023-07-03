@@ -48,6 +48,7 @@
         <span class="rf-10 tool-tip max-w-65 py-8" *ngIf="!foodPrepared">You’ll be receiving a notification when the
           order is ready for
           pickup.</span>
+        
         <span class="bf-12 py-8">Order Contains:</span>
         <div class="grid gap-9 py-8">
           <span class="rf-10 max-w-65" *ngFor="let dish of order.menu">
@@ -66,6 +67,7 @@
               class="close-circle"></span>
           </div>
         </div>
+        <span class=" py-8 flex gap-9 flex-aligned"><span class="rf-12">Total Amount: </span> <span class="bf-12">₹{{order.amount}}</span> </span>
         <span class="rf-10 f-midgrey">
           Please verify if the package contains all the above mentioned food items before confirming pickup.
         </span>

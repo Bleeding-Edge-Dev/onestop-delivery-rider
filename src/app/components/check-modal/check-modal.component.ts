@@ -29,7 +29,7 @@ export class CheckModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.type);
+
   }
   onDismiss() {
     this.modalController.dismiss();

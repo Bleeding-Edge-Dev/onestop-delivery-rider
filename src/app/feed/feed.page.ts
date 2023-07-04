@@ -47,6 +47,10 @@ export class FeedPage implements OnInit {
 
   async ngOnInit() {
     this.token = `Bearer ${await get('token')}`;
+    
+  }
+
+  async ionViewWillEnter() {
     this.getRewards();
 
     this.statusService.isRiderOnline.subscribe((res) => {
@@ -61,11 +65,15 @@ export class FeedPage implements OnInit {
         this.getAllOrders();
         this.ongoingInterval = setInterval(() => {
           this.getAllOrders();
-        }, 5000);
+        }, 1000);
       } else {
         clearInterval(this.ongoingInterval);
       }
     });
+  }
+
+  async ionViewWillLeave() {
+    clearInterval(this.ongoingInterval);
   }
 
   myTargetData: any = {

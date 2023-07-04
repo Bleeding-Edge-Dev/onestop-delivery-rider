@@ -13,19 +13,21 @@ export class RatingService {
     private httpOld: HttpClient) {
     this.http = new HttpClient(back);
   }
-  raiseTicket(token:string, orderId:string, issue:string, contact:any, image:any, imagename:any) {
-    token = 'Bearer ' + token;
+  raiseTicket(token:any,orderId:any,issue:any,contact:any,image:any,imagename:any) {
 
+    token = 'Bearer '+token;
     const formData = new FormData();
-    formData.append('file', image);
-    formData.append('token', token);
-    formData.append('orderId', orderId);
-    formData.append('issue', issue);
-    formData.append('contact', contact);
-    formData.append('type', '1');
-formData.append('imagename', imagename)
+    formData.append('file',image);
+    formData.append('token',token);
+    formData.append('orderId',orderId);
+    formData.append('issue',issue);
+    formData.append('contact',contact);
+    formData.append('type','1');
+    formData.append('imagename',imagename)
 
-    return this.httpOld.post("https://onestopdelivery.in/api/riderApp/api/raiseTicket.php", formData);
+    console.log(formData);
+
+    return this.httpOld.post("https://onestopdelivery.in/api/riderApp/api/raiseTicket.php",formData);
   }
   getTicket(token:string) {
 

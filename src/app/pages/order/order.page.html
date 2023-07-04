@@ -30,8 +30,8 @@
           </span>
         </div>
         <div class="flex-col-spaced">
-          <button class="p-btn">Navigate</button>
-          <button class="s-btn">Call</button>
+          <button class="p-btn" (click)="navigateToAddress(order.vlat,order.vlong)">Navigate</button>
+          <button class="s-btn" (click)="callPhoneNumber(order.deliverynumber)">Call</button>
         </div>
       </div>
       <div class="bordered-card p-16 grid gap-4">

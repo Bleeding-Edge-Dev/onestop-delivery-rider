@@ -9,6 +9,7 @@ import { PocketPageRoutingModule } from './pocket-routing.module';
 import { PocketPage } from './pocket.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { DepositModalComponent } from './deposit-modal/deposit-modal.component';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import { DepositModalComponent } from './deposit-modal/deposit-modal.component';
     PocketPageRoutingModule,
     ComponentsModule
   ],
-  providers: [ DatePipe ],
+  providers: [ DatePipe,InAppBrowser ],
   declarations: [PocketPage,DepositModalComponent]
 })
 export class PocketPageModule {}

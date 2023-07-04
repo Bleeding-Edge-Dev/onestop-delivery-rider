@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-// import { CameraResultType, CameraSource, Camera } from '@capacitor/camera';
+import { CameraResultType, CameraSource, Camera } from '@capacitor/camera';
 import {
   ActionSheetController,
   Platform,
@@ -37,35 +37,35 @@ export class NewTicketPage implements OnInit {
   async ngOnInit() {
     this.token = await get('token');
   }
-  async selectImageSource() {
+  async selectImageSource(){
     const buttons = [
       {
-        text: 'Take Photo',
-        icon: 'camera',
-        handler: () => {
-          // this.addImage(CameraSource.Camera);
-        },
+        text:'Take Photo',
+        icon:'camera',
+        handler : () =>{
+          this.addImage(CameraSource.Camera);
+        }
       },
       {
-        text: 'Choose from Photos',
-        icon: 'image',
-        handler: () => {
-          // this.addImage(CameraSource.Photos);
-        },
-      },
+        text:"Choose from Photos",
+        icon:'image',
+        handler:()=>{
+          this.addImage(CameraSource.Photos)
+        }
+      }
     ];
-    if (!this.plt.is('hybrid')) {
+    if(!this.plt.is('hybrid')){
       buttons.push({
-        text: 'Choose a file',
-        icon: 'attach',
-        handler: () => {
+        text:'Choose a file',
+        icon:'attach',
+        handler:()=>{
           this.fileInput.nativeElement.click();
-        },
-      });
+        }
+      })
     }
     const actionSheet = await this.actionSheetController.create({
-      header: 'Select Image Source',
-      buttons: buttons,
+      header:'Select Image Source',
+      buttons:buttons
     });
     await actionSheet.present();
   }
@@ -99,28 +99,27 @@ export class NewTicketPage implements OnInit {
         })
         .then((toast) => toast.present());
     }
-  }
-  uploadFile(event: any) {
+  }  uploadFile(event: any) {
     const file = event.target.files[0];
     this.image = file;
     this.imageName = file.name;
   }
-  // async addImage(source: CameraSource) {
-  //   const image = await Camera.getPhoto({
-  //     quality: 60,
-  //     allowEditing: false,
-  //     resultType: CameraResultType.Base64,
-  //     source,
-  //   });
+  async addImage(source: CameraSource) {
+    const image = await Camera.getPhoto({
+      quality: 60,
+      allowEditing: false,
+      resultType: CameraResultType.Base64,
+      source,
+    });
 
-  //   const blobData = this.b64toBlob(
-  //     image.base64String,
-  //     `image/${image.format}`
-  //   );
-  //   this.imageName = 'Ticket_' + Date.now() + '.' + image.format;
+    const blobData = this.b64toBlob(
+      image.base64String,
+      `image/${image.format}`
+    );
+    this.imageName = 'Ticket_' + Date.now() + '.' + image.format;
 
-  //   this.image = blobData;
-  // }
+    this.image = blobData;
+  }
   b64toBlob(b64Data:any, contentType = '', sliceSize = 512) {
     const byteCharacters = atob(b64Data);
     const byteArrays = [];

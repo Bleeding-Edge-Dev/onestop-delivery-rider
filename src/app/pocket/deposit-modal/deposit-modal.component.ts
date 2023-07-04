@@ -11,7 +11,7 @@ import { get } from 'src/app/services/storage';
   styleUrls: ['./deposit-modal.component.scss'],
 })
 export class DepositModalComponent implements OnInit {
-  depositAmount: number = 1;
+  depositAmount: number = 0;
 
   options: InAppBrowserOptions = {
     location: 'yes', //Or 'no'
@@ -53,8 +53,7 @@ export class DepositModalComponent implements OnInit {
     const url =
       'https://onestopdelivery.in/api/riderApp/api/depositPocket.php?token=' +
       token +
-      '&amount=' +
-      this.depositAmount;
+      '&amount=' + this.depositAmount;
     console.log(url);
     const target = '_blank';
     const browser = this.iab.create(url, target, this.options);

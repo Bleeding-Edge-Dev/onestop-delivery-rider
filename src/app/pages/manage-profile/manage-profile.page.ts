@@ -31,7 +31,7 @@ export class ManageProfilePage implements OnInit {
   loadingModal.present();
 
     this.authService.getProfile(this.token).subscribe((res: any) => {
-      console.log(res.details);
+
       this.profileData = res.details;
       this.isloading = false;
       loadingModal.dismiss();

@@ -12,15 +12,16 @@ import { get } from 'src/app/services/storage';
   styleUrls: ['./order.page.scss'],
 })
 export class OrderPage implements OnInit {
-  paymentStatus='pending';
+  isLoading: boolean = true;
+  paymentStatus = 'pending';
   token = "";
   orderId = "";
   order: any
-  foodPrepared: boolean= false;
-  allItemsPresent: boolean= false;
-  orderInterval:any = null;
-  statusData:any = {
-    0:{
+  foodPrepared: boolean = false;
+  allItemsPresent: boolean = false;
+  orderInterval: any = null;
+  statusData: any = {
+    0: {
       headText: "Waiting data",
       vendorCard: false,
       itemsPresentBlock: false,
@@ -43,7 +44,7 @@ export class OrderPage implements OnInit {
       headText: "3: deliver order",
       vendorCard: false,
       itemsPresentBlock: false,
-      slideBtnClass:  "disabled-deliver-order"  ,
+      slideBtnClass: "deliver-order",
 
     }
   }
@@ -56,23 +57,22 @@ export class OrderPage implements OnInit {
   }
   async onSliderTouchEnd() {
     if (this.sliderValue > 90) {
-      switch(parseInt(this.order.status)) {
+      switch (parseInt(this.order.status)) {
         case 4:
-          this.foodPrepared = true
-          this.order.status = '5'
+
           this.pickedup(this.order.txnid)
           break;
         case 5:
           this.delivered(this.order.txnid)
           break
         default:
-          console.log("invalid status")
+
       }
     }
 
-      setTimeout(() => {
-        this.sliderValue = 0;
-      }, 100);
+    setTimeout(() => {
+      this.sliderValue = 0;
+    }, 100);
 
   }
   getColor() {
@@ -85,8 +85,8 @@ export class OrderPage implements OnInit {
   }
   async generatePaymentLink() {
     this.ordersService.generatePaymentLink(this.token, this.order.id).subscribe((res: any) => {
-      console.log(res);
-      if(res.message === "Link generated successfully"){
+
+      if (res.message === "Link generated successfully") {
         this.paymentStatus = 'waiting'
       }
     })
@@ -97,9 +97,22 @@ export class OrderPage implements OnInit {
     private alertController: AlertController,
     private ordersService: OrdersService,
     private router: Router
-    ) { }
+  ) { }
 
   async ngOnInit() {
+
+
+  }
+
+  doRefresh(event: any) {
+    this.getOrder();
+    setTimeout(() => {
+      event.target.complete();
+    }, 200);
+  }
+
+
+  async ionViewWillEnter() {
     this.token = await get("token");
     this.token = "Bearer " + this.token;
     this.activatedRoute.queryParamMap.subscribe(params => {
@@ -108,53 +121,80 @@ export class OrderPage implements OnInit {
         this.orderId = JSON.parse(orderString);
         this.getOrder();
 
-      } else { 
+
       }
     });
 
   }
 
-  doRefresh(event:any) {
-    this.getOrder();
-    setTimeout(() => {
-      event.target.complete();
-    }, 200);
-  }
-
-  async ionViewDidEnter() {
-    this.orderInterval = setInterval(() => {
-      this.getOrder();
-      if(this.order.ptype==='Cash' ){
-        this.checkPaymentStatus();
-      }
-    }, 3000);
-  }
-
   ionViewDidLeave() {
     clearInterval(this.orderInterval);
   }
-  async checkPaymentStatus(){
+  async checkPaymentStatus() {
     this.ordersService.checkPaymentStatus(this.token, this.order.id).subscribe((res: any) => {
       console.log(res);
-      
+
     })
   }
-  async getOrder(){
-    this.ordersService.getOrder( this.token,this.orderId).subscribe((res: any) => {
+  async getOrder() {
+
+    const loadingMOdal = await this.loadingController.create({
+      spinner: 'lines-small',
+      showBackdrop: false,
+      animated: false,
+    });
+    this.isLoading = true;
+    await loadingMOdal.present();
+
+    this.ordersService.getOrder(this.token, this.orderId).subscribe((res: any) => {
       console.log(res);
       let order = res.order;
       order.menu = JSON.parse(order.menu);
       this.order = order;
-      if(this.order.ptype!=='Cash' ){
+      if (this.order.ptype !== 'Cash') {
         this.statusData[5].slideBtnClass = "deliver-order"
       }
+      if (this.order.ptype === 'Cash' && this.order.status === '5') {
+        this.checkPaymentStatus();
+      }
       console.log(this.order);
+      loadingMOdal.dismiss();
+      this.isLoading = false;
       // this.foodPrepared = this.order.prep;
       // this.allItemsPresent = this.order.manual;
     })
   }
+  async itemsPresent() {
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      header: "Are you sure",
+      message: "All items are present?!!!",
+      buttons: [
+        {
+          text: "No",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: (blah) => {
+            console.log("Confirm Cancel");
+          },
+        },
+        {
+          text: "Yes",
+          handler: () => {
+            this.allItemsPresent = true;
+            this.statusData[4].slideBtnClass = 'pickup-order'
+          },
+        },
+      ],
+    });
 
-  async declineorder(id:any) {
+
+    await alert.present();
+
+
+
+  }
+  async declineorder(id: any) {
     const al = await this.loadingController.create({
       message: "Please Wait..",
       spinner: "bubbles",
@@ -164,12 +204,12 @@ export class OrderPage implements OnInit {
       .firstAction(id, 2, this.token)
       .subscribe(async (res: any) => {
         if (res.message == "Success") {
-          
+
         }
         await al.dismiss();
       });
   }
-  async picked(id:any) {
+  async picked(id: any) {
     const al = await this.loadingController.create({
       message: "Please Wait..",
       spinner: "bubbles",
@@ -185,11 +225,14 @@ export class OrderPage implements OnInit {
             message: "Picked Up!",
             buttons: ["OK"],
           });
+
           await salert.present();
+          this.foodPrepared = true
+          this.order.status = '5'
         }
       });
   }
-  async deliver(id:any) {
+  async deliver(id: any) {
     const al = await this.loadingController.create({
       message: "Please Wait..",
       spinner: "bubbles",
@@ -210,7 +253,7 @@ export class OrderPage implements OnInit {
       });
   }
 
-  async reject(data:any) {
+  async reject(data: any) {
     let id = data.id;
     let msg = data.rejectmsg;
     const al = await this.loadingController.create({
@@ -232,11 +275,11 @@ export class OrderPage implements OnInit {
         }
       });
   }
-  async pickedup(id:any) {
+  async pickedup(id: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       header: "Are you sure",
-      message: "<strong>Picked up the order?</strong>!!!",
+      message: "Picked up the order?!!!",
       buttons: [
         {
           text: "No",
@@ -257,11 +300,11 @@ export class OrderPage implements OnInit {
 
     await alert.present();
   }
-  async delivered(id:any) {
+  async delivered(id: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       header: "Good job!",
-      message: "<strong>Are you sure?</strong>!!!",
+      message: "Are you sure?!!!",
       buttons: [
         {
           text: "No",
@@ -282,7 +325,7 @@ export class OrderPage implements OnInit {
 
     await alert.present();
   }
-  async rejected(id:any) {
+  async rejected(id: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       header: "Reason for rejection",

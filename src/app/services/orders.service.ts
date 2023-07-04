@@ -36,7 +36,7 @@ export class OrdersService {
     });
   }
   checkPaymentStatus(token:string, id:string) {
-    return this.http.post(this.apiUrl + "checkPaymentStatus.php", {
+    return this.http.post(this.apiUrl + "checkPayment.php", {
       token: token,
       id: id,
     });

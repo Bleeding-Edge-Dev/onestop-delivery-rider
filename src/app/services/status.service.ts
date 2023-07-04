@@ -15,7 +15,7 @@ export class StatusService {
 
   constructor(private http: HttpClient,
     private authservice:AuthService) {
-    this.authservice.isAuthenticated.subscribe((res) => {
+    this.authservice.isAuthenticated$.subscribe((res) => {
       if (res) {
         this.checkRiderOnline();
       }

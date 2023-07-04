@@ -1,11 +1,13 @@
-<ion-header class="flex-spaced py-8">
+<ion-header class="flex-spaced py-8" *ngIf="!isLoading" >
   <div class="flex-aligned ">
-    <ion-back-button class="f-lightgrey" defaultHref="/tabs/feed"></ion-back-button>
+
+    <ion-back-button class="f-black" defaultHref="/tabs/feed"></ion-back-button>
     <span class="bf-16">{{statusData[order.status].headText}}</span>
   </div>
   <div class="flex-aligned gap-24 px">
-    <button class="bordered-chip">HELP</button>
-    <button><img src="../../assets/icon/notifications.svg" alt="notification"></button>
+    <button class="bordered-chip" routerLink="/tabs/support-tickets" >HELP</button>
+
+
   </div>
 </ion-header>
 <ion-content>
@@ -13,7 +15,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="px flex-col-spaced gap-16  h-full">
+  <div class="px flex-col-spaced gap-16  h-full"  *ngIf="!isLoading" >
     <div class="flex-col gap-16">
       <div class="bordered-card p-16 flex gap-12">
         <div class="grid gap-9">
@@ -46,16 +48,42 @@
         <span class="rf-10 tool-tip max-w-65 py-8" *ngIf="!foodPrepared">You’ll be receiving a notification when the
           order is ready for
           pickup.</span>
+        
         <span class="bf-12 py-8">Order Contains:</span>
         <div class="grid gap-9 py-8">
-          <span class="rf-10 max-w-65" *ngFor="let dish of order.menu">
-            {{dish.quantity}} x {{dish.dishName}}
-          </span>
+          <div class="flex-col" *ngFor="let item of order.menu; let last = last">
+              <div class="bf-12 flex-col">
+                <span class="flex-aligned gap-4">
+                  <span class="dish-name bf-12">
+                    {{ item?.dishName }}
+                  </span>
+                  <span class="flex-spaced" *ngFor="let v of item.variations">
+                    <span class="bf-14 f-darkgrey" *ngFor="let val of v | keyvalue">- {{ val?.key }} </span>
+                  </span>
+                  <span> x {{ item?.quantity }}</span>
+                </span>
+    
+              </div>
+    
+            <div class="flex-spaced" *ngIf="item?.addOns?.length > 0">
+              <span class="bf-12"> Add-Ons:</span>
+              <div class="flex-col">
+                <span *ngFor="let a of item?.addOns">
+                  <span class="rf-14" *ngFor="let val of a | keyvalue">{{ val?.key }}
+                  </span>
+                </span>
+              </div>
+            </div>
+    
+            <div *ngIf="!last">
+              <div class="divider"></div>
+            </div>
+          </div>
         </div>
         <div *ngIf="statusData[order.status].itemsPresentBlock">
           <div class="w-full px-40 py" *ngIf="!allItemsPresent">
             <button class="p-btn w-full"
-              (click)="allItemsPresent = true;this.statusData[4].slideBtnClass = 'pickup-order'">All Items
+              (click)="itemsPresent()">All Items
               Present</button>
           </div>
           <div class="bf-12 f-green py-8 flex-spaced flex-aligned" *ngIf="allItemsPresent">
@@ -64,6 +92,7 @@
               class="close-circle"></span>
           </div>
         </div>
+        <span class=" py-8 flex gap-9 flex-aligned"><span class="rf-12">Total Amount: </span> <span class="bf-12">₹{{order.amount}}</span> </span>
         <span class="rf-10 f-midgrey">
           Please verify if the package contains all the above mentioned food items before confirming pickup.
         </span>

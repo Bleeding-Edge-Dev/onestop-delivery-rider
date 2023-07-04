@@ -34,8 +34,32 @@ export class NewOrderModalComponent implements OnInit {
   async ngOnInit() {
     this.token = await get('token');
     this.token = 'Bearer ' + this.token;
-  }
 
+      const endTime = new Date(this.order.time).getTime() + 5 * 60 * 1000; 
+      const currentTime = new Date().getTime();
+
+      this.order.timeLeft = Math.max(0, endTime - currentTime)
+  
+
+      this.startCountdown();
+  }
+  startCountdown() {
+    setTimeout(() => {
+      if (this.order.timeLeft > 0) {
+      this.order.timeLeft -= 1000; 
+        this.startCountdown();
+      }
+      
+    }, 1000);
+  }
+  formatCountdown(countdown: number): string {
+    const minutes = Math.floor(countdown / 60000); // Convert milliseconds to minutes
+    const seconds = Math.floor((countdown % 60000) / 1000); // Convert remaining milliseconds to seconds
+  
+    // Format the countdown as "mm:ss" or any other desired format
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+  
   sliderValue: number = 0;
   onSliderChange(event: any) {
     const currentValue = event.target.value;
@@ -65,8 +89,11 @@ export class NewOrderModalComponent implements OnInit {
     await al.present();
     this.ordersService.firstAction(id, 1, this.token).subscribe(async (res) => {
       setTimeout(async () => {
-        await al.dismiss();
+        await al.dismiss({
+          role: 'confirm',
+        });
       }, 1000);
     });
+
   }
 }

@@ -10,6 +10,9 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 <div class="p-16 flex-col gap-16" *ngIf="!isloading">
   <div class="bordered-card flex-aligned p-16 gap-24">
     <span class="user-img bg-grey">

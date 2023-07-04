@@ -37,7 +37,12 @@ export class ManageProfilePage implements OnInit {
       loadingModal.dismiss();
     })
   }
-
+  async doRefresh(event:any) {
+    this.getProfile();
+    setTimeout(() => {
+      event.target.complete();
+    }, 500);
+  }
   ionViewWillEnter() {
     this.getProfile();
 

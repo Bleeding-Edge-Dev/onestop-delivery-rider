@@ -620,7 +620,8 @@ height: 50px;
   }
 
   input[type="range"] {
-    width: 295px;
+    min-width: 295px;
+    width: 100%;
     height: 56px;
     background: #FF6565;
     border-radius: 28px;

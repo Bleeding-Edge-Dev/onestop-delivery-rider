@@ -42,7 +42,12 @@ export class TripHistoryPage implements OnInit {
   getCurrentDate(): string {
     return this.todayDate;
   }
-
+async doRefresh(event:any){
+  this.getData();
+  setTimeout(() => {
+    event.target.complete();
+  }, 500);
+}
   getCurrentMonth(): string {
     const currentMonth = new Date().toISOString().split('T')[0].substr(0, 7);
     return currentMonth;
@@ -124,7 +129,10 @@ export class TripHistoryPage implements OnInit {
 
   async ngOnInit() {
     this.token= 'Bearer '+ await get('token');
-    this.getTripHistory(this.selectedDate,this.selectedDate);
+  }
+  
+  async ionViewWillEnter(){
+   this.getData();
   }
 
   async getTripHistory(from:string,to:string){

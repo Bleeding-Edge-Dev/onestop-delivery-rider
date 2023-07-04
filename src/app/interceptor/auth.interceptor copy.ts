@@ -5,21 +5,21 @@ import {
   HttpInterceptor,
   HttpResponse,
   HttpErrorResponse,
-} from '@angular/common/http';
-import { from, Observable, throwError } from 'rxjs';
-import { map, catchError, switchMap } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
-import { Injectable } from '@angular/core';
-import { Device } from '@capacitor/device';
-import jsSHA from 'jssha';
-import { get, set } from '../services/storage';
-import { AuthService } from '../services/auth.service';
+} from "@angular/common/http";
+import { from, Observable, throwError } from "rxjs";
+import { map, catchError, switchMap } from "rxjs/operators";
+import { Router } from "@angular/router";
+import { ToastController } from "@ionic/angular";
+import { Injectable } from "@angular/core";
+import { Device } from "@capacitor/device";
+import jsSHA from "jssha";
+import { get, set } from "../services/storage";
+import { AuthService } from "../services/auth.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   uid: any;
-  uuid: string = '';
+  uuid: string = "";
   token: any;
   constructor(
     private router: Router,
@@ -34,15 +34,21 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return from(this.getuid()).pipe(
       switchMap((token) => {
-        request = request.clone({
-          body: { ...request.body, ...{ key: token } },
-        });
-        if (!request.headers.has('Content-Type')) {
+        if (request.body instanceof FormData) {
           request = request.clone({
-            setHeaders: {
-              'content-type': 'application/json',
-            },
+            body: request.body.append("key", token),
           });
+        } else {
+          request = request.clone({
+            body: { ...request.body, ...{ key: token } },
+          });
+          if (!request.headers.has("Content-Type")) {
+            request = request.clone({
+              setHeaders: {
+                "content-type": "application/json",
+              },
+            });
+          }
         }
 
         return next.handle(request).pipe(
@@ -64,15 +70,15 @@ export class AuthInterceptor implements HttpInterceptor {
 
   async getuid() {
     const info = await Device.getId();
-    let shaObj = new jsSHA('SHA-256', 'TEXT');
+    let shaObj = new jsSHA("SHA-256", "TEXT");
     shaObj.update(info.identifier);
-    let h = await shaObj.getHash('HEX');
-    await set('uuid', h);
+    let h = await shaObj.getHash("HEX");
+    await set("uuid", h);
     this.uuid = h;
     return h;
   }
   async logout() {
-    this.token = await get('token');
+    this.token = await get("token");
     this.authService.logout(this.token);
   }
 }

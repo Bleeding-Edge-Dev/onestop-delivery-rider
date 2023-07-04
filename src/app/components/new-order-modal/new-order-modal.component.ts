@@ -49,6 +49,9 @@ export class NewOrderModalComponent implements OnInit {
       this.order.timeLeft -= 1000; 
         this.startCountdown();
       }
+      if (this.order.timeLeft == 0) {
+        this.modalController.dismiss();
+      }
       
     }, 1000);
   }

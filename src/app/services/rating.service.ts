@@ -9,8 +9,8 @@ import { set } from './storage';
 export class RatingService {
   uuid: string='';
   constructor(private http: HttpClient,
-    private back: HttpBackend, private httpOg: HttpClient,
-    private httpOld: HttpClient) {
+    private back: HttpBackend, 
+) {
     this.http = new HttpClient(back);
   }
   raiseTicket(token:any,orderId:any,issue:any,contact:any,image:any,imagename:any) {
@@ -27,11 +27,11 @@ export class RatingService {
 
     console.log(formData);
 
-    return this.httpOld.post("https://onestopdelivery.in/api/riderApp/api/raiseTicket.php",formData);
+    return this.http.post("https://onestopdelivery.in/api/riderApp/api/raiseTicket.php",formData);
   }
   getTicket(token:string) {
 
-    return this.httpOld.post('https://onestopdelivery.in/api/riderApp/api/getTickets.php', { token });
+    return this.http.post('https://onestopdelivery.in/api/riderApp/api/getTickets.php', { token });
   }
   async getuid() {
     const info = await Device.getId();

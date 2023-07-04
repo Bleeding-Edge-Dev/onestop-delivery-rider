@@ -80,6 +80,7 @@
             </div>
           </div>
         </div>
+        <span class=" py-8 flex gap-9 flex-aligned"><span class="rf-12">Total Amount: </span> <span class="bf-12">₹{{order.amount}}</span> </span>
         <div *ngIf="statusData[order.status].itemsPresentBlock">
           <div class="w-full px-40 py" *ngIf="!allItemsPresent">
             <button class="p-btn w-full"
@@ -92,7 +93,7 @@
               class="close-circle"></span>
           </div>
         </div>
-        <span class=" py-8 flex gap-9 flex-aligned"><span class="rf-12">Total Amount: </span> <span class="bf-12">₹{{order.amount}}</span> </span>
+        
         <span class="rf-10 f-midgrey">
           Please verify if the package contains all the above mentioned food items before confirming pickup.
         </span>

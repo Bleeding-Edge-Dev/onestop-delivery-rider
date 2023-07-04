@@ -50,6 +50,7 @@ export class OrderPage implements OnInit {
   }
 
   sliderValue: number = 0;
+  paymentStatusInterval: any;
   onSliderChange(event: any) {
     const currentValue = event.target.value;
     this.sliderValue = currentValue;
@@ -88,6 +89,10 @@ export class OrderPage implements OnInit {
 
       if (res.message === "Link generated successfully") {
         this.paymentStatus = 'waiting'
+        this.statusData[5].slideBtnClass = "deliver-order"
+        this.paymentStatusInterval = setInterval(() => {
+          this.checkPaymentStatus();
+        }, 1000);
       }
     })
   }
@@ -133,6 +138,11 @@ export class OrderPage implements OnInit {
   async checkPaymentStatus() {
     this.ordersService.checkPaymentStatus(this.token, this.order.id).subscribe((res: any) => {
       console.log(res);
+      if (res.status) {
+        this.paymentStatus = 'paid';
+        clearInterval(this.paymentStatusInterval);
+        this.statusData[5].slideBtnClass = "deliver-order"
+      }
 
     })
   }

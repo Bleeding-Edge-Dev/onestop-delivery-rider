@@ -359,4 +359,16 @@ export class OrderPage implements OnInit {
 
     await alert.present();
   }
+
+
+  callPhoneNumber(phoneNumber: string) {
+    window.open(`tel:${phoneNumber}`, '_system');
+  }
+
+  navigateToAddress(vlat:string,vlong:string) {
+    window.open(`https://www.google.com/maps/search/?api=1&query=${vlat},${vlong}`, '_system');
+
+  }
+
+
 }

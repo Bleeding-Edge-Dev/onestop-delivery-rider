@@ -4,10 +4,10 @@
       <span class="bf-18">
         Enter Deposit Amount
     </span>
-    <input class="rf-12 round" placeholder="Enter Deposit Amount" type="number" name="" id="" min="0"/>
+    <input [(ngModel)]="depositAmount" class="rf-12 round" placeholder="Enter Deposit Amount" type="number" name="" id="" min="0"/>
     
 <div class="flex-spaced py">
-  <button class="dismiss-btn s-btn" (click)="onDismiss($event)" [(ngModel)]="depositAmount">
+  <button class="dismiss-btn s-btn" (click)="onDismiss($event)" >
     {{"close"}}
   </button>
   <button class="dissmiss-btn p-btn" (click)="onConfirm()">

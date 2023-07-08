@@ -1,51 +1,64 @@
 <ion-header class="flex-spaced py-8">
-  <div class="flex-aligned ">
+  <div class="flex-aligned">
     <ion-back-button class="f-black" defaultHref="/tabs/feed"></ion-back-button>
     <span class="bf-16">Trip History</span>
   </div>
   <div class="flex-aligned gap-24 px">
-    <button class="bordered-chip" routerLink="/tabs/support-tickets" >HELP</button>
-
+    <button class="bordered-chip" routerLink="/tabs/support-tickets">
+      HELP
+    </button>
   </div>
 </ion-header>
 
 <ion-content>
-  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+  <ion-refresher
+    slot="fixed"
+    pullFactor="0.5"
+    pullMin="100"
+    pullMax="200"
+    (ionRefresh)="doRefresh($event)"
+  >
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <div class="flex-col gap-16 p-16 h-full">
     <ion-segment [(ngModel)]="selectedValue" (ionChange)="onSegmentChange()">
-      <ion-segment-button value="daily">
-        Daily
-      </ion-segment-button>
-      <ion-segment-button value="weekly">
-        Weekly
-      </ion-segment-button>
-      <ion-segment-button value="monthly">
-        Monthly
-      </ion-segment-button>
+      <ion-segment-button value="daily"> Daily </ion-segment-button>
+      <ion-segment-button value="weekly"> Weekly </ion-segment-button>
+      <ion-segment-button value="monthly"> Monthly </ion-segment-button>
     </ion-segment>
-    <ion-datetime-button id="date-picker" class="bf-12 date-filter dark-border flex-aligned flex-spaced gap-8" [datetime]="selectedValue">
+    <ion-datetime-button
+      id="date-picker"
+      class="bf-12 date-filter dark-border flex-aligned flex-spaced gap-8"
+      [datetime]="selectedValue"
+    >
     </ion-datetime-button>
     <ion-modal [keepContentsMounted]="true">
       <ng-template>
-        <ion-datetime [id]="selectedValue" [presentation]="this.selectedValue=='monthly'?'month-year':'date'" prefer-wheel="false" showDefaultButtons="true"
-          [value]="selectedDate" (ionChange)="onDateChange($event)" placeholder="Select Date" [max]="todayDate">
+        <ion-datetime
+          [id]="selectedValue"
+          [presentation]="this.selectedValue=='monthly'?'month-year':'date'"
+          prefer-wheel="false"
+          showDefaultButtons="true"
+          [value]="selectedDate"
+          (ionChange)="onDateChange($event)"
+          placeholder="Select Date"
+          [max]="todayDate"
+        >
         </ion-datetime>
-
       </ng-template>
     </ion-modal>
 
-    <div *ngIf="tripHistory.length==0"  class="grid-center p-32 gap-24 h-full">
+    <div *ngIf="tripHistory.length==0" class="grid-center p-32 gap-24 h-full">
       <div class="grid-center gap-24">
-        <div class="bf-16 text-center ">
-          No Trips.
-        </div>
+        <div class="bf-16 text-center">No Trips.</div>
       </div>
     </div>
 
     <div class="flex-col gap-9">
-      <div class="bordered-card p-16 flex gap-16" *ngFor="let trip of tripHistory">
+      <div
+        class="bordered-card p-16 flex gap-16"
+        *ngFor="let trip of tripHistory"
+      >
         <div class="flex-col w-full">
           <div class="flex-spaced flex-aligned">
             <span class="bf-16">{{trip.vendorName}}</span>
@@ -54,19 +67,15 @@
           <span class="rf-10 f-darkgrey">{{trip.time}}</span>
 
           <div class="flex-spaced flex-aligned">
-            <span class="rf-10">Cash collected:  ₹{{trip.amountCollected}}</span>
-            <span class="bf-12">Fee:  ₹{{trip.deliveryCharge}}</span>
+            <span class="rf-10">Cash collected: ₹{{trip.amountCollected}}</span>
+            <span class="bf-12">Payment: ₹{{trip.deliveryCharge}}</span>
           </div>
         </div>
         <div class="grid-center p-8">
           <span class="expand-btn-black" (click)="goToTripDetails(trip)">
-
           </span>
         </div>
-
       </div>
     </div>
-
   </div>
-
 </ion-content>
